@@ -1,42 +1,107 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Vista de login */
+.login-container {
+    background-color: #b3e5fc;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .login-logo {
+    max-width: 100%;
+    height: auto;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  
+  .vh-100 {
+    height: 100vh;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+  
+  
+  /* Scroll */
+  .scroll-container {
+    max-height: 500px; 
+    overflow-y: auto; 
+    padding-right: 15px; 
+  }
+  
+  .card-img-top {
+    height: 200px; 
+    object-fit: cover;
+  }
+  
+  .card {
+    border: none;
+    border-radius: 20px; 
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.222);
+  }
+  
+  .card-body {
+    text-align: left;
+  }
+  
+  /* Sidebar menu*/
+  .sidebar-container {
+    height: auto;
+    padding: 1rem;
+    background-color: #0f4c75;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar-brand {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+  
+  .sidebar-brand img {
+    margin-right: 10px;
+  }
+  
+  .sidebar-brand-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 10px 0;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+  
+  .sidebar-link:hover {
+    background-color: rgba(0, 103, 187, 0.1);
+  }
+  
+  .sidebar-icon {
+    margin-right: 10px;
+  }
+  
+  /* Cards Assign tasks*/
+  .room-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+  }
+  
+  .room-card img {
+    width: 100px;
+              height: 100px;
+              border-radius: 10px;
+              object-fit: cover;
+  }
+  
+  .room-body {
+    flex: 1;
+    margin-left: 20px;
+  }
+  .card-buttons {
+    display: flex;
+    gap: 10px;
+  }
