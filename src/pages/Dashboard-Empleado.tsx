@@ -22,35 +22,7 @@ const Dashboardempleado: React.FC = () => {
 
     const rooms = [
         { id: 'A01-105', status: 'Por hacer' },
-        { id: 'A01-105', status: 'Por hacer' },
-
-
-
-        { id: 'A01-105', status: 'Por hacer' },
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
-
-        { id: 'A01-105', status: 'Por hacer' },
+      
 
        
     ];
@@ -66,7 +38,7 @@ const Dashboardempleado: React.FC = () => {
                         <Header />
                         <div >
                             <Container fluid className="flex-grow-1 d-flex flex-column">
-                                <h1 className="my-4">Bienvenida, Karla!</h1>
+                                <h1 className="my-4">Bienvenid@, peki!</h1>
                                 <h3>Habitaciones</h3>
                                 <div className="scroll-container flex-grow-1">
                                     <div className="row">

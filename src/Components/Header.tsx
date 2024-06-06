@@ -27,9 +27,12 @@ const Header : React.FC = () => {
             id="dropdownMenuButton"
             data-bs-toggle="dropdown"
             aria-expanded="false"
+            style={{
+              color:'#0f4c75'
+            }}
           >
           </button>
-          <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+          <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"  >
             <li> <Link className="dropdown-item"  to="/login">
             <i className="fa-solid fa-power-off me-2"></i>
            Cerrar sesión

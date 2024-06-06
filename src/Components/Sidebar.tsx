@@ -16,7 +16,7 @@ const Sidebar: React.FC = () => {
         <span className="sidebar-brand-text">RoomClean</span>
       </Navbar.Brand>
 
-      <Nav className="flex-column w-100">
+      <Nav className="flex-column w-100 ">
         <Nav.Link as={Link} to="/Dashboardempleado" className="sidebar-link">
           <i className="fa-solid fa-house sidebar-icon me-2"></i>
           Dashboard
