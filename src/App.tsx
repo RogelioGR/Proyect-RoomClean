@@ -9,6 +9,8 @@ import './App.css'
 
 /* View paginas del sitio */
 import Dashboardempleado from './pages/Dashboard-Empleado';
+import DashboardAdmin from './pages/Dashboard-Admin';
+import AssignTasksAdmin from './pages/Assign-tasks';
 
 
 
@@ -18,6 +20,8 @@ const App: React.FC = () => {
       <div>
         <Routes>
           <Route path="/Dashboardempleado" element={<Dashboardempleado />} />
+          <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
+          <Route path="/AssignTasksAdmin" element={<AssignTasksAdmin />} />
           <Route path="/" element={<Dashboardempleado />} />
           
         </Routes>
