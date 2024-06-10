@@ -38,7 +38,6 @@
   /* Sidebar menu*/
   .sidebar-container {
     height: auto;
-    padding: 1rem;
     background-color: #0f4c75;
     display: flex;
     flex-direction: column;
