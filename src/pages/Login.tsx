@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../Services/axiosConfig';
-
+import axios from 'axios';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const navigate = useNavigate();
 
-    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handleLogin = async (event: React.FormEvent) => {
+        event.preventDefault(); 
+
         try {
-            const response = await axiosInstance.post('/auth/login', { email, password });
-            localStorage.setItem('token', response.data.token);
+            const response = await axios.post('https://localhost:7103/api/auth/login', {
+                correo: email,
+                contraseña: password
+            });
             alert('Login successful');
+            localStorage.setItem('token', response.data.token);
             navigate("/DashboardAdmin");
+
+            console.log(response.data);
         } catch (error) {
             console.error(error);
             alert('Login failed');
