@@ -11,6 +11,10 @@ import './App.css'
 import Dashboardempleado from './pages/Dashboard-Empleado';
 import DashboardAdmin from './pages/Dashboard-Admin';
 import AssignTasksAdmin from './pages/Assign-tasks';
+import Login from './pages/Login';
+import ViewPerfil from './pages/ViewPerfil';
+import TaskEmpleado from './pages/ViewTaskEmpleado';
+import Viewinform from './pages/ViewInform';
 
 
 
@@ -19,10 +23,14 @@ const App: React.FC = () => {
     <Router>
       <div>
         <Routes>
-          <Route path="/Dashboardempleado" element={<Dashboardempleado />} />
+        <Route path="/login" element={<Login />} />
           <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
+          <Route path="/Dashboardempleado" element={<Dashboardempleado />} />
+          <Route path="/ViewPerfil" element={<ViewPerfil/>} />
+          <Route path="/TaskEmpleado" element={<TaskEmpleado />} />
           <Route path="/AssignTasksAdmin" element={<AssignTasksAdmin />} />
-          <Route path="/" element={<Dashboardempleado />} />
+          <Route path="/Viewinform" element={<Viewinform/>} />
+          <Route path="/" element={<Login />} />
           
         </Routes>
       </div>
