@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import ViewPerfil from './pages/ViewPerfil';
 import TaskEmpleado from './pages/ViewTaskEmpleado';
 import Viewinform from './pages/ViewInform';
+import NotFound from './pages/Notfound';
 
 
 
@@ -31,6 +32,8 @@ const App: React.FC = () => {
           <Route path="/AssignTasksAdmin" element={<AssignTasksAdmin />} />
           <Route path="/Viewinform" element={<Viewinform/>} />
           <Route path="/" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+
           
         </Routes>
       </div>

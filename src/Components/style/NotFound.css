@@ -1,0 +1,119 @@
+/* ErrorPage.css */
+
+
+  
+  .error-page {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+    animation: backgroundAnimation 10s infinite alternate;
+  }
+  
+
+  
+  .error-message {
+    flex: 1;
+    animation: fadeIn 2s;
+  }
+  
+  .error-message h1 {
+    font-size: 8rem;
+    color: #5A67D8;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-20px);
+    }
+    60% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .error-message p {
+    font-size: 1.2rem;
+    color: #2D3748;
+    margin: 20px 0;
+  }
+  
+  .home-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #5A67D8;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .home-button:hover {
+    background-color: #434190;
+  }
+  
+  .error-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    animation: float 3s infinite ease-in-out;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .error-image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .error-page {
+      flex-direction: column;
+    }
+  
+    .error-message h1 {
+      font-size: 2.5rem;
+    }
+  
+    .error-message p {
+      font-size: 1rem;
+    }
+  
+    .home-button {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .error-message h1 {
+      font-size: 2rem;
+    }
+  
+    .error-message p {
+      font-size: 0.9rem;
+    }
+  
+    .home-button {
+      font-size: 0.8rem;
+      padding: 8px 16px;
+    }
+  }
+  
