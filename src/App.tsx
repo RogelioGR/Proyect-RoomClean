@@ -1,5 +1,4 @@
 import './App.css'
-import '@fortawesome/fontawesome-free/css/all.min.css'; 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,7 +8,14 @@ import './App.css'
 
 /* View paginas del sitio */
 import Dashboardempleado from './pages/Dashboard-Empleado';
-/* prueba */
+import DashboardAdmin from './pages/Dashboard-Admin';
+import ViewPerfil from './pages/ViewPerfil';
+import TaskEmpleado from './pages/ViewTaskEmpleado';
+import AssignTasksAdmin from './pages/Assign-tasks';
+import Viewinform from './pages/ViewInform';
+import Login from './pages/Login';
+import NotFound from './pages/Notfound';
+
 
 
 
@@ -18,8 +24,16 @@ const App: React.FC = () => {
     <Router>
       <div>
         <Routes>
+        <Route path="/login" element={<Login />} />
+          <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
           <Route path="/Dashboardempleado" element={<Dashboardempleado />} />
-          <Route path="/" element={<Dashboardempleado />} />
+          <Route path="/ViewPerfil" element={<ViewPerfil/>} />
+          <Route path="/TaskEmpleado" element={<TaskEmpleado />} />
+          <Route path="/AssignTasksAdmin" element={<AssignTasksAdmin />} />
+          <Route path="/Viewinform" element={<Viewinform/>} />
+          <Route path="/" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+
           
         </Routes>
       </div>
