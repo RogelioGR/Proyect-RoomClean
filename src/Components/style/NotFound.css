@@ -1,7 +1,4 @@
-/* ErrorPage.css */
-
-
-  
+ 
   .error-page {
     display: flex;
     flex-direction: row;
@@ -101,6 +98,10 @@
       font-size: 0.9rem;
     }
   }
+  .error-image img {
+    max-width: 70%;
+    height: auto;
+  }
   
   @media (max-width: 480px) {
     .error-message h1 {
@@ -115,5 +116,9 @@
       font-size: 0.8rem;
       padding: 8px 16px;
     }
+    .error-image img {
+        max-width: 50%;
+        height: auto;
+      }
   }
   
