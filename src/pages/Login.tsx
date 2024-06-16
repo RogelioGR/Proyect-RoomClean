@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const Login: React.FC = () => {
@@ -22,43 +23,50 @@ const Login: React.FC = () => {
 
             console.log(response.data);
         } catch (error) {
-            console.error(error);
-            alert('Login failed');
+            Swal.fire({
+                title: 'Usuario invalido',
+                text: 'Correo o contraseña incorrecta.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+           
         }
     };
 
+
+
     return (
-        <Container fluid className="login-container">
-            <Row className="justify-content-center align-items-center vh-100">
-                <Col md={6} lg={4} className="text-center">
-                    <h1 className="mb-4">Iniciar sesión</h1>
-                    <Form onSubmit={handleLogin}>
-                        <Form.Group controlId="formBasicEmail">
-                            <Form.Control 
-                                type="email" 
+        <>
+      
+
+        <Container fluid className="login-container" onSubmit={handleLogin}>
+      <Row className="justify-content-center align-items-center vh-100">
+        <Col xs={10} sm={8} md={6} lg={4} className="text-center">
+          <Form className="form-controls">
+             <h1 className="title">Iniciar sesión</h1>
+            <div className="input-field">
+              <input required className="input" type="email" 
                                 placeholder="Correo Electrónico" 
                                 value={email} 
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} 
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formBasicPassword" className="mt-3">
-                            <Form.Control 
-                                type="password" 
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}  />
+              <label className="label" htmlFor="input">Correo electrónico</label>
+            </div>
+            <div className="input-field">
+              <input required className="input"    type="password" 
                                 placeholder="Password" 
                                 value={password} 
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} 
-                            />
-                        </Form.Group>
-                        <Button variant="primary" type="submit" className="mt-3">
-                            Iniciar sesión
-                        </Button>
-                    </Form>
-                </Col>
-                <Col md={6} lg={4} className="d-none d-md-block text-center">
-                    <img src="/public/roomclean.png" alt="Logo" className="login-logo" />
-                </Col>
-            </Row>
-        </Container>
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}/>
+              <label className="label" htmlFor="input">Contraseña</label>
+            </div>
+            <button className="submit-btn">Iniciar sesión</button>
+          </Form>
+        </Col>
+        <Col xs={10} sm={8} md={6} lg={4} className="d-none d-lg-block text-center">
+          <img src="/public/roomclean.png" alt="Logo" className="login-logo" />
+        </Col>
+      </Row>
+    </Container>
+        </>
     );
 };
 
