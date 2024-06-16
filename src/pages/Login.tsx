@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form,  Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -48,14 +48,16 @@ const Login: React.FC = () => {
               <input required className="input" type="email" 
                                 placeholder="Correo Electrónico" 
                                 value={email} 
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}  />
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} 
+                                autoComplete="off" />
               <label className="label" htmlFor="input">Correo electrónico</label>
             </div>
             <div className="input-field">
               <input required className="input"    type="password" 
                                 placeholder="Password" 
                                 value={password} 
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}/>
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                                autoComplete="off"/>
               <label className="label" htmlFor="input">Contraseña</label>
             </div>
             <button className="submit-btn">Iniciar sesión</button>
