@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
   return (
-    <Navbar variant="dark" className="sidebar-container p-3">
+    <Navbar variant="dark" className="sidebar-container" style={{ padding: '10px' }}>
       <Navbar.Brand className="sidebar-brand">
         <img
           src="/roomclean.png"

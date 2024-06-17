@@ -32,23 +32,8 @@ const DashboardAdmin: React.FC = () => {
 
   /* datos de prueba */
   const users: User[] = [
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
-    { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
+/*     { Nombre: 'Karla', correo: 'karla@gmmail.com', telefono: '7305477760', NumEmpleado: '123456', img: '/public/mujer.png' }, 
+ */  
     
 
   ];
@@ -83,74 +68,76 @@ const DashboardAdmin: React.FC = () => {
         <Loader />
       ) : (
         <div className="d-flex vh-100">
-          <Sidebar />
-          <div className="flex-grow-1 d-flex flex-column">
-            <Header />
-            <Container className="mt-5">
-              <h1 className="mb-4">Bienvenido, Admin!</h1>
-              <div className="d-flex justify-content-end align-items-center mt-4">
-                <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
-                  <i className="fas fa-plus"></i> Agregar usuario
-                </Button>
-              </div>
-              <Table striped bordered hover className="mt-4">
-                <thead className="text-center">
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Teléfono</th>
-                    <th>Número de empleado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentUsers.length > 0 ? (
-                    currentUsers.map((user, index) => (
-                      <tr key={index}>
-                        <td>
-                          <img src={user.img} alt="user" style={{ width: '50px', borderRadius: '50%', marginRight: '10px' }} />
-                          {user.Nombre}
-                        </td>
-                        <td>{user.correo}</td>
-                        <td>{user.telefono}</td>
-                        <td>{user.NumEmpleado}</td>
-                        <td>
-                          <div className="d-flex justify-content-center m-1">
-                            <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER)}>
-                              <i className="fas fa-pen"></i>
+        <Sidebar />
+        <div className="flex-grow-1 d-flex flex-column" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <Header />
+          <Container className="mt-5" >
+            <h1 className="mb-4">Bienvenido, Admin!</h1>
+            <div className="d-flex justify-content-end align-items-center mt-4">
+              <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
+                <i className="fas fa-plus"></i> Agregar usuario
+              </Button>
+            </div>
+            <Table striped bordered hover className="mt-4">
+              <thead className="text-center">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Correo</th>
+                  <th className="d-none d-md-table-cell">Numero</th>
+                  <th>Número de empleado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentUsers.length > 0 ? (
+                  currentUsers.map((user, index) => (
+                    <tr key={index}>
+                      <td>
+                        <img src={user.img} alt="user" style={{ width: '50px', borderRadius: '50%', marginRight: '10px' }} />
+                        {user.Nombre}
+                      </td>
+                      <td>{user.correo}</td>
+                      <td className="d-none d-md-table-cell">{user.telefono}</td>
+                      <td>{user.NumEmpleado}</td>
+                      <td>
+                        <div className="d-flex justify-content-center m-1">
+                          <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER)}>
+                            <i className="fas fa-pen"></i>
+                          </Button>
+                          <Button variant="danger" className="me-2" onClick={() => handleOpenModal(ModalsUsers.DELETE_USER)}>
+                            <i className="fas fa-trash"></i>
+                          </Button>
+                          <Link to="/AssignTasksAdmin" style={{ textDecoration: 'none', color: 'white' }}>
+                            <Button variant="primary" className="me-2">
+                              <i className="fas fa-plus"></i> 
+                              <span className="d-none d-md-inline ">Asignar tareas</span>
+
                             </Button>
-                            <Button variant="danger" className="me-2" onClick={() => handleOpenModal(ModalsUsers.DELETE_USER)}>
-                              <i className="fas fa-trash"></i>
-                            </Button>
-                            <Link to="/AssignTasksAdmin" style={{ textDecoration: 'none', color: 'white' }}>
-                              <Button variant="primary" className="me-2">
-                                <i className="fas fa-plus"></i> Asignar tareas
-                              </Button>
-                            </Link>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={5} className="text-center">Sin empleados en la lista</td>
+                          </Link>
+                        </div>
+                      </td>
                     </tr>
-                  )}
-                </tbody>
-              </Table>
-              {users.length > 0 && (
-                <Pagination className="justify-content-center">
-                  {[...Array(Math.ceil(users.length / usersPerPage)).keys()].map(number => (
-                    <Pagination.Item key={number} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
-                      {number + 1}
-                    </Pagination.Item>
-                  ))}
-                </Pagination>
-              )}
-            </Container>
-            <Footer />
-          </div>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={5} className="text-center">Sin empleados en la lista</td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+            {users.length > 0 && (
+              <Pagination className="justify-content-center">
+                {[...Array(Math.ceil(users.length / usersPerPage)).keys()].map(number => (
+                  <Pagination.Item key={number} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+                    {number + 1}
+                  </Pagination.Item>
+                ))}
+              </Pagination>
+            )}
+          </Container>
+          <Footer />
         </div>
+      </div>
       )}
       {/* Modals */}
       <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal} />
