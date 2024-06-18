@@ -9,7 +9,7 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
 
     const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault(); // Previene el comportamiento predeterminado del formulario
+        event.preventDefault(); 
 
         try {
             await login({ correo: email, contraseña: password});
@@ -54,4 +54,4 @@ const Login: React.FC = () => {
     );
 };
 
-export default Login;
+export default Login;

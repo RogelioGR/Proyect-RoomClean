@@ -12,7 +12,7 @@ interface AuthResponse {
 
 export const login = async (loginData: LoginData): Promise<void> => {
     try {
-        const response = await axiosInstance.post<AuthResponse>('/api/Auth/login', loginData);
+        const response = await axiosInstance.post<AuthResponse>('/Usuario/login', loginData);
         localStorage.setItem('token', response.data.token);
         console.log('Login successful');
     } catch (error) {
