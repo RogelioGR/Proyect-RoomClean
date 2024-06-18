@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { login } from '../Services/AuthService'; 
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -12,17 +12,9 @@ const Login: React.FC = () => {
         event.preventDefault(); // Previene el comportamiento predeterminado del formulario
 
         try {
-            const response = await axios.post('https://localhost:7103/api/auth/login', {
-                correo: email,
-                contraseña: password
-            });
-            alert('Login successful');
-            localStorage.setItem('token', response.data.token);
+            await login({ correo: email, contraseña: password});
             navigate("/DashboardAdmin");
-
-            console.log(response.data);
         } catch (error) {
-            console.error(error);
             alert('Login failed');
         }
     };
