@@ -1,30 +1,42 @@
 import axiosInstance from './axiosConfig';
 
-export const getUsers = async (): Promise<unknown[]> => {
-    const response = await axiosInstance.get('/Usuario/list');
-    return response.data;
+export interface User {
+    id: number;
+    nombre: string;
+    apellido: string;
+    número: string;
+    correo: string;
+    contraseña: string;
+    foto: string | null;
+    fkRol: number;
+}
+
+interface ApiResponse {
+    succeded: boolean;
+    message: string | null;
+    result: User[];
+}
+
+export const getUsers = async (): Promise<User[]> => {
+    const response = await axiosInstance.get<ApiResponse>('/Usuario/list');
+    return response.data.result;
 };
 
-
-export const getUserById = async (id: string): Promise<unknown> => {
-    const response = await axiosInstance.get(`/Usuario/list/${id}`);
-    return response.data;
+export const getUserById = async (id: number): Promise<User> => {
+    const response = await axiosInstance.get<ApiResponse>(`/Usuario/list/${id}`);
+    return response.data.result[0];
 };
 
-
-export const createUser = async (userData: unknown): Promise<unknown> => {
-    const response = await axiosInstance.post('/Usuario/create', userData);
-    return response.data;
+export const createUser = async (userData: User): Promise<User> => {
+    const response = await axiosInstance.post<ApiResponse>('/Usuario/create', userData);
+    return response.data.result[0];
 };
 
-
-export const updateUser = async (id: string, userData: unknown): Promise<unknown> => {
-    const response = await axiosInstance.put(`/Usuario/update/${id}`, userData);
-    return response.data;
+export const updateUser = async (id: number, userData: User): Promise<User> => {
+    const response = await axiosInstance.put<ApiResponse>(`/Usuario/update/${id}`, userData);
+    return response.data.result[0];
 };
 
-
-export const deleteUser = async (id: string): Promise<unknown> => {
-    const response = await axiosInstance.delete(`/Usuario/delete/${id}`);
-    return response.data;
+export const deleteUser = async (id: number): Promise<void> => {
+    await axiosInstance.delete<ApiResponse>(`/Usuario/delete/${id}`);
 };

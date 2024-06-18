@@ -1,31 +1,39 @@
 import axiosInstance from './axiosConfig';
 
+export interface Task {
+    id: number;
+    nombre: string;
+    descripcion: string;
+    estatus: string;
+    fkUsuario: number;
+}
 
-export const getTasks = async (): Promise<unknown[]> => {
-    const response = await axiosInstance.get('/Tarea/list');
-    return response.data;
+interface ApiResponse {
+    succeded: boolean;
+    message: string | null;
+    result: Task[];
+}
+
+export const getTasks = async (): Promise<Task[]> => {
+    const response = await axiosInstance.get<ApiResponse>('/Tarea/list');
+    return response.data.result;
 };
 
-
-export const getTaskById = async (id: string): Promise<unknown> => {
-    const response = await axiosInstance.get(`/Tarea/list/${id}`);
-    return response.data;
+export const getTaskById = async (id: number): Promise<Task> => {
+    const response = await axiosInstance.get<ApiResponse>(`/Tarea/list/${id}`);
+    return response.data.result[0];
 };
 
-
-export const createTask = async (taskData: unknown): Promise<unknown> => {
-    const response = await axiosInstance.post('/Tarea/create', taskData);
-    return response.data;
+export const createTask = async (taskData: Task): Promise<Task> => {
+    const response = await axiosInstance.post<ApiResponse>('/Tarea/create', taskData);
+    return response.data.result[0];
 };
 
-
-export const updateTask = async (id: string, taskData: unknown): Promise<unknown> => {
-    const response = await axiosInstance.put(`/Tarea/update/${id}`, taskData);
-    return response.data;
+export const updateTask = async (id: number, taskData: Task): Promise<Task> => {
+    const response = await axiosInstance.put<ApiResponse>(`/Tarea/update/${id}`, taskData);
+    return response.data.result[0];
 };
 
-
-export const deleteTask = async (id: string): Promise<unknown> => {
-    const response = await axiosInstance.delete(`/Tarea/delete/${id}`);
-    return response.data;
+export const deleteTask = async (id: number): Promise<void> => {
+    await axiosInstance.delete<ApiResponse>(`/Tarea/delete/${id}`);
 };

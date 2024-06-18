@@ -13,9 +13,17 @@ const Login: React.FC = () => {
 
         try {
             await login({ correo: email, contraseña: password});
-            navigate("/DashboardAdmin");
+            const rol = localStorage.getItem('rol'); 
+
+            if (rol === '1') {
+                navigate("/DashboardAdmin");
+            } else if (rol === '2') {
+                navigate("/Dashboardempleado");
+            } else {
+                alert('Acceso no autorizado');
+            }
         } catch (error) {
-            alert('Login failed');
+            alert('Error de inicio de sesion');
         }
     };
 
