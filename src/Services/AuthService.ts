@@ -1,6 +1,5 @@
 import axiosInstance from './axiosConfig';
 
-
 interface LoginData {
     correo: string;
     contraseña: string; 
@@ -8,16 +7,17 @@ interface LoginData {
 
 interface AuthResponse {
     token: string;
+    rol: string; 
 }
 
 export const login = async (loginData: LoginData): Promise<void> => {
     try {
         const response = await axiosInstance.post<AuthResponse>('/Usuario/login', loginData);
         localStorage.setItem('token', response.data.token);
-        console.log('Login successful');
+        localStorage.setItem('rol', response.data.rol); 
+        console.log('Inicio de sesión exitoso');
     } catch (error) {
-        console.error('Login failed:', error);
-        throw new Error('Login failed');
+        console.error('Ocurrio un error en el inicio de sesión:', error);
+        throw new Error('Error de inicio de sesion');
     }
 };
-
