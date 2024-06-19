@@ -3,28 +3,45 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { deleteUser  } from '../../../Services/UsuarioService';
 
 interface MDeleteUserProps {
   show: boolean;
   handleClose: () => void;
   handleDelete: () => void;
+  userId?: number; // Cambia user por userId
+ 
 }
 
 const MySwal = withReactContent(Swal);
 
-const MDeleteUser: React.FC<MDeleteUserProps> = ({ show, handleClose, handleDelete }) => {
+const MDeleteUser: React.FC<MDeleteUserProps> = ({ show, handleClose , userId}) => {
 
-  const handleDeleteAndNotify = () => {
-    handleDelete();
-    MySwal.fire({
-      title: 'Eliminado',
-      text: 'El usuario ha sido eliminado.',
-      icon: 'success',
-      confirmButtonText: 'OK'
-    }).then(() => {
-      handleClose();
-    });
+  const handleDeleteAndNotify = async () => {
+    try {
+      if (userId !== undefined) {
+        await deleteUser(userId);  // Llama a deleteUser solo si userId no es undefined
+        MySwal.fire({
+          title: 'Eliminado',
+          text: 'El usuario ha sido eliminado.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          handleClose();
+        });
+      } else {
+        throw new Error('El ID del usuario es undefined');
+      }
+    } catch (error) {
+      MySwal.fire({
+        title: 'Error',
+        text: 'No se pudo eliminar el usuario.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
   };
+  
 
   return (
     <Modal
@@ -39,7 +56,7 @@ const MDeleteUser: React.FC<MDeleteUserProps> = ({ show, handleClose, handleDele
       </Modal.Header>
       <Modal.Body className="text-center justify-content-center">
         <h2>Eliminar Usuario</h2>
-        <p>¿Estás seguro de que deseas eliminar este usuario?</p>
+        <p>¿Estás seguro de que deseas eliminar el usuario  ?</p>
       </Modal.Body>
       <Modal.Footer className="justify-content-center">
         <Button variant="danger" onClick={handleDeleteAndNotify}>
