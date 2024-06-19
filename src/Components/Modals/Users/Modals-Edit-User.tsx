@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Modal, Button, Container, Row, Col, Form } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { updateUser, User } from '../../../Services/UsuarioService';
 
 interface MEditUserProps {
   show: boolean;
@@ -11,6 +12,7 @@ interface MEditUserProps {
 const MySwal = withReactContent(Swal);
 
 const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose }) => {
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
