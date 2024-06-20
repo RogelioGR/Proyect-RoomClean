@@ -21,3 +21,8 @@ export const login = async (loginData: LoginData): Promise<void> => {
         throw new Error('Error de inicio de sesion');
     }
 };
+
+export const logout = () => {
+    localStorage.removeItem('authenticated');
+    localStorage.removeItem('rol');
+};
