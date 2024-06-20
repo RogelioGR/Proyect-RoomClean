@@ -67,8 +67,6 @@ const TaskEmpleado: React.FC = () => {
                                             </Col>
                                         </Row>
                                         </div>
-                                     
-                                       
                                     </React.Fragment>
                                 ))}
                             </Container>

@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom';
+import LogoutButton from './Logout';
 
 const Header : React.FC = () => {
   return (
@@ -33,10 +33,9 @@ const Header : React.FC = () => {
           >
           </button>
           <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"  >
-            <li> <Link className="dropdown-item"  to="/login">
-            <i className="fa-solid fa-power-off me-2"></i>
-           Cerrar sesión
-            </Link></li>
+          <li>
+            <LogoutButton />
+          </li>
           </ul>
         </div>
       </div>

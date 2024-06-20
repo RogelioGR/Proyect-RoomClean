@@ -1,70 +1,15 @@
- 
-  .error-page {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
-    padding: 20px;
-    animation: backgroundAnimation 10s infinite alternate;
-  }
-  
-
-  
-  .error-message {
-    flex: 1;
-    animation: fadeIn 2s;
-  }
-  
-  .error-message h1 {
-    font-size: 8rem;
-    color: #5A67D8;
-    margin-bottom: 20px;
-    animation: bounce 2s infinite;
-  }
-  
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-20px);
-    }
-    60% {
-      transform: translateY(-10px);
-    }
-  }
-  
-  .error-message p {
-    font-size: 1.2rem;
-    color: #2D3748;
-    margin: 20px 0;
-  }
-  
-  .home-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #5A67D8;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .home-button:hover {
-    background-color: #434190;
-  }
-  
-  .error-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+.text{
+    margin-bottom:2rem ;
+}
+.image{
+    width: 100%;
+    max-width: 800px;
+    margin-block: 4rem;
     animation: float 3s infinite ease-in-out;
-  }
-  
-  @keyframes float {
+
+}
+ 
+@keyframes float {
     0% {
       transform: translateY(0);
     }
@@ -75,50 +20,83 @@
       transform: translateY(0);
     }
   }
-  
-  .error-image img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  @media (max-width: 768px) {
-    .error-page {
-      flex-direction: column;
+.image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.text h1{
+    font-style: italic;
+    color: #88c7fc;
+    font-size: 8rem;
+    
+
+}.text
+ p{
+    color: #7469d1;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+
+}
+
+.text a{
+    position: relative;
+    margin-top: 2rem;
+    background-color: #7469d1;
+    text-decoration: none;
+    padding: .5rem 1rem;
+    border-radius: .3rem;
+    overflow: hidden;
+    z-index: 1;
+
+}
+.text a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Corrección */
+    z-index: 1;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: 200ms ease-in-out transform;
+}
+
+.text a:hover::before{
+    transform: scaleX(1);
+    transform-origin: left;
+}
+.text a:active{
+    transform: scale(.9);
+}
+
+.container-error button{
+    font-size: 1.2rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 900px){
+    .container-error{
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: 1fr 1fr;
     }
-  
-    .error-message h1 {
-      font-size: 2.5rem;
+    .text{
+        grid-column: 1 / 2;
+        align-self: flex-end;
+        justify-self: center;
     }
-  
-    .error-message p {
-      font-size: 1rem;
+    .image{
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
     }
-  
-    .home-button {
-      font-size: 0.9rem;
+    a{
+        justify-self: center;
+        align-self: flex-start;
     }
-  }
-  .error-image img {
-    max-width: 70%;
-    height: auto;
-  }
-  
-  @media (max-width: 480px) {
-    .error-message h1 {
-      font-size: 2rem;
-    }
-  
-    .error-message p {
-      font-size: 0.9rem;
-    }
-  
-    .home-button {
-      font-size: 0.8rem;
-      padding: 8px 16px;
-    }
-    .error-image img {
-        max-width: 50%;
-        height: auto;
-      }
-  }
-  
+}

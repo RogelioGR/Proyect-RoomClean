@@ -41,7 +41,7 @@ const ViewPerfil: React.FC = () => {
                     <Sidebar />
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
-                        <Container className="flex-grow-1 my-5">
+                        <Container className="flex-grow-1 my-5" style={{ padding: '60px' }}>
                             <h2 className="text-center mb-4">Perfil del  usuario</h2>
                             <Row className="justify-content-center">
                                 <Col md={4} className="d-flex justify-content-center align-items-center">
