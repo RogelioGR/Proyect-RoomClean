@@ -1,36 +1,37 @@
-
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { deleteUser  } from '../../../Services/UsuarioService';
 
+
 interface MDeleteUserProps {
   show: boolean;
   handleClose: () => void;
   handleDelete: () => void;
-  userId?: number; // Cambia user por userId
- 
+  userId?: number; 
 }
-
+/* sweetalert2 */
 const MySwal = withReactContent(Swal);
 
 const MDeleteUser: React.FC<MDeleteUserProps> = ({ show, handleClose , userId}) => {
 
-  const handleDeleteAndNotify = async () => {
+  const ValidarEliminacion = async () => {
     try {
       if (userId !== undefined) {
-        await deleteUser(userId);  // Llama a deleteUser solo si userId no es undefined
+        await deleteUser(userId);  
         MySwal.fire({
           title: 'Eliminado',
           text: 'El usuario ha sido eliminado.',
           icon: 'success',
           confirmButtonText: 'OK'
-        }).then(() => {
-          handleClose();
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
         });
       } else {
-        throw new Error('El ID del usuario es undefined');
+        throw new Error('El ID del usuario es indefinido');
       }
     } catch (error) {
       MySwal.fire({
@@ -59,7 +60,7 @@ const MDeleteUser: React.FC<MDeleteUserProps> = ({ show, handleClose , userId}) 
         <p>¿Estás seguro de que deseas eliminar el usuario  ?</p>
       </Modal.Body>
       <Modal.Footer className="justify-content-center">
-        <Button variant="danger" onClick={handleDeleteAndNotify}>
+        <Button variant="danger" onClick={ValidarEliminacion}>
           Eliminar
         </Button>
         <Button variant="secondary" onClick={handleClose}>
