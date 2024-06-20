@@ -3,7 +3,6 @@ import { Button, Table, Container, Pagination, /* Alert */  } from 'react-bootst
 import { Link , useNavigate } from 'react-router-dom';
 import { getUsers , User} from '../Services/UsuarioService';
 
-
 /*Componentes */
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
@@ -19,24 +18,15 @@ const DashboardAdmin: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(5); // el número de usuarios por páginas
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
-/*   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true); // Estado para controlar la visibilidad del mensaje
- */
   const navigate = useNavigate();
 
   useEffect(() => {
     const authStatus = localStorage.getItem('authenticated');
     if (authStatus === 'true') {
-      setIsAuthenticated(true);
-   /*    setTimeout(() => {
-        setShowWelcomeMessage(false); // Oculta el mensaje de bienvenida después de 3 segundos
-      }, 1000); */
     } else {
-      navigate("/login"); // Redirigir al login si no está autenticado
+      navigate("/login"); 
     }
- 
-
     const fetchUsers = async () => {
       try {
         const usersData = await getUsers();
@@ -47,7 +37,6 @@ const DashboardAdmin: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchUsers();
   }, [navigate]);
 
@@ -55,7 +44,6 @@ const DashboardAdmin: React.FC = () => {
 const indexOfLastUser = currentPage * usersPerPage;
 const indexOfFirstUser = indexOfLastUser - usersPerPage;
 const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-
 const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   enum ModalsUsers {
@@ -67,16 +55,14 @@ const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const [modalUsers, setModalUsers] = useState<ModalsUsers>(ModalsUsers.NONE);
   const [selectedUserId, setSelectedUserId] = useState<number | undefined>(undefined);
-
   const handleCloseModal = () => setModalUsers(ModalsUsers.NONE);
 
   const handleOpenModal = (type: ModalsUsers, userId?: number) => {
     setModalUsers(type);
-    setSelectedUserId(userId); // Almacena el ID del usuario seleccionado
+    setSelectedUserId(userId); 
   };
 
   const handleDeleteUser = () => {
-    // Lógica para eliminar el usuario
     handleCloseModal();
   };
 
@@ -86,17 +72,10 @@ const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
         <Loader />
       ) : (
         <div className="d-flex vh-100">
-          
         <Sidebar />
-        
         <div className="flex-grow-1 d-flex flex-column" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          
           <Header />
           <Container className="mt-5" >
-        {/*   {isAuthenticated && showWelcomeMessage && (
-                <Alert variant="success">Bienvenido, Has iniciado sesión correctamente.</Alert>
-              )} */}
-
             <h1 className="mb-4">Bienvenido, Admin!</h1>
             <div className="d-flex justify-content-end align-items-center mt-4">
               <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
@@ -106,8 +85,9 @@ const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
             <Table striped bordered hover className="mt-4">
               <thead className="text-center">
                 <tr>
-                  <th>Nombre</th>
-                  <th>Correo</th>
+                  <th>Imagen</th>
+                  <th>Nombre completo </th>
+                  <th>Correo electrónico</th>
                   <th className="d-none d-md-table-cell">Numero</th>
                   <th>Núm empleado</th>
                   <th>Acciones</th>
@@ -116,8 +96,10 @@ const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
               <tbody>{currentUsers.length > 0 ? (
                     currentUsers.map((user) => (
                       <tr key={user.id}>
+                        <td> 
+                        <img src='/public/mujer.png' alt="user" style={{ width: '50px', borderRadius: '50%', marginRight: '10px' }} />
+                        </td>
                         <td>
-                          <img src='/public/mujer.png' alt="user" style={{ width: '50px', borderRadius: '50%', marginRight: '10px' }} />
                           {user.nombre} {user.apellido}
                         </td>
                         <td>{user.correo}</td>
@@ -125,16 +107,18 @@ const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
                         <td>{user.id}</td>
                         <td>
                           <div className="d-flex justify-content-center m-1">
+                            {/* Boton de editar al usuario */}
                             <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER, user.id)}>
                               <i className="fas fa-pen"></i>
                             </Button>
+                            {/* Boton de eliminar al usuario */}
                             <Button variant="danger" className="me-2"  onClick={() => handleOpenModal(ModalsUsers.DELETE_USER, user.id)}>
                               <i className="fas fa-trash"></i>
                             </Button>
                             <Link to="/AssignTasksAdmin" style={{ textDecoration: 'none', color: 'white' }}>
                               <Button variant="primary" className="me-2">
                                 <i className="fas fa-plus"></i>
-                                <span className="d-none d-md-inline">Asignar tareas</span>
+                                <span className="d-none d-md-inline" > Asignar tareas</span>
                               </Button>
                             </Link>
                           </div>
@@ -143,7 +127,7 @@ const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={5} className="text-center">Sin empleados en la lista</td>
+                      <td colSpan={6} className="text-center">Sin empleados en la lista</td>
                     </tr>
                   )}
                 </tbody>
@@ -162,11 +146,11 @@ const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
         </div>
       </div>
       )}
+      
       {/* Modals */}
-      <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal} />
-      <MCreateUser show={modalUsers === ModalsUsers.CREATE_USER} handleClose={handleCloseModal} />
-      <MDeleteUser show={modalUsers === ModalsUsers.DELETE_USER} handleClose={handleCloseModal} handleDelete={handleDeleteUser}   userId={selectedUserId} 
- />
+      <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal}/>
+      <MCreateUser show={modalUsers === ModalsUsers.CREATE_USER} handleClose={handleCloseModal}/>
+      <MDeleteUser show={modalUsers === ModalsUsers.DELETE_USER} handleClose={handleCloseModal} handleDelete={handleDeleteUser} userId={selectedUserId}/>
     </>
   );
 };
