@@ -39,7 +39,7 @@ const Login: React.FC = () => {
     return (
         <Container fluid className="login-container">
             <Row className="justify-content-center align-items-center vh-100">
-                <Col xs={10} sm={8} md={6} lg={4} className="text-center">
+                <Col  sm={8} md={6} lg={4} className="text-center">
                     <Form className="form-controls" onSubmit={handleLogin}>
                         <h1 className="title">Iniciar sesión</h1>
                         <div className="input-field">

@@ -29,7 +29,6 @@ export const getUserById = async (id: number): Promise<User> => {
 
 export const createUser = async (userData: User): Promise<User> => {
     const response = await axiosInstance.post<ApiResponse>('/Usuario/create', userData);
-    console.log(response.data); // Aquí se imprime la respuesta del servidor
     return response.data.result[0];
 };
 
