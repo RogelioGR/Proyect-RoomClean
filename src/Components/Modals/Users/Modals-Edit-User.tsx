@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Container, Row, Col, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { updateUser, User, getUserById } from "../../../Services/UsuarioService";
+import { getUserById, updateUser, User } from "../../../Services/UsuarioService";
 
 interface MEditUserProps {
   show: boolean;
   handleClose: () => void;
   userId?: number;
-  user: User | null;
 }
 
 const MySwal = withReactContent(Swal);
@@ -25,22 +24,19 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchUser = async () => {
       if (userId !== undefined) {
         try {
           const userData = await getUserById(userId);
-          if (userData) {
-            setFormData(userData);
-          } else {
-            MySwal.fire("Error", "No se encontraron datos para el usuario", "error");
-          }
+          console.log("userData:", userData);
+          setFormData(userData);
         } catch (error) {
           MySwal.fire("Error", "Hubo un error al cargar los datos del usuario", "error");
         }
       }
     };
 
-    fetchData();
+    fetchUser();
   }, [userId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +104,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                         type="text"
                         placeholder="Nombre"
                         name="nombre"
-                        value={formData?.nombre || ''}
+                        value={formData?.nombre }
                         onChange={handleChange}
                       />
                     </Form.Group>
@@ -120,7 +116,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                         type="text"
                         placeholder="Apellido"
                         name="apellido"
-                        value={formData?.apellido || ''}
+                        value={formData?.apellido }
                         onChange={handleChange}
                       />
                     </Form.Group>
@@ -132,7 +128,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                     type="email"
                     placeholder="Correo electrónico"
                     name="correo"
-                    value={formData?.correo || ''}
+                    value={formData?.correo }
                     onChange={handleChange}
                   />
                 </Form.Group>
@@ -142,7 +138,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                     type="password"
                     placeholder="Contraseña"
                     name="contraseña"
-                    value={formData?.contraseña || ''}
+                    value={formData?.contraseña }
                     onChange={handleChange}
                   />
                 </Form.Group>
@@ -154,7 +150,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                         type="text"
                         placeholder="Teléfono"
                         name="número"
-                        value={formData?.número || ''}
+                        value={formData?.número }
                         onChange={handleChange}
                       />
                     </Form.Group>
@@ -165,7 +161,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                       <Form.Control
                         as="select"
                         name="fkRol"
-                        value={formData?.fkRol || ''}
+                        value={formData?.fkRol }
                         onChange={handleChange}
                       >
                           <option>Roles </option>

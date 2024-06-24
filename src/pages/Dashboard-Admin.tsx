@@ -69,7 +69,7 @@ const DashboardAdmin: React.FC = () => {
         <Loader />
       ) : (
         <div className="d-flex vh-100">
-          <Sidebar />
+          <Sidebar  />
           <div className="flex-grow-1 d-flex flex-column">
             <Header />
             <Container className="mt-5">
@@ -151,7 +151,7 @@ const DashboardAdmin: React.FC = () => {
       )}
 
       {/* Modals */}
-      <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal}  userId={selectedUserId}    user={currentUsers.find(user => user.id === selectedUserId) || null}/>
+      <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal}  userId={selectedUserId}   />
       <MCreateUser show={modalUsers === ModalsUsers.CREATE_USER} handleClose={handleCloseModal} />
       <MDeleteUser show={modalUsers === ModalsUsers.DELETE_USER} handleClose={handleCloseModal} handleDelete={handleDeleteUser} userId={selectedUserId} />
     </>

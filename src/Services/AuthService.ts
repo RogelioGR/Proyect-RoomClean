@@ -15,6 +15,8 @@ export const login = async (loginData: LoginData): Promise<void> => {
         const response = await axiosInstance.post<AuthResponse>('/Usuario/login', loginData);
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('rol', response.data.rol); 
+
+
         console.log('Inicio de sesión exitoso');
     } catch (error) {
         console.error('Ocurrio un error en el inicio de sesión:', error);

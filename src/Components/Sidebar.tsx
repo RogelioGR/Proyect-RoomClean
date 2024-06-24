@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../Services/AuthService';
 
-const Sidebar: React.FC = () => {
+
+const Sidebar: React.FC<{ rol?: string; userId?: string }> = ({  userId }) => {
 
   const navigate = useNavigate();
 
@@ -32,7 +33,7 @@ const Sidebar: React.FC = () => {
           <i className="fa-solid fa-house sidebar-icon me-2"></i>
           Dashboard
         </Nav.Link>
-        <Nav.Link as={Link} to="/ViewPerfil" className="sidebar-link">
+        <Nav.Link as={Link} to={`/ViewPerfil/${userId}`} className="sidebar-link">
           <i className="fa-solid fa-user sidebar-icon me-2"></i>
           Perfil
         </Nav.Link>
