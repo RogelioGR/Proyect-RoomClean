@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
+import { getUsers, User } from '../Services/UsuarioService';
+
 
 /*Componentes */
 import Footer from '../Components/Footer';
@@ -12,6 +14,8 @@ import MDeleteTasks from '../Components/Modals/Tasks/Modals-Drop-Tasks';
 
 const AssignTasksAdmin: React.FC = () => {
     const [loading, setLoading] = useState(true);
+    const [users, setUsers] = useState<User[]>([]);
+
 
     useEffect(() => {
         // Simula una carga de datos
@@ -21,24 +25,6 @@ const AssignTasksAdmin: React.FC = () => {
     }, []);
 
     const rooms = [
-        { number: 'A01-105', status: 'Por hacer' },
-        { number: 'A01-105', status: 'Por hacer' },
-        { number: 'A01-105', status: 'Por hacer' },
-
-        { number: 'A01-105', status: 'Por hacer' },
-
-        { number: 'A01-105', status: 'Por hacer' },
-
-        { number: 'A01-105', status: 'Por hacer' },
-
-        { number: 'A01-105', status: 'Por hacer' },
-        { number: 'A01-105', status: 'Por hacer' },
-
-        { number: 'A01-105', status: 'Por hacer' },
-
-        { number: 'A01-105', status: 'Por hacer' },
-
-        { number: 'A01-105', status: 'Por hacer' },
         { number: 'A01-105', status: 'Por hacer' },
 
         

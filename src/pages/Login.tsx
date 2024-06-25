@@ -38,7 +38,11 @@ const Login: React.FC = () => {
 
     return (
         <Container fluid className="login-container">
-            <Row className="justify-content-center align-items-center vh-100">
+            <Row className="justify-content-center align-items-center vh-100 ">
+ {/*            <div className="button rounded-pill text-bg-info position-absolute start-0" style={{width: '450px', height: '100px', transform: 'rotate(-45deg)', bottom: 0}}>
+</div>
+<div className="button rounded-pill text-bg-info position-absolute start-1" style=  {{width: '450px', height: '100px', transform: 'rotate(-45deg)', bottom: 0}}>
+</div> */}
                 <Col  sm={8} md={6} lg={4} className="text-center">
                     <Form className="form-controls" onSubmit={handleLogin}>
                         <h1 className="title">Iniciar sesión</h1>
@@ -69,6 +73,7 @@ const Login: React.FC = () => {
                             Iniciar sesión
                         </Button>
                     </Form>
+     
                 </Col>
                 <Col xs={10} sm={8} md={6} lg={4} className="d-none d-lg-block text-center">
                     <img src="/public/roomclean.png" alt="Logo" className="login-logo" />
