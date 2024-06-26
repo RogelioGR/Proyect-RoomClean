@@ -14,6 +14,20 @@ const Sidebar: React.FC<{ rol?: string; userId?: string }> = ({  userId }) => {
       navigate('/login');
   };
 
+  const handleDashboard = () => {
+
+    const rol = localStorage.getItem('rol');
+
+    if (rol === '1') {
+      navigate("/DashboardAdmin");
+    } else if (rol === '2') {
+        navigate("/Dashboardempleado");
+      } else {
+          navigate("/login");
+        }
+    
+    
+  };
 
   return (
     <Navbar variant="dark" className="sidebar-container" style={{ padding: '10px' }}>
@@ -29,7 +43,7 @@ const Sidebar: React.FC<{ rol?: string; userId?: string }> = ({  userId }) => {
       </Navbar.Brand>
 
       <Nav className="flex-column w-100 ">
-        <Nav.Link as={Link} to="/Dashboardempleado" className="sidebar-link">
+        <Nav.Link onClick={handleDashboard} className="sidebar-link">
           <i className="fa-solid fa-house sidebar-icon me-2"></i>
           Dashboard
         </Nav.Link>
@@ -43,23 +57,11 @@ const Sidebar: React.FC<{ rol?: string; userId?: string }> = ({  userId }) => {
         </Nav.Link>
       </Nav>
 
-      <Nav className="mt-auto w-100">
-      <button
-            className="btn btn-link dropdown-item"
-            onClick={handleLogout}
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                border: 'none',
-                background: 'none',
-                cursor: 'pointer'
-            }}
-        >
-            <i className="fa-solid fa-power-off me-2"></i>
-            Cerrar sesión
-        </button>
+      <Nav className="mt-auto w-100" style={{justifyContent:'center'}}>
+      <Nav.Link onClick={handleLogout} className="sidebar-link">
+      <i className="fa-solid fa-power-off me-2"></i>
+          Cerrar Sesion
+        </Nav.Link>
       </Nav>
     </Navbar>
   );
