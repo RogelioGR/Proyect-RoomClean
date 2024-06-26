@@ -135,7 +135,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                 <Form.Group>
                   <Form.Label>Contraseña:</Form.Label>
                   <Form.Control
-                    type="password"
+                    type="text"
                     placeholder="Contraseña"
                     name="contraseña"
                     value={formData?.contraseña }

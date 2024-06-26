@@ -30,6 +30,16 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (formData.número.length < 10) {
+      MySwal.fire(
+        "Error",
+        "Número telefonico incorrecto",
+        "error"
+      );
+      return;
+    }
+    
+
     if (formData.contraseña.length < 8) {
       MySwal.fire(
         "Error",
