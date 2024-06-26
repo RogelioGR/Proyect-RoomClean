@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { getUsers, User } from '../Services/UsuarioService';
 
 
@@ -13,6 +14,7 @@ import MCEditTasks from '../Components/Modals/Tasks/Modals-Edit-Tasks';
 import MDeleteTasks from '../Components/Modals/Tasks/Modals-Drop-Tasks';
 
 const AssignTasksAdmin: React.FC = () => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState<User[]>([]);
 
@@ -75,7 +77,7 @@ const AssignTasksAdmin: React.FC = () => {
                                                     <Card.Title>{room.number}</Card.Title>
                                                     <Card.Text>Estado: <span className="text-muted">{room.status}</span></Card.Text>
                                                     <div className="card-buttons">
-                                                        <Button variant="primary" className="mr-2" onClick={() => handleOpenModal(ModalsTasks.EDIT_TASKS)}>Editar</Button>
+                                                        <Button variant="primary" className="mr-2" onClick={() => navigate("/TaskAdmin")}>Editar</Button>
                                                         <Button variant="danger" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS)}>Eliminar</Button>
                                                     </div>
                                                 </Card.Body>
@@ -86,7 +88,7 @@ const AssignTasksAdmin: React.FC = () => {
                             </div>
                         </Container>
                         <Footer />
-                    </div>
+                    </div> 
                 </div>
             )}
             <MCreateTasks
