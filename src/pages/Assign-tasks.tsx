@@ -92,7 +92,7 @@ const AssignTasksAdmin: React.FC = () => {
                             </div>
                         </Container>
                         <Footer />
-                    </div>
+                    </div> 
                 </div>
             )}
             <MCreateTasks

@@ -14,6 +14,7 @@ import AssignTasksAdmin from './pages/Assign-tasks';
 import Viewinform from './pages/ViewInform';
 import Login from './pages/Login';
 import NotFound from './pages/Notfound';
+import TaskAdmin from './pages/ViewTaskAdmin';
 
 
 
