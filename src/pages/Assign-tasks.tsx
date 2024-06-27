@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getTasks, Task } from '../Services/TareaService';
 import { getUserById, User } from '../Services/UsuarioService';
 
@@ -14,6 +14,7 @@ import MCEditTasks from '../Components/Modals/Tasks/Modals-Edit-Tasks';
 import MDeleteTasks from '../Components/Modals/Tasks/Modals-Drop-Tasks';
 
 const AssignTasksAdmin: React.FC = () => {
+    const navigate = useNavigate();
     const { userId } = useParams<{ userId: string }>();
     const UserAssignId = userId ? parseInt(userId) : null;
     const [loading, setLoading] = useState(true);
@@ -100,7 +101,7 @@ const AssignTasksAdmin: React.FC = () => {
                                                         <Card.Text>Descripción: <span className="text-muted">{task.descripcion}</span></Card.Text>
                                                         <Card.Text>Estatus: <span className="text-muted">{task.estatus}</span></Card.Text>
                                                         <div className="card-buttons">
-                                                            <Button variant="primary" className="mr-2" onClick={() => handleOpenModal(ModalsTasks.EDIT_TASKS)}>Editar</Button>
+                                                        <Button variant="primary" className="mr-2" onClick={() => navigate("/TaskAdmin")}>Editar</Button>
                                                             <Button variant="danger" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS , task.id)}>Eliminar</Button>
                                                         </div>
                                                     </Card.Body>
