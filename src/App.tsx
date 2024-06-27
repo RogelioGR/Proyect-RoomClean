@@ -53,7 +53,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/Dashboardempleado" element={<PrivateRoute element={<Dashboardempleado />} roles={['2']} />} />
       <Route path="/ViewPerfil/:id" element={<PrivateRoute element={<ViewPerfil />}/>} />
       <Route path="/TaskEmpleado" element={<PrivateRoute element={<TaskEmpleado />} roles={['2']} />} />
-      <Route path="/AssignTasksAdmin" element={<PrivateRoute element={<AssignTasksAdmin />} roles={['1']} />} />
+      <Route path="/AssignTasksAdmin/:userId/:nombre/:apellido" element={<PrivateRoute element={<AssignTasksAdmin />} roles={['1']} />} />
       <Route path="/Viewinform" element={<PrivateRoute element={<Viewinform />} />} />
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="*" element={<NotFound />} />
