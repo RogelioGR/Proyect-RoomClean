@@ -7,9 +7,9 @@ import { deleteUser } from "../../../Services/UsuarioService";
 interface MDeleteUserProps {
   show: boolean;
   handleClose: () => void;
-  handleDelete: () => void;
   userId?: number;
 }
+
 /* sweetalert2 */
 const MySwal = withReactContent(Swal);
 

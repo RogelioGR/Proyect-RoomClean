@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../Services/AuthService';
 
 const Sidebar: React.FC<{ rol?: string; userId?: string; mobile?: boolean }> = ({ userId, mobile = false }) => {
@@ -11,8 +10,24 @@ const Sidebar: React.FC<{ rol?: string; userId?: string; mobile?: boolean }> = (
     logout();
     navigate('/login');
   };
+  
+  const handleDashboard = () => {
+
+    const rol = localStorage.getItem('rol');
+
+    if (rol === '1') {
+      navigate("/DashboardAdmin");
+    } else if (rol === '2') {
+        navigate("/Dashboardempleado");
+      } else {
+          navigate("/login");
+        }
+
+
+  };
 
   return (
+    
     <Navbar
       variant="dark"
       className={`sidebar-container ${mobile ? 'd-block' : 'd-none d-lg-flex'}`}
@@ -30,7 +45,7 @@ const Sidebar: React.FC<{ rol?: string; userId?: string; mobile?: boolean }> = (
       </Navbar.Brand>
 
       <Nav className="flex-column w-100 flex-grow-1">
-        <Nav.Link as={Link} to="/Dashboardempleado" className="sidebar-link">
+      <Nav.Link onClick={handleDashboard} className="sidebar-link">
           <i className="fa-solid fa-house sidebar-icon me-2"></i>
           Dashboard
         </Nav.Link>
@@ -44,24 +59,12 @@ const Sidebar: React.FC<{ rol?: string; userId?: string; mobile?: boolean }> = (
         </Nav.Link>
       </Nav>
 
-      <Nav className="w-100 mt-auto">
-        <button
-          className="btn btn-link dropdown-item"
-          onClick={handleLogout}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            color: 'white',
-            border: 'none',
-            background: 'none',
-            cursor: 'pointer',
-            padding: '10px'
-          }}
-        >
-          <i className="fa-solid fa-power-off me-2"></i>
-          Cerrar sesión
-        </button>
-      </Nav>
+      <Nav className="mt-auto w-100" style={{justifyContent:'center'}}>
+      <Nav.Link onClick={handleLogout} className="sidebar-link">
+      <i className="fa-solid fa-power-off me-2"></i>
+          Cerrar Sesion
+        </Nav.Link>
+      </Nav>-
     </Navbar>
   );
 };

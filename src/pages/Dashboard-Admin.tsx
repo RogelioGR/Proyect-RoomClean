@@ -17,6 +17,7 @@ const DashboardAdmin: React.FC = () => {
   const [usersPerPage] = useState(5); 
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,9 +60,6 @@ const DashboardAdmin: React.FC = () => {
     setSelectedUserId(userId);
   };
 
-  const handleDeleteUser = () => {
-    handleCloseModal();
-  };
 
   return (
     <>
@@ -109,21 +107,33 @@ const DashboardAdmin: React.FC = () => {
                             <Button variant="danger" className="me-2" onClick={() => handleOpenModal(ModalsUsers.DELETE_USER, user.id)}>
                               <i className="fas fa-trash"></i>
                             </Button>
-
                             {user.fkRol === 1 ? (
-                              <Button variant="secondary" className="me-2" disabled>
-                                <i className="fas fa-plus"></i>
-                                <span className="d-none d-md-inline"> Asignar tareas</span>
-                              </Button>
-                            ) : (
-                              <Link to="/AssignTasksAdmin" style={{ textDecoration: 'none', color: 'white' }}>
-                                <Button variant="primary" className="me-2">
+                                <Button
+                                  variant="secondary"
+                                  className="me-2"
+                                  disabled
+                                >
                                   <i className="fas fa-plus"></i>
-                                  <span className="d-none d-md-inline"> Asignar tareas</span>
+                                  <span className="d-none d-md-inline">
+                                    Asignar tareas
+                                  </span>
                                 </Button>
-                              </Link>
-                            )}
-
+                              ) : (
+                                <Link
+                                  to={`/AssignTasksAdmin/${user.id}`}
+                                  style={{
+                                    textDecoration: "none",
+                                    color: "white",
+                                  }}
+                                >
+                                  <Button variant="primary" className="me-2">
+                                    <i className="fas fa-plus"></i>
+                                    <span className="d-none d-md-inline">
+                                      Asignar tareas
+                                    </span>
+                                  </Button>
+                                </Link>
+                              )}
                           </div>
                         </td>
                       </tr>
@@ -153,7 +163,7 @@ const DashboardAdmin: React.FC = () => {
       {/* Modals */}
       <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal}  userId={selectedUserId}   />
       <MCreateUser show={modalUsers === ModalsUsers.CREATE_USER} handleClose={handleCloseModal} />
-      <MDeleteUser show={modalUsers === ModalsUsers.DELETE_USER} handleClose={handleCloseModal} handleDelete={handleDeleteUser} userId={selectedUserId} />
+      <MDeleteUser show={modalUsers === ModalsUsers.DELETE_USER} handleClose={handleCloseModal}  userId={selectedUserId} />
     </>
   );
 };

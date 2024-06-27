@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LogoutButton from './Logout';
 import Sidebar from './Sidebar';
 
+
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };

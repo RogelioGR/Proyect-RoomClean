@@ -1,7 +1,7 @@
 import axiosInstance from './axiosConfig';
 
 export interface Task {
-    id: number;
+    id?: number;
     nombre: string;
     descripcion: string;
     estatus: string;
