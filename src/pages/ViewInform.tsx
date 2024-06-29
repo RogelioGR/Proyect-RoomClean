@@ -14,7 +14,7 @@ const Viewinform: React.FC = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 3000); // el tiempo de carga real
+        }, 2000); 
     }, []);
 
     return (
@@ -28,7 +28,7 @@ const Viewinform: React.FC = () => {
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
                         <Container className="container my-3">
-                        <div className="scroll-container-inform  flex-grow-1">
+                        <div className=" flex-grow-1">
                             <div className="row mb-2">
                                 <div className="col-md-6">
                                     <img src="/public/empresas.jpg" className="img-fluid rounded" alt="About Us" />

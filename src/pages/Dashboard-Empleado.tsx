@@ -12,10 +12,9 @@ const Dashboardempleado: React.FC = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Simula una carga de datos
         setTimeout(() => {
             setLoading(false);
-        }, 2000); // el tiempo de carga real
+        }, 2000); 
     }, []);
 
     const rooms = [

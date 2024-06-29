@@ -14,28 +14,27 @@ export interface User {
 interface ApiResponse {
     succeded: boolean;
     message: string | null;
-    result: User[];
+    result: User | User[];
 }
 
 export const getUsers = async (): Promise<User[]> => {
     const response = await axiosInstance.get<ApiResponse>('/Usuario/list');
-    return response.data.result;
+    return response.data.result as User[];
 };
 
 export const getUserById = async (id: number): Promise<User> => {
     const response = await axiosInstance.get<ApiResponse>(`/Usuario/list/${id}`);
-    return response.data.result[0];
-};
+    return response.data.result as User;
+};   
 
 export const createUser = async (userData: User): Promise<User> => {
     const response = await axiosInstance.post<ApiResponse>('/Usuario/create', userData);
-    console.log(response.data); // Aquí se imprime la respuesta del servidor
-    return response.data.result[0];
+    return response.data.result as User;
 };
 
 export const updateUser = async (id: number, userData: User): Promise<User> => {
     const response = await axiosInstance.put<ApiResponse>(`/Usuario/update/${id}`, userData);
-    return response.data.result[0];
+    return response.data.result as User;
 };
 
 export const deleteUser = async (id: number): Promise<void> => {

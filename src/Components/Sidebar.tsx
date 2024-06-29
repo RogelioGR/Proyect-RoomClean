@@ -1,21 +1,38 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../Services/AuthService';
 
-const Sidebar: React.FC = () => {
-
+const Sidebar: React.FC<{ rol?: string; userId?: string; mobile?: boolean }> = ({ userId, mobile = false }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-      logout();
-      navigate('/login');
+    logout();
+    navigate('/login');
+  };
+  
+  const handleDashboard = () => {
+
+    const rol = localStorage.getItem('rol');
+
+    if (rol === '1') {
+      navigate("/DashboardAdmin");
+    } else if (rol === '2') {
+        navigate("/Dashboardempleado");
+      } else {
+          navigate("/login");
+        }
+
+
   };
 
-
   return (
-    <Navbar variant="dark" className="sidebar-container" style={{ padding: '10px' }}>
+    
+    <Navbar
+      variant="dark"
+      className={`sidebar-container ${mobile ? 'd-block' : 'd-none d-lg-flex'}`}
+      style={{ padding: '10px' }}
+    >
       <Navbar.Brand className="sidebar-brand">
         <img
           src="/roomclean.png"
@@ -27,12 +44,12 @@ const Sidebar: React.FC = () => {
         <span className="sidebar-brand-text">RoomClean</span>
       </Navbar.Brand>
 
-      <Nav className="flex-column w-100 ">
-        <Nav.Link as={Link} to="/Dashboardempleado" className="sidebar-link">
+      <Nav className="flex-column w-100 flex-grow-1">
+      <Nav.Link onClick={handleDashboard} className="sidebar-link">
           <i className="fa-solid fa-house sidebar-icon me-2"></i>
           Dashboard
         </Nav.Link>
-        <Nav.Link as={Link} to="/ViewPerfil" className="sidebar-link">
+        <Nav.Link as={Link} to={`/ViewPerfil/${userId}`} className="sidebar-link">
           <i className="fa-solid fa-user sidebar-icon me-2"></i>
           Perfil
         </Nav.Link>
@@ -42,24 +59,12 @@ const Sidebar: React.FC = () => {
         </Nav.Link>
       </Nav>
 
-      <Nav className="mt-auto w-100">
-      <button
-            className="btn btn-link dropdown-item"
-            onClick={handleLogout}
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                border: 'none',
-                background: 'none',
-                cursor: 'pointer'
-            }}
-        >
-            <i className="fa-solid fa-power-off me-2"></i>
-            Cerrar sesión
-        </button>
-      </Nav>
+      <Nav className="mt-auto w-100" style={{justifyContent:'center'}}>
+      <Nav.Link onClick={handleLogout} className="sidebar-link">
+      <i className="fa-solid fa-power-off me-2"></i>
+          Cerrar Sesion
+        </Nav.Link>
+      </Nav>-
     </Navbar>
   );
 };

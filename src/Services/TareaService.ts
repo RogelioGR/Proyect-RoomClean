@@ -1,7 +1,7 @@
 import axiosInstance from './axiosConfig';
 
 export interface Task {
-    id: number;
+    id?: number;
     nombre: string;
     descripcion: string;
     estatus: string;
@@ -11,27 +11,29 @@ export interface Task {
 interface ApiResponse {
     succeded: boolean;
     message: string | null;
-    result: Task[];
+    result: Task | Task[];
 }
+
 
 export const getTasks = async (): Promise<Task[]> => {
     const response = await axiosInstance.get<ApiResponse>('/Tarea/list');
-    return response.data.result;
+    return response.data.result as Task[];
 };
 
-export const getTaskById = async (id: number): Promise<Task> => {
+export const getTaskById = async (id: number): Promise<Task[]> => {
     const response = await axiosInstance.get<ApiResponse>(`/Tarea/list/${id}`);
-    return response.data.result[0];
+    return response.data.result as Task[];
 };
+
 
 export const createTask = async (taskData: Task): Promise<Task> => {
     const response = await axiosInstance.post<ApiResponse>('/Tarea/create', taskData);
-    return response.data.result[0];
+    return response.data.result as Task;
 };
 
 export const updateTask = async (id: number, taskData: Task): Promise<Task> => {
     const response = await axiosInstance.put<ApiResponse>(`/Tarea/update/${id}`, taskData);
-    return response.data.result[0];
+    return response.data.result as Task;
 };
 
 export const deleteTask = async (id: number): Promise<void> => {
