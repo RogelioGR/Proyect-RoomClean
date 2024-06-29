@@ -12,6 +12,7 @@ interface MCreateUserProps {
 }
 
 const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
+  
   const [formData, setFormData] = useState<User>({
     nombre: "",
     apellido: "",
@@ -22,32 +23,34 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
     fkRol: 0,
   });
 
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (formData.número.length < 10) {
+    
+    if (formData.número.length !== 10 ) {
       MySwal.fire(
         "Error",
-        "Número telefonico incorrecto",
+        "Número telefónico incorrecto. Debe tener 10 dígitos.",
         "error"
       );
       return;
     }
-    
 
     if (formData.contraseña.length < 8) {
       MySwal.fire(
         "Error",
-        "La contraseña debe tener al menos 8 caracteres",
+        "La contraseña debe tener al menos 8 caracteres.",
         "error"
       );
       return;
     }
+  
     try {
       await createUser(formData);
       MySwal.fire({
@@ -65,6 +68,7 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
       MySwal.fire("Error", "Hubo un error al crear el usuario", "error");
     }
   };
+  
 
   return (
     <Modal
