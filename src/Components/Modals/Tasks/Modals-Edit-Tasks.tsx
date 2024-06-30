@@ -1,52 +1,106 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-
+import React, { useState, useEffect } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+import { updateTask, getTaskById, Task } from '../../../Services/TareaService';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 interface MEditTasksProps {
-    show: boolean;
-    handleClose: () => void;
-  }
+  show: boolean;
+  handleClose: () => void;
+  taskId: string | undefined;
+}
+const MySwal = withReactContent(Swal);
 
-const  MCEditTasks: React.FC<MEditTasksProps> = ({ show, handleClose }) => {
+const MEditTasks: React.FC<MEditTasksProps> = ({ show, handleClose, taskId }) => {
+  const [taskData, setTaskData] = useState<Task>({
+    nombre: '',
+    descripcion: '',
+    estatus: "",
+  });
+
+  useEffect(() => {
+    const fetchTask = async () => {
+      if (taskId) {
+        try {
+          const taskData = await getTaskById(parseInt(taskId));
+          setTaskData(taskData);
+        } catch (error) {
+          MySwal.fire("Error", "Hubo un error al cargar los datos del usuario", "error");
+        }
+      }
+    };
+
+    fetchTask();
+  }, [taskId]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setTaskData({ ...taskData, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!taskId) {
+      console.error('Task ID not provided.');
+      return;
+    }
+
+    try {
+      await updateTask(parseInt(taskId), taskData);
+      MySwal.fire({
+        title: "Tarea editado",
+        text: "La Tarea ha sido editado correctamente.",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload(); 
+        }
+      });
+      handleClose();
+    } catch (error) {
+      MySwal.fire("Error", "Hubo un error al editar la Tarea", "error");
+
+    }
+  };
 
   return (
-    <>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title></Modal.Title>
-        </Modal.Header>
-        <Modal.Body> 
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <h2 className="text-center mb-4">Editar Tarea</h2>
-              <Form.Label>Habitacion del hotel</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="A01-105"
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows={3} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer className="justify-content-center">
-      <Button variant="success" type="submit" >
-              Guardar
-            </Button>
-        <Button variant="secondary" onClick={handleClose}>
-          Cancelar
-        </Button>
-      </Modal.Footer>
-      </Modal>
-    </>
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Editar Tarea</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicHabitacion">
+            <Form.Label>Habitación del hotel</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="A01-105"
+              name="nombre"
+              value={taskData.nombre}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicDescripcion">
+            <Form.Label>Descripción</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              placeholder="Descripción de la tarea"
+              name="descripcion"
+              value={taskData.descripcion}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Button variant="success" type="submit">
+            Guardar
+          </Button>{' '}
+          <Button variant="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
-}
+};
 
-export default MCEditTasks;
+export default MEditTasks;

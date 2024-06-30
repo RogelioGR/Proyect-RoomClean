@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table, Container, Pagination } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getUsers, User } from '../Services/UsuarioService';
 
 /*Componentes */
@@ -60,7 +60,6 @@ const DashboardAdmin: React.FC = () => {
     setSelectedUserId(userId);
   };
 
-
   return (
     <>
       {loading ? (
@@ -119,20 +118,12 @@ const DashboardAdmin: React.FC = () => {
                                   </span>
                                 </Button>
                               ) : (
-                                <Link
-                                  to={`/AssignTasksAdmin/${user.id}`}
-                                  style={{
-                                    textDecoration: "none",
-                                    color: "white",
-                                  }}
-                                >
-                                  <Button variant="primary" className="me-2">
+                                  <Button variant="primary" className="me-2"  onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
                                     <i className="fas fa-plus"></i>
                                     <span className="d-none d-md-inline">
                                       Asignar tareas
                                     </span>
                                   </Button>
-                                </Link>
                               )}
                           </div>
                         </td>
