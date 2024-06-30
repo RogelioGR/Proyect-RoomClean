@@ -18,10 +18,12 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
     apellido: "",
     número: "",
     correo: "",
-    contraseña: "",
+    contraseña: "", 
     foto: null,
     fkRol: 0,
   });
+
+  const [tempPassword, setTempPassword] = useState<string>("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,7 +43,11 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "contraseña") {
+      setTempPassword(value); // Actualiza el estado temporal de la contraseña
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -52,7 +58,8 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
     }
 
     try {
-      await updateUser(userId, formData);
+      // Actualiza formData.contraseña con el valor de tempPassword
+      await updateUser(userId, { ...formData, contraseña: tempPassword });
       MySwal.fire({
         title: "Usuario editado",
         text: "El usuario ha sido editado correctamente.",
@@ -104,7 +111,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                         type="text"
                         placeholder="Nombre"
                         name="nombre"
-                        value={formData?.nombre }
+                        value={formData.nombre}
                         onChange={handleChange}
                       />
                     </Form.Group>
@@ -116,7 +123,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                         type="text"
                         placeholder="Apellido"
                         name="apellido"
-                        value={formData?.apellido }
+                        value={formData.apellido}
                         onChange={handleChange}
                       />
                     </Form.Group>
@@ -128,17 +135,17 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                     type="email"
                     placeholder="Correo electrónico"
                     name="correo"
-                    value={formData?.correo }
+                    value={formData.correo}
                     onChange={handleChange}
                   />
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Contraseña:</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="password" // Tipo password para ocultar el texto
                     placeholder="Contraseña"
                     name="contraseña"
-                    value={formData?.contraseña }
+                    value={tempPassword} // Usa tempPassword para el campo de entrada
                     onChange={handleChange}
                   />
                 </Form.Group>
@@ -150,7 +157,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                         type="text"
                         placeholder="Teléfono"
                         name="número"
-                        value={formData?.número }
+                        value={formData.número}
                         onChange={handleChange}
                       />
                     </Form.Group>
@@ -161,13 +168,12 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                       <Form.Control
                         as="select"
                         name="fkRol"
-                        value={formData?.fkRol }
+                        value={formData.fkRol}
                         onChange={handleChange}
                       >
-                          <option>Roles </option>
+                        <option>Roles </option>
                         <option value={1}>Admin </option>
                         <option value={2}>Empleado</option>
-                        
                       </Form.Control>
                     </Form.Group>
                   </Col>

@@ -10,16 +10,15 @@ import Header from '../Components/Header';
 import Sidebar from '../Components/Sidebar';
 import Loader from '../Components/Loader';
 import MCreateTasks from '../Components/Modals/Tasks/Modals-Create-Tasks';
-import MCEditTasks from '../Components/Modals/Tasks/Modals-Edit-Tasks';
 import MDeleteTasks from '../Components/Modals/Tasks/Modals-Drop-Tasks';
 
 const AssignTasksAdmin: React.FC = () => {
     const navigate = useNavigate();
     const { userId } = useParams<{ userId: string }>();
+    const [user, setUser] = useState<User | null>(null);
     const UserAssignId = userId ? parseInt(userId) : null;
     const [loading, setLoading] = useState(true);
     const [tasks, setTasks] = useState<Task[]>([]);
-    const [user, setUser] = useState<User | null>(null);
     const [TaskAssignId, setTaskId] = useState<number | undefined>(undefined);
 
 
@@ -56,22 +55,16 @@ const AssignTasksAdmin: React.FC = () => {
     enum ModalsTasks {
         NONE = 'NONE',
         CREATE_TASKS = 'CREATE_TASKS',
-        EDIT_TASKS = 'EDIT_TASKS',
         DELETE_TASKS = 'DELETE_TASKS',
     }
 
     const [modalType, setModalType] = useState<ModalsTasks>(ModalsTasks.NONE);
+    const handleCloseModal = () => setModalType(ModalsTasks.NONE);
 
     const handleOpenModal = (type: ModalsTasks, taskId? :number) => {
         setModalType(type);
         setTaskId(taskId);
-
     };
-        
-   
-    
-    const handleCloseModal = () => setModalType(ModalsTasks.NONE);
-
 
     return (
         <>
@@ -95,17 +88,20 @@ const AssignTasksAdmin: React.FC = () => {
                                     <Row>
                                         {tasks.map((task, index) => (
                                             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
+
                                                 <div className="task-card">
+                                                <Card.Img variant="top" src="/public/habitacion_Sencilla_8.jpg" alt="Room" className="room-image" />
                                                     <Card.Body className="task-body">
                                                         <Card.Title>{task.nombre}</Card.Title>
                                                         <Card.Text>Descripción: <span className="text-muted">{task.descripcion}</span></Card.Text>
                                                         <Card.Text>Estatus: <span className="text-muted">{task.estatus}</span></Card.Text>
                                                         <div className="card-buttons">
-                                                        <Button variant="primary" className="mr-2" onClick={() => navigate("/TaskAdmin")}>Editar</Button>
+                                                        <Button variant="primary" className="mr-2" onClick={() => navigate(`/TaskAdmin/${task.id}`)}>Vista</Button>
                                                             <Button variant="danger" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS , task.id)}>Eliminar</Button>
                                                         </div>
                                                     </Card.Body>
                                                 </div>
+                                                
                                             </Col>
                                         ))}
                                     </Row>
@@ -123,10 +119,6 @@ const AssignTasksAdmin: React.FC = () => {
                     userId={UserAssignId} 
                 />
             )}
-            <MCEditTasks
-                show={modalType === ModalsTasks.EDIT_TASKS}
-                handleClose={handleCloseModal}
-            />
             <MDeleteTasks
                 show={modalType === ModalsTasks.DELETE_TASKS}
                 handleClose={handleCloseModal}

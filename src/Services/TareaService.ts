@@ -5,7 +5,7 @@ export interface Task {
     nombre: string;
     descripcion: string;
     estatus: string;
-    fkUsuario: number;
+    fkUsuario?: number;
 }
 
 interface ApiResponse {
@@ -20,9 +20,9 @@ export const getTasks = async (): Promise<Task[]> => {
     return response.data.result as Task[];
 };
 
-export const getTaskById = async (id: number): Promise<Task[]> => {
+export const getTaskById = async (id: number): Promise<Task> => {
     const response = await axiosInstance.get<ApiResponse>(`/Tarea/list/${id}`);
-    return response.data.result as Task[];
+    return response.data.result as Task;
 };
 
 

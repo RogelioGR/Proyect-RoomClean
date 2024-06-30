@@ -4,17 +4,14 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { deleteTask } from '../../../Services/TareaService';
 
-
-
 interface MDeleteTasksProps {
   show: boolean;
   handleClose: () => void;
   TaskId?: number;
 }
 
+
 const MySwal = withReactContent(Swal);
-
-
 
 const MDeleteTasks: React.FC<MDeleteTasksProps> = ({ show, handleClose, TaskId }) => {
   const ValidarEliminacion = async () => {

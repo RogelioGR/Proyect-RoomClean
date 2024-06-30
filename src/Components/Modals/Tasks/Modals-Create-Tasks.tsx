@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+import { Modal, Button , Form} from 'react-bootstrap';
 import { createTask, Task } from '../../../Services/TareaService';
 
 const MySwal = withReactContent(Swal);
-
 interface MCreateTasksProps {
   show: boolean;
   handleClose: () => void;
@@ -15,10 +12,11 @@ interface MCreateTasksProps {
 }
 
 const MCreateTasks: React.FC<MCreateTasksProps> = ({ show, handleClose, userId }) => {
+
   const [formData, setFormData] = useState<Task>({
     nombre: "",
     descripcion: "",
-    estatus: "",
+    estatus: "Por hacer",
     fkUsuario: userId, 
   });
 
@@ -27,6 +25,7 @@ const MCreateTasks: React.FC<MCreateTasksProps> = ({ show, handleClose, userId }
     setFormData({ ...formData, [name]: value });
   };
 
+  
   const handleGuardar = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -56,15 +55,16 @@ const MCreateTasks: React.FC<MCreateTasksProps> = ({ show, handleClose, userId }
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Crear Tarea</Modal.Title>
+          <Modal.Title></Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <h1 className='text-center'>Crear Tarea</h1>
           <Form onSubmit={handleGuardar}>
             <Form.Group className="mb-3" controlId="formNombre">
               <Form.Label>Habitación del hotel</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="A01-105"
+                placeholder="Habitacion"
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
@@ -76,22 +76,13 @@ const MCreateTasks: React.FC<MCreateTasksProps> = ({ show, handleClose, userId }
               <Form.Control
                 as="textarea"
                 rows={3}
-                
+                placeholder="Descripcion de la habitacion"
                 name="descripcion"
                 value={formData.descripcion}
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formStatus">
-              <Form.Label>Status</Form.Label>
-              <Form.Control
-              type="text"
-                 placeholder="terminado sin"
-                name="estatus"
-                value={formData.estatus}
-                onChange={handleChange}
-              />
-            </Form.Group>
+       
             <div className="d-flex align-items-center mt-4">
                   <Button variant="success" className="me-2" type="submit">
                     Guardar
@@ -99,16 +90,13 @@ const MCreateTasks: React.FC<MCreateTasksProps> = ({ show, handleClose, userId }
                   <Button
                     variant="secondary"
                     className="me-2"
-                    onClick={handleClose}
-                  >
+                    onClick={handleClose}>
                     Cancelar
                   </Button>
                 </div>
-
           </Form>
         </Modal.Body>
         <Modal.Footer >
-         
         </Modal.Footer>
       </Modal>
     </>
