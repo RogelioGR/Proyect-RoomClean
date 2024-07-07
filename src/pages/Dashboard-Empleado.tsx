@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-/* Componentes */
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Sidebar from '../Components/Sidebar';
 import Loader from '../Components/Loader';
+import { getTasks, Task } from '../Services/TareaService';
 
 const Dashboardempleado: React.FC = () => {
     const [loading, setLoading] = useState(true);
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000); 
+        const fetchTasks = async () => {
+            try {
+                const taskData = await getTasks();
+                setTasks(taskData);
+            } catch (error) {
+                setError('Error al cargar las tareas');
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTasks();
     }, []);
-
-    const rooms = [
-         { id: 'A01-105', status: 'Por hacer' },
-        { id: 'A01-105', status: 'Por hacer' },
-
-      
-      
-
-       
-    ];
 
     return (
         <>
@@ -42,19 +43,23 @@ const Dashboardempleado: React.FC = () => {
                                 <h3>Habitaciones</h3>
                                 <div className="scroll-container flex-grow-1">
                                     <div className="row">
-                                        {rooms.length === 0 ? (
+                                        {error ? (
+                                            <div className="col-12 text-center">
+                                                <p>{error}</p>
+                                            </div>
+                                        ) : tasks.length === 0 ? (
                                             <div className="col-12 text-center">
                                                 <p>Sin actividades</p>
                                             </div>
                                         ) : (
-                                            rooms.map((room, index) => (
-                                                <div key={index} className="col-md-3 mb-3">
+                                            tasks.map((task) => (
+                                                <div key={task.id} className="col-md-3 mb-3">
                                                     <div className="card">
                                                         <img src="public/habitacion_Sencilla_8.jpg" className="card-img-top" alt="Room" />
-                                                        <Link to="/TaskEmpleado" style={{ textDecoration: 'none', color: '#000000' }}>
+                                                        <Link to={`/TaskEmpleado/${task.id}`} style={{ textDecoration: 'none', color: '#000000' }}>
                                                             <div className="card-body">
-                                                                <h5 className="card-title">{room.id}</h5>
-                                                                <p className="card-text">Estado: <strong>{room.status}</strong></p>
+                                                                <h5 className="card-title">{task.nombre}</h5>
+                                                                <p className="card-text">Estado: <strong>{task.estatus}</strong></p>
                                                             </div>
                                                         </Link>
                                                     </div>
