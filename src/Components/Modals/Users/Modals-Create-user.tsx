@@ -19,12 +19,27 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
     número: "",
     correo: "",
     contraseña: "",
-    foto: null,
+    foto: "",
     fkRol: 0,
   });
 
-
-
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader(); 
+  
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          const photoUrl = event.target.result.toString(); 
+          setFormData({ ...formData, foto: photoUrl }); 
+        }
+      };
+  
+      reader.readAsDataURL(file); 
+    }
+  };
+  
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -87,8 +102,8 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
           <Row className="justify-content-center">
             <Col className="d-flex justify-content-center align-items-center">
               <img
-                src="/public/agregar-usuario.png"
-                style={{ width: "150px", height: "150px" }}
+                src={formData.foto || "/public/agregar-usuario.png"}
+                style={{ width: "180px", height: "180px" , borderRadius:"6rem"}}
                 alt="Perfil del usuario"
               />
             </Col>
@@ -172,6 +187,15 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
                     </Form.Group>
                   </Col>
                 </Row>
+
+                <Form.Group controlId="formFoto">
+                  <Form.Label>Foto de perfil:</Form.Label>
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                </Form.Group>
 
                 <div className="d-flex align-items-center mt-4">
                   <Button variant="success" className="me-2" type="submit">

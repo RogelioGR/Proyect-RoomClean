@@ -6,8 +6,8 @@ export interface User {
     apellido: string;
     número: string;
     correo: string;
-    contraseña: string;
-    foto: string | null;
+    contraseña: string ;
+    foto: string ;
     fkRol: number;
 }
 

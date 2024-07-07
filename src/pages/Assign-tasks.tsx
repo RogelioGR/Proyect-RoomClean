@@ -21,7 +21,6 @@ const AssignTasksAdmin: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [TaskAssignId, setTaskId] = useState<number | undefined>(undefined);
 
-
     useEffect(() => {
         const fetchTasks = async () => {
             try {
@@ -41,7 +40,11 @@ const AssignTasksAdmin: React.FC = () => {
             try {
                 if (UserAssignId) {
                     const userData = await getUserById(UserAssignId);
-                    setUser(userData);
+                    if (userData.fkRol !== 1) {
+                        setUser(userData);
+                    } else {
+                        navigate('/DashboardAdmin'); 
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching user:', error);
@@ -50,7 +53,7 @@ const AssignTasksAdmin: React.FC = () => {
 
         fetchTasks();
         fetchUser();
-    }, [UserAssignId]);
+    }, [UserAssignId, navigate]);
 
     enum ModalsTasks {
         NONE = 'NONE',
@@ -72,11 +75,11 @@ const AssignTasksAdmin: React.FC = () => {
                 <Loader />
             ) : (
                 <div className="d-flex vh-100">
-                    <Sidebar />
+                   <Sidebar  /> 
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
                         <Container className="container mt-2">
-                            <h2>Habitaciones</h2>
+                            <h2>Tareas Asignadas</h2>
                             <p>Empleado: {user ? `${user.nombre} ${user.apellido}` : 'Cargando...'}</p>
                             <div className="d-flex justify-content-end align-items-center mt-4">
                                 <Button variant="success" className="mb-2" onClick={() => handleOpenModal(ModalsTasks.CREATE_TASKS)}>Crear Tarea</Button>
@@ -88,20 +91,18 @@ const AssignTasksAdmin: React.FC = () => {
                                     <Row>
                                         {tasks.map((task, index) => (
                                             <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
-
                                                 <div className="task-card">
-                                                <Card.Img variant="top" src="/public/habitacion_Sencilla_8.jpg" alt="Room" className="room-image" />
+                                                    <Card.Img variant="top" src="/public/habitacion_Sencilla_8.jpg" alt="Room" className="room-image" />
                                                     <Card.Body className="task-body">
                                                         <Card.Title>{task.nombre}</Card.Title>
                                                         <Card.Text>Descripción: <span className="text-muted">{task.descripcion}</span></Card.Text>
                                                         <Card.Text>Estatus: <span className="text-muted">{task.estatus}</span></Card.Text>
                                                         <div className="card-buttons">
-                                                        <Button variant="primary" className="mr-2" onClick={() => navigate(`/TaskAdmin/${task.id}`)}>Vista</Button>
-                                                            <Button variant="danger" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS , task.id)}>Eliminar</Button>
+                                                            <Button variant="primary" className="mr-2" onClick={() => navigate(`/TaskAdmin/${task.id}`)}>Vista</Button>
+                                                            <Button variant="danger" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS, task.id)}>Eliminar</Button>
                                                         </div>
                                                     </Card.Body>
                                                 </div>
-                                                
                                             </Col>
                                         ))}
                                     </Row>
@@ -124,7 +125,6 @@ const AssignTasksAdmin: React.FC = () => {
                 handleClose={handleCloseModal}
                 TaskId={TaskAssignId} 
             />
-            
         </>
     );
 };

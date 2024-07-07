@@ -10,6 +10,7 @@ import Loader from '../Components/Loader';
 
 const Dashboardempleado: React.FC = () => {
     const [loading, setLoading] = useState(true);
+    
 
     useEffect(() => {
         setTimeout(() => {
@@ -20,10 +21,6 @@ const Dashboardempleado: React.FC = () => {
     const rooms = [
          { id: 'A01-105', status: 'Por hacer' },
         { id: 'A01-105', status: 'Por hacer' },
-
-      
-      
-
        
     ];
 
@@ -33,7 +30,7 @@ const Dashboardempleado: React.FC = () => {
                 <Loader />
             ) : (
                 <div className="d-flex vh-100">
-                    <Sidebar />
+                    <Sidebar  /> 
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
                         <div>

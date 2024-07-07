@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>('');
+
     const [password, setPassword] = useState<string>('');
     const navigate = useNavigate();
 
@@ -17,6 +18,10 @@ const Login: React.FC = () => {
             await login({ correo: email, contraseña: password });
             localStorage.setItem('authenticated', 'true'); 
             const rol = localStorage.getItem('rol');
+            const userId = localStorage.getItem('userId'); 
+
+            
+            console.log('ID del usuario:', userId);
 
             if (rol === '1') {
                 navigate("/DashboardAdmin");
@@ -39,10 +44,7 @@ const Login: React.FC = () => {
     return (
         <Container fluid className="login-container">
             <Row className="justify-content-center align-items-center vh-100 ">
- {/*            <div className="button rounded-pill text-bg-info position-absolute start-0" style={{width: '450px', height: '100px', transform: 'rotate(-45deg)', bottom: 0}}>
-</div>
-<div className="button rounded-pill text-bg-info position-absolute start-1" style=  {{width: '450px', height: '100px', transform: 'rotate(-45deg)', bottom: 0}}>
-</div> */}
+
                 <Col  sm={8} md={6} lg={4} className="text-center">
                     <Form className="form-controls" onSubmit={handleLogin}>
                         <h1 className="title">Iniciar sesión</h1>

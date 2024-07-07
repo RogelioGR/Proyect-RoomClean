@@ -1,13 +1,17 @@
+// Header.tsx
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LogoutButton from './Logout';
 import Sidebar from './Sidebar';
-
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -17,6 +21,7 @@ const Header: React.FC = () => {
           <i className="fa fa-bars"></i>
         </button>
       </div>
+      {/* Usuario y avatar (puedes personalizar esto según tus necesidades) */}
       <div className="d-flex justify-content-end align-items-center user-info w-100">
         <img
           src="/mujer.png"
@@ -32,6 +37,7 @@ const Header: React.FC = () => {
           <br />
           <span className="text-muted">PekiDroiid@mail.com</span>
         </div>
+        {/* Menú desplegable para opciones adicionales (puedes personalizar esto según tus necesidades) */}
         <div className="dropdown ms-4">
           <button
             className="btn btn-link dropdown-toggle"
@@ -43,15 +49,17 @@ const Header: React.FC = () => {
               color: '#0f4c75'
             }}
           >
+            {/* Contenido del botón del menú desplegable */}
           </button>
           <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
             <li>
-              <LogoutButton />
+              {/* Componente de logout, puedes usar LogoutButton aquí si es necesario */}
             </li>
           </ul>
         </div>
       </div>
-      {menuOpen && <Sidebar />}
+      {/* Renderiza el Sidebar solo si el menú está abierto */}
+      {menuOpen && <Sidebar mobile closeMenu={closeMenu} />}
     </header>
   );
 };
