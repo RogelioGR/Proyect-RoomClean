@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getTasks, Task } from '../Services/TareaService';
+import { getTaskId, Task } from '../Services/TareaService';
 import { getUserById, User } from '../Services/UsuarioService';
 
 /* Componentes */
@@ -25,10 +25,9 @@ const AssignTasksAdmin: React.FC = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const allTasks = await getTasks();
+                const allTasks = await getTaskId(UserAssignId!);
                 if (UserAssignId) {
-                    const userTasks = allTasks.filter(task => task.fkUsuario === UserAssignId);
-                    setTasks(userTasks || []);
+                    setTasks(allTasks || []);
                 }
                 setLoading(false);
             } catch (error) {
@@ -93,7 +92,6 @@ const AssignTasksAdmin: React.FC = () => {
                                                 <Card.Img variant="top" src="/public/habitacion_Sencilla_8.jpg" alt="Room" className="room-image" />
                                                     <Card.Body className="task-body">
                                                         <Card.Title>{task.nombre}</Card.Title>
-                                                        <Card.Text>Descripción: <span className="text-muted">{task.descripcion}</span></Card.Text>
                                                         <Card.Text>Estatus: <span className="text-muted">{task.estatus}</span></Card.Text>
                                                         <div className="card-buttons">
                                                         <Button variant="primary" className="mr-2" onClick={() => navigate(`/TaskAdmin/${task.id}`)}>Vista</Button>

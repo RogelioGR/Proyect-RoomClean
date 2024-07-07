@@ -21,10 +21,14 @@ export const getTasks = async (): Promise<Task[]> => {
 };
 
 export const getTaskById = async (id: number): Promise<Task> => {
-    const response = await axiosInstance.get<ApiResponse>(`/Tarea/list/${id}`);
+    const response = await axiosInstance.get<ApiResponse>(`/Tarea/${id}`);
     return response.data.result as Task;
 };
 
+export const getTaskId = async (fkUsuario: number): Promise<Task[]> => {
+    const response = await axiosInstance.get<ApiResponse>(`/Tarea/list/${fkUsuario}`);
+    return response.data.result as Task[];
+};
 
 export const createTask = async (taskData: Task): Promise<Task> => {
     const response = await axiosInstance.post<ApiResponse>('/Tarea/create', taskData);
