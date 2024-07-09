@@ -18,12 +18,10 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
     apellido: "",
     número: "",
     correo: "",
-    contraseña: "", 
-    foto: null,
+    contraseña: "" , 
+    foto: "",
     fkRol: 0,
   });
-
-  const [tempPassword, setTempPassword] = useState<string>("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -43,10 +41,20 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "contraseña") {
-      setTempPassword(value); // Actualiza el estado temporal de la contraseña
-    } else {
-      setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value });
+  };
+  
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          const photoUrl = event.target.result.toString();
+          setFormData({ ...formData, foto: photoUrl });
+        }
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -58,8 +66,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
     }
 
     try {
-      // Actualiza formData.contraseña con el valor de tempPassword
-      await updateUser(userId, { ...formData, contraseña: tempPassword });
+      await updateUser(userId, formData);
       MySwal.fire({
         title: "Usuario editado",
         text: "El usuario ha sido editado correctamente.",
@@ -70,7 +77,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
           window.location.reload(); 
         }
       });
-      handleClose();
+      handleClose(); 
     } catch (error) {
       MySwal.fire("Error", "Hubo un error al editar el usuario", "error");
     }
@@ -89,15 +96,15 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
       </Modal.Header>
       <Modal.Body>
         <Container className="flex-grow-1 my-5">
-          <h2 className="text-center mb-4">Editar Perfil del usuario</h2>
+          <h2 className="text-center mb-4">Editar usuario</h2>
           <Row className="justify-content-center">
             <Col
-              md={4}
+              
               className="d-flex justify-content-center align-items-center"
             >
-              <img
-                src="/public/agregar-usuario.png"
-                style={{ width: "150px", height: "150px" }}
+               <img
+                src={formData.foto  || "/public/usuario.png"}
+                style={{ width: "180px", height: "180px" , borderRadius:"6rem"}}
                 alt="Perfil del usuario"
               />
             </Col>
@@ -142,10 +149,9 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                 <Form.Group>
                   <Form.Label>Contraseña:</Form.Label>
                   <Form.Control
-                    type="password" // Tipo password para ocultar el texto
+                    type="password" 
                     placeholder="Contraseña"
                     name="contraseña"
-                    value={tempPassword} // Usa tempPassword para el campo de entrada
                     onChange={handleChange}
                   />
                 </Form.Group>
@@ -178,6 +184,15 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                     </Form.Group>
                   </Col>
                 </Row>
+                <Form.Group>
+                  <Form.Label>Foto de perfil:</Form.Label>
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    
+                    onChange={handleFileChange}
+                  />
+                </Form.Group>
                 <div className="d-flex align-items-center mt-4">
                   <Button variant="success" className="me-2" type="submit">
                     Guardar

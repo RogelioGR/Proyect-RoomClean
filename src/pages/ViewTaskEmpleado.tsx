@@ -31,7 +31,6 @@ const TaskEmpleado: React.FC = () => {
                     const evidencePhotos = await getPhotos(evidences[0].id!);
                     setUploadedPhotos(evidencePhotos);
                 }
-
             } catch (error) {
                 console.error('Error al cargar las tareas', error);
             } finally {
@@ -85,13 +84,13 @@ const TaskEmpleado: React.FC = () => {
                     await uploadPhoto(formData);
                 }));
             }
+
             Swal.fire({
                 title: 'Evidencia guardada',
                 text: 'La evidencia se ha guardado correctamente.',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
             });
-
         } catch (error) {
             console.error('Error al guardar la evidencia', error);
             Swal.fire({
@@ -137,7 +136,7 @@ const TaskEmpleado: React.FC = () => {
                                                 onChange={(e: any) => setComment(e.target.value)}
                                                 className="mt-3"
                                             />
-                                            <div className="d-flex flex-wrap">
+                                            <div className="d-flex flex-wrap p-2">
                                                 {uploadedPhotos.map(photo => (
                                                     <img
                                                         key={photo.id}

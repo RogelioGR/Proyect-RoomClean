@@ -14,10 +14,9 @@ import MDeleteUser from '../Components/Modals/Users/Modals-Drop-user';
 
 const DashboardAdmin: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(5); 
+  const [usersPerPage, setUsersPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
-  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,6 +38,23 @@ const DashboardAdmin: React.FC = () => {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setUsersPerPage(7);
+      } else {
+        setUsersPerPage(5);
+      }
+    };
+
+    handleResize(); 
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
@@ -52,7 +68,7 @@ const DashboardAdmin: React.FC = () => {
   }
 
   const [modalUsers, setModalUsers] = useState<ModalsUsers>(ModalsUsers.NONE);
-  const [selectedUserId, setSelectedUserId] = useState<number | undefined>(undefined);
+  const [selectedUserId, setSelectedUserId] = useState<number>();
   const handleCloseModal = () => setModalUsers(ModalsUsers.NONE);
 
   const handleOpenModal = (type: ModalsUsers, userId?: number) => {
@@ -65,9 +81,9 @@ const DashboardAdmin: React.FC = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="d-flex vh-100">
-          <Sidebar  />
-          <div className="flex-grow-1 d-flex flex-column">
+        <div className="d-flex flex-column flex-md-row min-vh-100">
+          <Sidebar />
+          <div className="d-flex flex-column flex-grow-1">
             <Header />
             <Container className="mt-5">
               <h1 className="mb-4">Bienvenido, Admin!</h1>
@@ -76,7 +92,7 @@ const DashboardAdmin: React.FC = () => {
                   <i className="fas fa-plus"></i> Agregar usuario
                 </Button>
               </div>
-              <Table striped bordered hover className="mt-4">
+              <Table responsive striped bordered hover className="mt-4">
                 <thead className="text-center">
                   <tr>
                     <th>Imagen</th>
@@ -87,44 +103,44 @@ const DashboardAdmin: React.FC = () => {
                     <th>Acciones</th>
                   </tr>
                 </thead>
-                <tbody >
+                <tbody>
                   {currentUsers.length > 0 ? (
                     currentUsers.map((user) => (
-                      <tr key={user.id} >
-                        <td>
-                          <img src="/mujer.png" alt="user" style={{ width: '50px', borderRadius: '50%', marginRight: '10px' }} />
+                      <tr key={user.id}>
+                        <td className="align-middle text-center" style={{ width: '60px' }}>
+                          <img src={user.foto || "/public/usuario.png"} alt="user" className="rounded-circle" style={{ width: '50px' }} />
                         </td>
                         <td>{user.nombre} {user.apellido}</td>
                         <td>{user.correo}</td>
                         <td className="d-none d-md-table-cell">{user.número}</td>
-                        <td >{user.id}</td>
+                        <td>{user.id}</td>
                         <td>
                           <div className="d-flex justify-content-center m-1">
-                            <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER, user.id)}>
+                            <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER, user.id)} disabled={user.id === parseInt(localStorage.getItem('userId') || '')}>
                               <i className="fas fa-pen"></i>
                             </Button>
                             <Button variant="danger" className="me-2" onClick={() => handleOpenModal(ModalsUsers.DELETE_USER, user.id)}>
                               <i className="fas fa-trash"></i>
                             </Button>
                             {user.fkRol === 1 ? (
-                                <Button
-                                  variant="secondary"
-                                  className="me-2"
-                                  disabled
-                                >
-                                  <i className="fas fa-plus"></i>
-                                  <span className="d-none d-md-inline">
-                                    Asignar tareas
-                                  </span>
-                                </Button>
-                              ) : (
-                                  <Button variant="primary" className="me-2"  onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
-                                    <i className="fas fa-plus"></i>
-                                    <span className="d-none d-md-inline">
-                                      Asignar tareas
-                                    </span>
-                                  </Button>
-                              )}
+                              <Button
+                                variant="secondary"
+                                className="me-2"
+                                disabled
+                              >
+                                <i className="fas fa-plus"></i>
+                                <span className="d-none d-md-inline">
+                                  Asignar tareas
+                                </span>
+                              </Button>
+                            ) : (
+                              <Button variant="primary" className="me-2" onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
+                                <i className="fas fa-plus"></i>
+                                <span className="d-none d-md-inline">
+                                  Asignar tareas
+                                </span>
+                              </Button>
+                            )}
                           </div>
                         </td>
                       </tr>
@@ -152,9 +168,9 @@ const DashboardAdmin: React.FC = () => {
       )}
 
       {/* Modals */}
-      <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal}  userId={selectedUserId}   />
+      <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal} userId={selectedUserId} />
       <MCreateUser show={modalUsers === ModalsUsers.CREATE_USER} handleClose={handleCloseModal} />
-      <MDeleteUser show={modalUsers === ModalsUsers.DELETE_USER} handleClose={handleCloseModal}  userId={selectedUserId} />
+      <MDeleteUser show={modalUsers === ModalsUsers.DELETE_USER} handleClose={handleCloseModal} userId={selectedUserId} />
     </>
   );
 };

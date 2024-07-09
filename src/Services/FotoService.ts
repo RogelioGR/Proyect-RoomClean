@@ -6,16 +6,16 @@ export interface Photo {
     fkEvidencia?: number;
 }
 
-interface ApiResponse<T> {
+interface ApiResponse{
     succeeded: boolean;
     message: string | null;
-    result: T;
+    result: Photo | Photo[];
 }
 
 export const getPhotos = async (fkEvidencia: number): Promise<Photo[]> => {
     try {
-        const response = await axiosInstance.get<ApiResponse<Photo[]>>(`/Foto/list/id?Id=${fkEvidencia}`);
-        return response.data.result;
+        const response = await axiosInstance.get<ApiResponse>(`/Foto/list/id?Id=${fkEvidencia}`);
+        return response.data.result as Photo[];
     } catch (error) {
         console.error("Error fetching photos:", error);
         throw error;
@@ -24,8 +24,8 @@ export const getPhotos = async (fkEvidencia: number): Promise<Photo[]> => {
 
 export const getPhotoById = async (id: number): Promise<Photo> => {
     try {
-        const response = await axiosInstance.get<ApiResponse<Photo>>(`/Foto/${id}`);
-        return response.data.result;
+        const response = await axiosInstance.get<ApiResponse>(`/Foto/${id}`);
+        return response.data.result as Photo;
     } catch (error) {
         console.error("Error fetching photo by id:", error);
         throw error;
@@ -34,12 +34,12 @@ export const getPhotoById = async (id: number): Promise<Photo> => {
 
 export const uploadPhoto = async (photoData: FormData): Promise<Photo> => {
     try {
-        const response = await axiosInstance.post<ApiResponse<Photo>>('/Foto/create', photoData, {
+        const response = await axiosInstance.post<ApiResponse>('/Foto/create', photoData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        return response.data.result;
+        return response.data.result as Photo;
     } catch (error) {
         console.error("Error uploading photo:", error);
         throw error;
@@ -48,8 +48,8 @@ export const uploadPhoto = async (photoData: FormData): Promise<Photo> => {
 
 export const updatePhoto = async (id: number, photoData: Photo): Promise<Photo> => {
     try {
-        const response = await axiosInstance.put<ApiResponse<Photo>>(`/Foto/update/${id}`, photoData);
-        return response.data.result;
+        const response = await axiosInstance.put<ApiResponse>(`/Foto/update/${id}`, photoData);
+        return response.data.result as Photo;
     } catch (error) {
         console.error("Error updating photo:", error);
         throw error;
@@ -58,7 +58,7 @@ export const updatePhoto = async (id: number, photoData: Photo): Promise<Photo> 
 
 export const deletePhoto = async (id: number): Promise<void> => {
     try {
-        await axiosInstance.delete<ApiResponse<void>>(`/Foto/delete/${id}`);
+        await axiosInstance.delete<ApiResponse>(`/Foto/delete/${id}`);
     } catch (error) {
         console.error("Error deleting photo:", error);
         throw error;

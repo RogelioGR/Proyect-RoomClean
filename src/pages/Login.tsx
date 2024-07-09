@@ -4,19 +4,23 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../Services/AuthService';
 import Swal from 'sweetalert2';
 
-
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
+        setLoading(true);
 
         try {
             await login({ correo: email, contraseña: password });
             localStorage.setItem('authenticated', 'true'); 
             const rol = localStorage.getItem('rol');
+            const userId = localStorage.getItem('userId'); 
+
+            console.log('ID del usuario:', userId);
 
             if (rol === '1') {
                 navigate("/DashboardAdmin");
@@ -26,26 +30,24 @@ const Login: React.FC = () => {
                 alert('Acceso no autorizado');
             }
         } catch (error) {
-         
             Swal.fire({
                 title: 'Usuario Invalido',
                 text: 'Correo o contraseña incorrecto.',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
             });
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <Container fluid className="login-container">
-            <Row className="justify-content-center align-items-center vh-100 ">
- {/*            <div className="button rounded-pill text-bg-info position-absolute start-0" style={{width: '450px', height: '100px', transform: 'rotate(-45deg)', bottom: 0}}>
-</div>
-<div className="button rounded-pill text-bg-info position-absolute start-1" style=  {{width: '450px', height: '100px', transform: 'rotate(-45deg)', bottom: 0}}>
-</div> */}
-                <Col  sm={8} md={6} lg={4} className="text-center">
+         
+            <Row className="justify-content-center align-items-center vh-100">
+                <Col  lg={4} className="text-center">
                     <Form className="form-controls" onSubmit={handleLogin}>
-                        <h1 className="title">Iniciar sesión</h1>
+                        <h1 className="title-login">Iniciar sesión</h1>
                         <div className="input-field">
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Control
@@ -69,11 +71,17 @@ const Login: React.FC = () => {
                                 />
                             </Form.Group>
                         </div>
-                        <Button variant="primary" type="submit" className="submit-btn">
-                            Iniciar sesión
+                        <Button variant="primary" type="submit" className="submit-btn" disabled={loading}>
+                            {loading ? (
+                                <>
+                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                  
+                                </>
+                            ) : (
+                                'Iniciar sesión'
+                            )}
                         </Button>
                     </Form>
-     
                 </Col>
                 <Col xs={10} sm={8} md={6} lg={4} className="d-none d-lg-block text-center">
                     <img src="/public/roomclean.png" alt="Logo" className="login-logo" />

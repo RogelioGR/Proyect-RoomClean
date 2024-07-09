@@ -24,25 +24,22 @@ const Dashboardempleado: React.FC = () => {
                 setLoading(false);
             }
         };
-
         fetchTasks();
     }, []);
-
     return (
         <>
             {loading ? (
                 <Loader />
             ) : (
                 <div className="d-flex vh-100">
-                    <Sidebar />
+                    <Sidebar  /> 
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
                         <div>
-                            <Container fluid className="flex-grow-1 d-flex flex-column">
+                            <Container  className="container mt-2">
                                 <h1 className="my-4">Bienvenid@, peki!</h1>
                                 <h3>Habitaciones</h3>
                                 <div className="scroll-container flex-grow-1">
-                                    <div className="row">
                                         {error ? (
                                             <div className="col-12 text-center">
                                                 <p>{error}</p>
@@ -52,21 +49,29 @@ const Dashboardempleado: React.FC = () => {
                                                 <p>Sin actividades</p>
                                             </div>
                                         ) : (
-                                            tasks.map((task) => (
-                                                <div key={task.id} className="col-md-3 mb-3">
-                                                    <div className="card">
-                                                        <img src="public/habitacion_Sencilla_8.jpg" className="card-img-top" alt="Room" />
-                                                        <Link to={`/TaskEmpleado/${task.id}`} style={{ textDecoration: 'none', color: '#000000' }}>
-                                                            <div className="card-body">
-                                                                <h5 className="card-title">{task.nombre}</h5>
-                                                                <p className="card-text">Estado: <strong>{task.estatus}</strong></p>
-                                                            </div>
-                                                        </Link>
+
+                                            <div className="card-container">
+                                            {tasks.map((task, index) => (
+                                                <Link to={`/TaskEmpleado/${task.id}`} style={{ textDecoration: 'none', color: '#000000' }}>
+
+                                                <div className="card" key={index}>
+                                                    <img
+                                                        className="card-image"
+                                                        alt="Room"
+                                                        src="/public/habitacion_Sencilla_8.jpg"
+                                                    />
+                                                    <div className="content">
+                                                        <p className="title-card">{task.nombre}</p>
+                                                        <div className="desc">
+                                                            <span>Estatus: <span>{task.estatus}</span></span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            ))
+                                                </Link>
+                                            ))}
+                                        </div>
+                                        
                                         )}
-                                    </div>
                                 </div>
                             </Container>
                         </div>

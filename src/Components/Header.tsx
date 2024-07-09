@@ -1,13 +1,19 @@
+// Header.tsx
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LogoutButton from './Logout';
 import Sidebar from './Sidebar';
+import LogoutButton from './Logout';
 
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -46,12 +52,12 @@ const Header: React.FC = () => {
           </button>
           <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
             <li>
-              <LogoutButton />
+            <LogoutButton />
             </li>
           </ul>
         </div>
       </div>
-      {menuOpen && <Sidebar />}
+      {menuOpen && <Sidebar mobile closeMenu={closeMenu} />}
     </header>
   );
 };
