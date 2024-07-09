@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { getTaskById, Task } from '../Services/TareaService';
 import {  getEvidenceById, Evidence } from '../Services/EvidenciaService';
+import { getPhotoById, Photo } from '../Services/FotoService';
 
 
 /* componentes */
@@ -42,8 +43,6 @@ const TaskAdmin: React.FC = () => {
     const handleGuardarYFinalizar = async () => {
       
     };
-    
-
 
     const [modalType, setModalType] = useState('');
 
