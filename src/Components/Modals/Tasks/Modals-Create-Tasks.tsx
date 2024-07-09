@@ -53,7 +53,9 @@ const MCreateTasks: React.FC<MCreateTasksProps> = ({ show, handleClose, userId }
 
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}    
+      aria-labelledby="contained-modal-title-vcenter"
+      centered>
         <Modal.Header closeButton>
           <Modal.Title></Modal.Title>
         </Modal.Header>

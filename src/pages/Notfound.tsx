@@ -1,27 +1,42 @@
 import React from 'react';
-import'/src/Components/style/NotFound.css'
+import '/src/Components/style/NotFound.css';
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-const NotFound : React.FC = () => {
+
+const NotFound: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleDashboard = () => {
+    const rol = localStorage.getItem('rol');
+    if (rol === '1') {
+      navigate("/DashboardAdmin");
+    } else if (rol === '2') {
+      navigate("/Dashboardempleado");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
-  <>
-  <div className="container">
-
-   <div className="container-error">
-    <div className="text">
-      <h1> 404!</h1>
-      <p>No se puede encontrar la página ...</p>
+    <div className="container-Notfound">
+      <div className="infor-container">
+        <div>
+          <h1 className='titulo-404'>RoomClean</h1>
+          <span className='text-span'>Página no encontrada</span>
+          
+          <p className='text-p'>Lo sentimos, la página que buscas no está disponible.</p>
+          <div className='infor-button'>
+            <Button variant="secondary" onClick={handleDashboard}>
+            <i className="fa-solid fa-arrow-left"></i> Regresar
+            </Button>
+          </div>
+        </div>
+        <div className="image">
+          <img src='/notfound.svg' alt="404 Error" className="bounce" />
+        </div>
+      </div>
     </div>
-    <div className="image">
-      <img src='/public/notfound.svg' alt="404 Error" />
-    </div>
-    <a href="">
-        <button> volver </button>
-    </a>
-  </div>
-</div>
-  
-
-  </>
   );
 };
 

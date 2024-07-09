@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, Button, Row, Col } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getTaskId, Task } from '../Services/TareaService';
 import { getUserById, User } from '../Services/UsuarioService';
-
 /* Componentes */
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
@@ -11,6 +10,7 @@ import Sidebar from '../Components/Sidebar';
 import Loader from '../Components/Loader';
 import MCreateTasks from '../Components/Modals/Tasks/Modals-Create-Tasks';
 import MDeleteTasks from '../Components/Modals/Tasks/Modals-Drop-Tasks';
+
 
 const AssignTasksAdmin: React.FC = () => {
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ const AssignTasksAdmin: React.FC = () => {
                     if (userData.fkRol !== 1) {
                         setUser(userData);
                     } else {
-                        navigate('/DashboardAdmin'); 
+                        navigate('/DashboardAdmin');
                     }
                 }
             } catch (error) {
@@ -63,7 +63,7 @@ const AssignTasksAdmin: React.FC = () => {
     const [modalType, setModalType] = useState<ModalsTasks>(ModalsTasks.NONE);
     const handleCloseModal = () => setModalType(ModalsTasks.NONE);
 
-    const handleOpenModal = (type: ModalsTasks, taskId? :number) => {
+    const handleOpenModal = (type: ModalsTasks, taskId?: number) => {
         setModalType(type);
         setTaskId(taskId);
     };
@@ -74,7 +74,7 @@ const AssignTasksAdmin: React.FC = () => {
                 <Loader />
             ) : (
                 <div className="d-flex vh-100">
-                   <Sidebar  /> 
+                    <Sidebar />
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
                         <Container className="container mt-2">
@@ -87,23 +87,27 @@ const AssignTasksAdmin: React.FC = () => {
                                 {tasks.length === 0 ? (
                                     <p>Sin tareas asignadas</p>
                                 ) : (
-                                    <Row>
+                                    <div className="card-container">
                                         {tasks.map((task, index) => (
-                                            <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                                                <div className="task-card">
-                                                    <Card.Img variant="top" src="/public/habitacion_Sencilla_8.jpg" alt="Room" className="room-image" />
-                                                    <Card.Body className="task-body">
-                                                        <Card.Title>{task.nombre}</Card.Title>
-                                                        <Card.Text>Estatus: <span className="text-muted">{task.estatus}</span></Card.Text>
-                                                        <div className="card-buttons">
-                                                            <Button variant="primary" className="mr-2" onClick={() => navigate(`/TaskAdmin/${task.id}`)}>Vista</Button>
-                                                            <Button variant="danger" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS, task.id)}>Eliminar</Button>
-                                                        </div>
-                                                    </Card.Body>
+                                            <div className="card" key={index}>
+                                                <img
+                                                    className="card-image"
+                                                    alt="Room"
+                                                    src="/public/habitacion_Sencilla_8.jpg"
+                                                />
+                                                <div className="content">
+                                                    <p className="title-card">{task.nombre}</p>
+                                                    <div className="desc">
+                                                        <span>Estatus: <span>{task.estatus}</span></span>
+                                                    </div>
+                                                    <div className="actions">
+                                                        <button className="download" onClick={() => navigate(`/TaskAdmin/${task.id}`)}>Visualizar</button>
+                                                        <button className="notnow" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS, task.id)}>Eliminar</button>
+                                                    </div>
                                                 </div>
-                                            </Col>
+                                            </div>
                                         ))}
-                                    </Row>
+                                    </div>
                                 )}
                             </div>
                         </Container>
@@ -115,13 +119,13 @@ const AssignTasksAdmin: React.FC = () => {
                 <MCreateTasks
                     show={modalType === ModalsTasks.CREATE_TASKS}
                     handleClose={handleCloseModal}
-                    userId={UserAssignId} 
+                    userId={UserAssignId}
                 />
             )}
             <MDeleteTasks
                 show={modalType === ModalsTasks.DELETE_TASKS}
                 handleClose={handleCloseModal}
-                TaskId={TaskAssignId} 
+                TaskId={TaskAssignId}
             />
         </>
     );

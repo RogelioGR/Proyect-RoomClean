@@ -64,11 +64,14 @@ const MEditTasks: React.FC<MEditTasksProps> = ({ show, handleClose, taskId }) =>
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose}    
+    aria-labelledby="contained-modal-title-vcenter"
+    centered>
       <Modal.Header closeButton>
-        <Modal.Title>Editar Tarea</Modal.Title>
+        <Modal.Title></Modal.Title>
       </Modal.Header>
       <Modal.Body>
+      <h2 className="text-center ">Editar Tarea</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicHabitacion">
             <Form.Label>Habitación del hotel</Form.Label>

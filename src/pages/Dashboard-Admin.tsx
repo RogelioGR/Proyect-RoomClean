@@ -14,10 +14,9 @@ import MDeleteUser from '../Components/Modals/Users/Modals-Drop-user';
 
 const DashboardAdmin: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(5);
+  const [usersPerPage, setUsersPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,9 +35,25 @@ const DashboardAdmin: React.FC = () => {
         }
       };
       fetchUsers();
-
     }
   }, [navigate]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setUsersPerPage(7);
+      } else {
+        setUsersPerPage(5);
+      }
+    };
+
+    handleResize(); 
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -61,15 +76,14 @@ const DashboardAdmin: React.FC = () => {
     setSelectedUserId(userId);
   };
 
-
   return (
     <>
       {loading ? (
         <Loader />
       ) : (
         <div className="d-flex flex-column flex-md-row min-vh-100">
-<Sidebar  />
-<div className="d-flex flex-column flex-grow-1">
+          <Sidebar />
+          <div className="d-flex flex-column flex-grow-1">
             <Header />
             <Container className="mt-5">
               <h1 className="mb-4">Bienvenido, Admin!</h1>
@@ -89,17 +103,17 @@ const DashboardAdmin: React.FC = () => {
                     <th>Acciones</th>
                   </tr>
                 </thead>
-                <tbody >
+                <tbody>
                   {currentUsers.length > 0 ? (
                     currentUsers.map((user) => (
-                      <tr key={user.id} >
+                      <tr key={user.id}>
                         <td className="align-middle text-center" style={{ width: '60px' }}>
-                          <img src={user.foto} alt="user" className=" rounded-circle" style={{ width: '50px' }} />
+                          <img src={user.foto || "/public/usuario.png"} alt="user" className="rounded-circle" style={{ width: '50px' }} />
                         </td>
                         <td>{user.nombre} {user.apellido}</td>
                         <td>{user.correo}</td>
                         <td className="d-none d-md-table-cell">{user.número}</td>
-                        <td >{user.id}</td>
+                        <td>{user.id}</td>
                         <td>
                           <div className="d-flex justify-content-center m-1">
                             <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER, user.id)} disabled={user.id === parseInt(localStorage.getItem('userId') || '')}>

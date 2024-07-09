@@ -96,14 +96,14 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
       </Modal.Header>
       <Modal.Body>
         <Container className="flex-grow-1 my-5">
-          <h2 className="text-center mb-4">Editar Perfil del usuario</h2>
+          <h2 className="text-center mb-4">Editar usuario</h2>
           <Row className="justify-content-center">
             <Col
-              md={4}
+              
               className="d-flex justify-content-center align-items-center"
             >
                <img
-                src={formData.foto }
+                src={formData.foto  || "/public/usuario.png"}
                 style={{ width: "180px", height: "180px" , borderRadius:"6rem"}}
                 alt="Perfil del usuario"
               />
@@ -189,6 +189,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                   <Form.Control
                     type="file"
                     accept="image/*"
+                    
                     onChange={handleFileChange}
                   />
                 </Form.Group>
