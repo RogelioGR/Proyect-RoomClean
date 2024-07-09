@@ -51,7 +51,6 @@ const TaskEmpleado: React.FC = () => {
 
     useEffect(() => {
         return () => {
-            // Clean up object URLs when component unmounts
             photos.forEach(photo => URL.revokeObjectURL(URL.createObjectURL(photo)));
         };
     }, [photos]);
