@@ -28,7 +28,7 @@ const NotFound: React.FC = () => {
           <p className='text-p'>Lo sentimos, la página que buscas no está disponible.</p>
           <div className='infor-button'>
             <Button variant="secondary" onClick={handleDashboard}>
-            <i className="fa-solid fa-arrow-left"></i> Regresar
+            <i className="fa-solid fa-arrow-left"></i> <span> Regresar</span>
             </Button>
           </div>
         </div>
