@@ -16,7 +16,7 @@ const TaskEmpleado: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [task, setTask] = useState<Task>();
     const [comment, setComment] = useState<string>('');
-    const [photos, setPhotos] = useState<File[]>([]);
+    const [photos, setPhotos] = useState<string[]>([]);
     const [uploadedPhotos, setUploadedPhotos] = useState<Photo[]>([]);
 
     useEffect(() => {
@@ -44,16 +44,17 @@ const TaskEmpleado: React.FC = () => {
     const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         if (files) {
-            const newPhotos = Array.from(files);
-            setPhotos(prevPhotos => [...prevPhotos, ...newPhotos]);
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (e.target?.result) {
+                        setPhotos(prevPhotos => [...prevPhotos, e.target.result as string]);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
         }
     };
-
-    useEffect(() => {
-        return () => {
-            photos.forEach(photo => URL.revokeObjectURL(URL.createObjectURL(photo)));
-        };
-    }, [photos]);
 
     const handleGuardarYFinalizar = async () => {
         try {
@@ -76,9 +77,9 @@ const TaskEmpleado: React.FC = () => {
             }
 
             if (photos.length > 0) {
-                await Promise.all(photos.map(async (photo) => {
+                await Promise.all(photos.map(async (photoUrl) => {
                     const formData = new FormData();
-                    formData.append('fotoUrl', photo);
+                    formData.append('fotoUrl', photoUrl);
                     formData.append('fkEvidencia', evidenceId.toString());
                     await uploadPhoto(formData);
                 }));
@@ -118,64 +119,59 @@ const TaskEmpleado: React.FC = () => {
                                     </Col>
                                 </Row>
                                 <Row>
-                                        <Col >
-                                            <h4>Instrucción</h4>
-                                            <p>{task!.descripcion}</p>
-                                        </Col>
-                                        <Col md={6}>
-                                            <h4>Evidencia</h4>
-                                            <TextField
-                                                label="Comentarios"
-                                                multiline
-                                                rows={4}
-                                                variant="outlined"
-                                                fullWidth
-                                                value={comment}
-                                                onChange={(e: any) => setComment(e.target.value)}
-                                                className="mt-3"
-                                            />
-                                            <div className="Photo-container p-2">
-                                           
-                                                <div className="photo-grid d-flex flex-wrap">
-                                                {uploadedPhotos.map(photo => (
-                                                    <img
-                                                        key={photo.id}
-                                                        src={photo.fotoUrl}
-                                                        alt={`evidence${photo.id}`}
-                                                        className="img-thumbnail me-2"
-                                                    />
-                                                ))}
-                                                    {photos.map((photo, index) => (
-                                                        <img
-                                                            key={index}
-                                                            src={URL.createObjectURL(photo)}
-                                                            alt={`selected${index}`}
-                                                            className="img-thumbnail"
-                                                        />
-
-                                                    ))}
-                                                    <label  className="btn btn-secondary align-self-center mb-2" style={{ width: '150px', height: '150px', fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <i className="fa-solid fa-camera"></i></label>
-
-                                                </div>
-
-                                                <input
-                                                    id="file-input"
-                                                    type="file"
-                                                    multiple
-                                                    onChange={handlePhotoChange}
-                                                    style={{ display: 'none' }}
+                                    <Col>
+                                        <h4>Instrucción</h4>
+                                        <p>{task!.descripcion}</p>
+                                    </Col>
+                                    <Col md={6}>
+                                        <h4>Evidencia</h4>
+                                        <TextField
+                                            label="Comentarios"
+                                            multiline
+                                            rows={4}
+                                            variant="outlined"
+                                            fullWidth
+                                            value={comment}
+                                            onChange={(e: any) => setComment(e.target.value)}
+                                            className="mt-3"
+                                        />
+                                        <div className="d-flex flex-wrap p-2">
+                                            {uploadedPhotos.map(photo => (
+                                                <img
+                                                    key={photo.id}
+                                                    src={photo.fotoUrl}
+                                                    alt={`evidence${photo.id}`}
+                                                    className="img-thumbnail me-2 mb-2"
+                                                    style={{ width: '150px', height: '150px' }}
                                                 />
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                <div>
-                                   
-                                    <Row className="mt-4">
-                                        <Col className="d-flex justify-content-center">
-                                            <Button variant="success" onClick={handleGuardarYFinalizar}>Guardar</Button>
-                                        </Col>
-                                    </Row>
-                                </div>
+                                            ))}
+                                            {photos.map((photo, index) => (
+                                                <img
+                                                    key={index}
+                                                    src={photo}
+                                                    alt={`selected${index}`}
+                                                    className="img-thumbnail me-2 mb-2"
+                                                    style={{ width: '150px', height: '150px' }}
+                                                />
+                                            ))}
+                                            <label htmlFor="file-input" className="btn btn-secondary align-self-center mb-2" style={{ width: '150px', height: '150px', fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                <i className="fa-solid fa-camera"></i>
+                                            </label>
+                                            <input
+                                                id="file-input"
+                                                type="file"
+                                                multiple
+                                                onChange={handlePhotoChange}
+                                                style={{ display: 'none' }}
+                                            />
+                                        </div>
+                                    </Col>
+                                </Row>
+                                <Row className="mt-4">
+                                    <Col className="d-flex justify-content-center">
+                                        <Button variant="success" onClick={handleGuardarYFinalizar}>Guardar</Button>
+                                    </Col>
+                                </Row>
                             </Container>
                         </div>
                         <Footer />
