@@ -1,23 +1,34 @@
+:root {
+  --loading-bg-color: rgba(255, 255, 255, 0.184);
+  --loading-bar-color: #0F4C75;
+  --loading-bar-width: 20px;
+  --loading-bar-height: 10px;
+  --loading-bar-radius: 5px;
+  --loading-bar-margin: 5px;
+  --loading-bar-animation-duration: 1s;
+  --loading-bar-animation-easing: ease-in-out;
+}
+
 .loading-wave {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.184);
+  background-color: var(--loading-bg-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; 
+  z-index: 9999;
 }
 
 .loading-bar {
-  width: 20px;
-  height: 10px;
-  margin: 0 5px;
-  background-color: #0F4C75;
-  border-radius: 5px;
-  animation: loading-wave-animation 1s ease-in-out infinite;
+  width: var(--loading-bar-width);
+  height: var(--loading-bar-height);
+  margin: 0 var(--loading-bar-margin);
+  background-color: var(--loading-bar-color);
+  border-radius: var(--loading-bar-radius);
+  animation: loading-wave-animation var(--loading-bar-animation-duration) var(--loading-bar-animation-easing) infinite;
 }
 
 .loading-bar:nth-child(2) {
@@ -34,7 +45,7 @@
 
 @keyframes loading-wave-animation {
   0% {
-    height: 10px;
+    height: var(--loading-bar-height);
   }
 
   50% {
@@ -42,6 +53,6 @@
   }
 
   100% {
-    height: 10px;
+    height: var(--loading-bar-height);
   }
 }

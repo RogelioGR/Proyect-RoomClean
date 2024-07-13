@@ -19,29 +19,29 @@ const DashboardAdmin: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const authStatus = localStorage.getItem('authenticated');
-    if (authStatus !== 'true') {
-      navigate("/login");
-    } else {
-      const fetchUsers = async () => {
-        try {
-          const usersData = await getUsers();
-          setUsers(usersData);
-          setLoading(false);
-        } catch (error) {
-          console.error('Error fetching users:', error);
-          setLoading(false);
-        }
-      };
-      fetchUsers();
-    }
-  }, [navigate]);
+
 
   useEffect(() => {
+  const authStatus = localStorage.getItem('authenticated');
+  if (authStatus !== 'true') {
+    navigate("/login");
+  } else {
+    const fetchUsers = async () => {
+      try {
+        const usersData = await getUsers();
+        setUsers(usersData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        setUsersPerPage(7);
+        setUsersPerPage(6);
       } else {
         setUsersPerPage(5);
       }
@@ -53,7 +53,9 @@ const DashboardAdmin: React.FC = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }
+}, [navigate]);
+
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -116,7 +118,7 @@ const DashboardAdmin: React.FC = () => {
                         <td>{user.id}</td>
                         <td>
                           <div className="d-flex justify-content-center m-1">
-                            <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER, user.id)} disabled={user.id === parseInt(localStorage.getItem('userId') || '')}>
+                            <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER, user.id)} >
                               <i className="fas fa-pen"></i>
                             </Button>
                             <Button variant="danger" className="me-2" onClick={() => handleOpenModal(ModalsUsers.DELETE_USER, user.id)}>
@@ -129,14 +131,14 @@ const DashboardAdmin: React.FC = () => {
                                 disabled
                               >
                                 <i className="fas fa-plus"></i>
-                                <span className="d-none d-md-inline">
+                                <span className="d-none d-md-inline spanTask">
                                   Asignar tareas
                                 </span>
                               </Button>
                             ) : (
                               <Button variant="primary" className="me-2" onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
                                 <i className="fas fa-plus"></i>
-                                <span className="d-none d-md-inline">
+                                <span className="d-none d-md-inline spanTask">
                                   Asignar tareas
                                 </span>
                               </Button>

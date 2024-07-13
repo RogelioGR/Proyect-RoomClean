@@ -1,41 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { getUserById, User } from '../Services/UsuarioService';
 
-
-
-/*Componentes */
+/* Componentes */
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Sidebar from '../Components/Sidebar';
 import Loader from '../Components/Loader';
 
 const ViewPerfil: React.FC = () => {
-    const [formData, setFormData] = useState({
-        nombre: 'karla',
-        Apellidos: 'Diaz',
-        email: 'karla@gmail.com',
-        contraseña: 'karla12345',
-        telefono: '992288222',
-        numEmpleado: '9282782'
+    const [loading, setLoading] = useState(true);
+    const [userData, setUserData] = useState<User>({
+        nombre: '',
+        apellido: '',
+        correo: '',
+        contraseña: '',
+        número: '',
+        foto: '',
+        fkRol: 0,
+
     });
 
-    const handleChange = () => {
-        setFormData({
-            ...formData,
-
-        });
-    };
-    const [loading, setLoading] = useState(true);
     useEffect(() => {
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 3000); // el tiempo de carga real
+        const userId = localStorage.getItem('userId');
+        
+        if (userId) {
+            getUserData(parseInt(userId));
+        } else {
+            setLoading(false); 
+        }
     }, []);
+
+    const getUserData = async (userId: number) => {
+        try {
+            const user = await getUserById(userId);
+            setUserData(user);
+            setLoading(false); 
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            setLoading(false); 
+        }
+    };
+
+
+
+
 
     return (
         <>
-
             {loading ? (
                 <Loader />
             ) : (
@@ -44,10 +56,10 @@ const ViewPerfil: React.FC = () => {
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
                         <Container className="flex-grow-1 my-5" style={{ padding: '60px' }}>
-                            <h2 className="text-center mb-4">Perfil del  usuario</h2>
+                            <h2 className="text-center mb-4">Perfil del usuario</h2>
                             <Row className="justify-content-center">
                                 <Col md={4} className="d-flex justify-content-center align-items-center">
-                                    <img src="/public/mujer.png" style={{ width: '150px', height: '150px' }} />
+                                    <img src={userData.foto}  alt="Avatar"  className="rounded-circle" style={{ width: '200px', height: '200px' }} />
                                 </Col>
                                 <Col md={8}>
                                     <Form >
@@ -58,9 +70,8 @@ const ViewPerfil: React.FC = () => {
                                                     <Form.Control
                                                         type="text"
                                                         placeholder="Nombre"
-                                                        name="firstName"
-                                                        value={formData.nombre}
-                                                        onChange={handleChange}
+                                                        name="nombre"
+                                                        value={userData.nombre}
                                                     />
                                                 </Form.Group>
                                             </Col>
@@ -70,9 +81,8 @@ const ViewPerfil: React.FC = () => {
                                                     <Form.Control
                                                         type="text"
                                                         placeholder="Apellido"
-                                                        name="lastName"
-                                                        value={formData.Apellidos}
-                                                        onChange={handleChange}
+                                                        name="Apellidos"
+                                                        value={userData.apellido}
                                                     />
                                                 </Form.Group>
                                             </Col>
@@ -84,21 +94,10 @@ const ViewPerfil: React.FC = () => {
                                                 type="email"
                                                 placeholder="Correo electrónico"
                                                 name="email"
-                                                value={formData.email}
-                                                onChange={handleChange}
+                                                value={userData.correo}
                                             />
                                         </Form.Group>
 
-                                        <Form.Group controlId="formPassword">
-                                            <Form.Label>Contraseña:</Form.Label>
-                                            <Form.Control
-                                                type="password"
-                                                placeholder="Contraseña"
-                                                name="password"
-                                                value={formData.contraseña}
-                                                onChange={handleChange}
-                                            />
-                                        </Form.Group>
                                         <Row>
                                             <Col md={6}>
                                                 <Form.Group controlId="formPhone">
@@ -106,34 +105,33 @@ const ViewPerfil: React.FC = () => {
                                                     <Form.Control
                                                         type="text"
                                                         placeholder="Teléfono"
-                                                        name="phone"
-                                                        value={formData.telefono}
-                                                        onChange={handleChange}
+                                                        name="telefono"
+                                                        value={userData.número}
                                                     />
                                                 </Form.Group>
                                             </Col>
                                             <Col md={6}>
-                                                <Form.Group controlId="formEmployeeNumber">
-                                                    <Form.Label>Número de empleado:</Form.Label>
+                                                <Form.Group controlId="formPhone">
+                                                    <Form.Label>Rol del empleado:</Form.Label>
                                                     <Form.Control
                                                         type="text"
-                                                        placeholder="Número de empleado"
-                                                        name="employeeNumber"
-                                                        value={formData.numEmpleado}
-                                                        onChange={handleChange}
+                                                        placeholder="Rol del empleaod"
+                                                        name="telefono"
+                                                        value={userData.fkRol === 1 ? 'Eres administrador' : userData.fkRol === 2 ? 'Eres empleado' : ''}
                                                     />
                                                 </Form.Group>
                                             </Col>
+                               
                                         </Row>
 
+                                   {/*      <div className='d-flex justify-content-center align-items-center mt-4'>
+                                            <Button variant="primary" type="submit" className="mt-3">
+                                                Guardar
+                                            </Button>
+                                        </div> */}
                                     </Form>
                                 </Col>
                             </Row>
-                            <div className='d-flex justify-content-center align-items-center mt-4'>
-                                <Button variant="primary" type="submit" className="mt-3 ">
-                                    Guardar
-                                </Button>
-                            </div>
                         </Container>
                         <Footer />
                     </div>
@@ -144,6 +142,3 @@ const ViewPerfil: React.FC = () => {
 };
 
 export default ViewPerfil;
-
-
-

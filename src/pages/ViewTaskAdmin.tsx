@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom';
 import { updateTask, getTaskById, Task } from '../Services/TareaService';
 import { getEvidences, Evidence } from '../Services/EvidenciaService';
 import { getPhotos, Photo } from '../Services/FotoService';
-
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
+
 /* componentes */
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';

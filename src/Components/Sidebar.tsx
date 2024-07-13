@@ -2,6 +2,8 @@ import React from 'react';
 import { Navbar, Nav, Offcanvas } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../Services/AuthService';
+import {  User } from '../Services/UsuarioService';
+
 
 interface SidebarProps {
   mobile?: boolean;
@@ -10,7 +12,6 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
   const navigate = useNavigate();
-  const userId = localStorage.getItem('userId') || '';
 
   const handleLogout = () => {
     logout();
@@ -37,7 +38,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
   return (
     <>
       {mobile ? (
-        <Offcanvas show className="sidebar-container" style={{ width: '250px' }} onHide={closeMenu}>
+        <Offcanvas show className="sidebar-container sidebar-mobile" style={{ width: '250px' }} onHide={closeMenu}>
           <Offcanvas.Header   >
             <Offcanvas.Title className="sidebar-brand">
               <img
@@ -56,7 +57,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
                 <i className="fa-solid fa-house sidebar-icon me-2"></i>
                 Dashboard
               </Nav.Link>
-              <Nav.Link as={Link} to={`/ViewPerfil/${userId}`} onClick={closeMenu} className="sidebar-link">
+              <Nav.Link as={Link} to="/ViewPerfil" onClick={closeMenu} className="sidebar-link">
                 <i className="fa-solid fa-user sidebar-icon me-2"></i>
                 Perfil
               </Nav.Link>
@@ -74,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
           </Offcanvas.Body>
         </Offcanvas>
       ) : (
-        <Navbar variant="dark" className="sidebar-container d-none d-lg-flex" style={{ padding: '10px' }}>
+        <Navbar variant="dark" className="sidebar-container sidebar-desktop d-none d-lg-flex " style={{ padding: '10px' }}>
           <Navbar.Brand className="sidebar-brand">
             <img
               src="/roomclean.png"
@@ -90,7 +91,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
               <i className="fa-solid fa-house sidebar-icon me-2"></i>
               Dashboard
             </Nav.Link>
-            <Nav.Link as={Link} to={`/ViewPerfil/${userId}`} className="sidebar-link">
+            <Nav.Link as={Link} to="/ViewPerfil" className="sidebar-link">
               <i className="fa-solid fa-user sidebar-icon me-2"></i>
               Perfil
             </Nav.Link>

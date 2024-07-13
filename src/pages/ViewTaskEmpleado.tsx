@@ -110,16 +110,15 @@ const TaskEmpleado: React.FC = () => {
                     <Sidebar />
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
-                        <div style={{ margin: '50px' }}>
+                        <div style={{ margin: '10px' }}>
                             <Container className="flex-grow-1">
                                 <Row>
                                     <Col>
                                         <h2 style={{ fontSize: '3rem' }}>Habitación {task!.nombre}</h2>
                                     </Col>
                                 </Row>
-                                <div>
-                                    <Row>
-                                        <Col md={6}>
+                                <Row>
+                                        <Col >
                                             <h4>Instrucción</h4>
                                             <p>{task!.descripcion}</p>
                                         </Col>
@@ -135,26 +134,30 @@ const TaskEmpleado: React.FC = () => {
                                                 onChange={(e: any) => setComment(e.target.value)}
                                                 className="mt-3"
                                             />
-                                            <div className="d-flex flex-wrap p-2">
+                                            <div className="Photo-container p-2">
+                                           
+                                                <div className="photo-grid d-flex flex-wrap">
                                                 {uploadedPhotos.map(photo => (
                                                     <img
                                                         key={photo.id}
                                                         src={photo.fotoUrl}
                                                         alt={`evidence${photo.id}`}
-                                                        className="img-thumbnail me-2 mb-2"
-                                                        style={{ width: '150px', height: '150px' }}
+                                                        className="img-thumbnail me-2"
                                                     />
                                                 ))}
-                                                {photos.map((photo, index) => (
-                                                    <img
-                                                        key={index}
-                                                        src={URL.createObjectURL(photo)}
-                                                        alt={`selected${index}`}
-                                                        className="img-thumbnail me-2 mb-2"
-                                                        style={{ width: '150px', height: '150px' }}
-                                                    />
-                                                ))}
-                                                <label htmlFor="file-input" className="btn btn-success align-self-center mb-2" style={{ width: '150px', height: '150px', fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>+</label>
+                                                    {photos.map((photo, index) => (
+                                                        <img
+                                                            key={index}
+                                                            src={URL.createObjectURL(photo)}
+                                                            alt={`selected${index}`}
+                                                            className="img-thumbnail"
+                                                        />
+
+                                                    ))}
+                                                    <label htmlFor="file-input" className="btn btn-success align-self-center mb-2" style={{ width: '150px', height: '150px', fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>+</label>
+
+                                                </div>
+
                                                 <input
                                                     id="file-input"
                                                     type="file"
@@ -165,6 +168,8 @@ const TaskEmpleado: React.FC = () => {
                                             </div>
                                         </Col>
                                     </Row>
+                                <div>
+                                   
                                     <Row className="mt-4">
                                         <Col className="d-flex justify-content-center">
                                             <Button variant="success" onClick={handleGuardarYFinalizar}>Guardar</Button>
