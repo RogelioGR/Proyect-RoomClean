@@ -42,7 +42,6 @@ const Login: React.FC = () => {
     return (
         <Container fluid className="login-container">
             <div className="form-container">
-                <div>
                     <Form className="form-controls" onSubmit={handleLogin} >
                         <h1 className="title-login">Iniciar sesión</h1>
                         <div >
@@ -78,12 +77,12 @@ const Login: React.FC = () => {
                             )}
                         </Button>
                     </Form>
-                </div>
-                <div className="login-img d-none d-lg-block">
+                    <div className="login-img d-none d-lg-block">
                     <img src='/public/roomclean.png' alt="404 Error" className="bounce" />
                 </div>
-            </div>
 
+                </div>
+                
         </Container>
     );
 };

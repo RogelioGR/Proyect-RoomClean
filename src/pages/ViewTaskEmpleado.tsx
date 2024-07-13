@@ -118,25 +118,25 @@ const TaskEmpleado: React.FC = () => {
                                     </Col>
                                 </Row>
                                 <Row>
-                                        <Col >
-                                            <h4>Instrucción</h4>
-                                            <p>{task!.descripcion}</p>
-                                        </Col>
-                                        <Col md={6}>
-                                            <h4>Evidencia</h4>
-                                            <TextField
-                                                label="Comentarios"
-                                                multiline
-                                                rows={4}
-                                                variant="outlined"
-                                                fullWidth
-                                                value={comment}
-                                                onChange={(e: any) => setComment(e.target.value)}
-                                                className="mt-3"
-                                            />
-                                            <div className="Photo-container p-2">
-                                           
-                                                <div className="photo-grid d-flex flex-wrap">
+                                    <Col >
+                                        <h4>Instrucción</h4>
+                                        <p>{task!.descripcion}</p>
+                                    </Col>
+                                    <Col md={6}>
+                                        <h4>Evidencia</h4>
+                                        <TextField
+                                            label="Comentarios"
+                                            multiline
+                                            rows={4}
+                                            variant="outlined"
+                                            fullWidth
+                                            value={comment}
+                                            onChange={(e: any) => setComment(e.target.value)}
+                                            className="mt-3"
+                                        />
+                                        <div className="Photo-container p-2">
+
+                                            <div className="photo-grid d-flex flex-wrap">
                                                 {uploadedPhotos.map(photo => (
                                                     <img
                                                         key={photo.id}
@@ -145,19 +145,18 @@ const TaskEmpleado: React.FC = () => {
                                                         className="img-thumbnail me-2"
                                                     />
                                                 ))}
-                                                    {photos.map((photo, index) => (
-                                                        <img
-                                                            key={index}
-                                                            src={URL.createObjectURL(photo)}
-                                                            alt={`selected${index}`}
-                                                            className="img-thumbnail"
-                                                        />
+                                                {photos.map((photo, index) => (
+                                                    <img
+                                                        key={index}
+                                                        src={URL.createObjectURL(photo)}
+                                                        alt={`selected${index}`}
+                                                        className="img-thumbnail"
+                                                    />
 
-                                                    ))}
-                                                    <label  className="btn btn-secondary align-self-center mb-2" style={{ width: '150px', height: '150px', fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <i className="fa-solid fa-camera"></i></label>
-
-                                                </div>
-
+                                                ))}
+                                                <label htmlFor="file-input" className="btn btn-secondary align-self-center mb-2" style={{ width: '150px', height: '150px', fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                    <i className="fa-solid fa-camera"></i>
+                                                </label>
                                                 <input
                                                     id="file-input"
                                                     type="file"
@@ -166,10 +165,11 @@ const TaskEmpleado: React.FC = () => {
                                                     style={{ display: 'none' }}
                                                 />
                                             </div>
-                                        </Col>
-                                    </Row>
+                                        </div>
+                                    </Col>
+                                </Row>
                                 <div>
-                                   
+
                                     <Row className="mt-4">
                                         <Col className="d-flex justify-content-center">
                                             <Button variant="success" onClick={handleGuardarYFinalizar}>Guardar</Button>

@@ -87,14 +87,14 @@ const DashboardAdmin: React.FC = () => {
           <Sidebar />
           <div className="d-flex flex-column flex-grow-1">
             <Header />
-            <Container className="mt-5">
+            <Container className="mt-1">
               <h1 className="mb-4">Bienvenido, Admin!</h1>
               <div className="d-flex justify-content-end align-items-center mt-4">
                 <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
                   <i className="fas fa-plus"></i> Agregar usuario
                 </Button>
               </div>
-              <Table responsive striped bordered hover className="mt-4">
+              <Table responsive striped bordered hover>
                 <thead className="text-center">
                   <tr>
                     <th>Imagen</th>
