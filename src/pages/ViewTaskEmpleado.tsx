@@ -9,7 +9,7 @@ import { Task, getTaskById } from '../Services/TareaService';
 import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { createEvidence, getEvidences, Evidence, updateEvidence } from '../Services/EvidenciaService';
-import { uploadPhoto, getPhotos, Photo } from '../Services/FotoService';
+import { uploadPhoto, getPhotos, Photo, deletePhoto } from '../Services/FotoService';
 
 const TaskEmpleado: React.FC = () => {
     const { id }: any = useParams();
@@ -56,6 +56,35 @@ const TaskEmpleado: React.FC = () => {
         }
     };
 
+    const handleDeletePhoto = async (photoId: number | undefined, index: number) => {
+        try {
+            if (photoId !== undefined) {
+                // Eliminar la foto de la base de datos
+                await deletePhoto(photoId); // Asegúrate de implementar esta función en FotoService
+            }
+
+            // Actualizar el estado local quitando la foto eliminada
+            const newPhotos = [...photos];
+            newPhotos.splice(index, 1);
+            setPhotos(newPhotos);
+
+            // Actualizar también las fotos subidas si se está eliminando una foto ya guardada
+            if (photoId !== undefined) {
+                const updatedUploadedPhotos = [...uploadedPhotos];
+                updatedUploadedPhotos.splice(updatedUploadedPhotos.findIndex(p => p.id === photoId), 1);
+                setUploadedPhotos(updatedUploadedPhotos);
+            }
+        } catch (error) {
+            console.error('Error al eliminar la foto', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al eliminar la foto. Por favor, inténtalo de nuevo más tarde.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    };
+
     const handleGuardarYFinalizar = async () => {
         try {
             let evidenceId;
@@ -76,6 +105,7 @@ const TaskEmpleado: React.FC = () => {
                 evidenceId = createdEvidence.id!;
             }
 
+            // Subir nuevas fotos
             if (photos.length > 0) {
                 await Promise.all(photos.map(async (photoUrl) => {
                     const formData = new FormData();
@@ -90,6 +120,9 @@ const TaskEmpleado: React.FC = () => {
                 text: 'La evidencia se ha guardado correctamente.',
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
+            }).then(() => {
+                // Recargar la página después de cerrar la alerta
+                window.location.reload();
             });
         } catch (error) {
             console.error('Error al guardar la evidencia', error);
@@ -136,23 +169,37 @@ const TaskEmpleado: React.FC = () => {
                                             className="mt-3"
                                         />
                                         <div className="d-flex flex-wrap p-2">
-                                            {uploadedPhotos.map(photo => (
-                                                <img
-                                                    key={photo.id}
-                                                    src={photo.fotoUrl}
-                                                    alt={`evidence${photo.id}`}
-                                                    className="img-thumbnail me-2 mb-2"
-                                                    style={{ width: '150px', height: '150px' }}
-                                                />
+                                            {uploadedPhotos.map((photo, index) => (
+                                                <div key={photo.id} className="position-relative">
+                                                    <img
+                                                        src={photo.fotoUrl}
+                                                        alt={`evidence${photo.id}`}
+                                                        className="img-thumbnail me-2 mb-2"
+                                                        style={{ width: '150px', height: '150px' }}
+                                                    />
+                                                    <button
+                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0"
+                                                        onClick={() => handleDeletePhoto(photo.id, index)}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
                                             ))}
                                             {photos.map((photo, index) => (
-                                                <img
-                                                    key={index}
-                                                    src={photo}
-                                                    alt={`selected${index}`}
-                                                    className="img-thumbnail me-2 mb-2"
-                                                    style={{ width: '150px', height: '150px' }}
-                                                />
+                                                <div key={index} className="position-relative">
+                                                    <img
+                                                        src={photo}
+                                                        alt={`selected${index}`}
+                                                        className="img-thumbnail me-2 mb-2"
+                                                        style={{ width: '150px', height: '150px' }}
+                                                    />
+                                                    <button
+                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0"
+                                                        onClick={() => handleDeletePhoto(undefined, index)}
+                                                    >
+                                                        X
+                                                    </button>
+                                                </div>
                                             ))}
                                             <label htmlFor="file-input" className="btn btn-secondary align-self-center mb-2" style={{ width: '150px', height: '150px', fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                 <i className="fa-solid fa-camera"></i>
