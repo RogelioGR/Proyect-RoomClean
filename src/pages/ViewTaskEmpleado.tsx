@@ -154,7 +154,7 @@ const TaskEmpleado: React.FC = () => {
                                                         />
 
                                                     ))}
-                                                    <label htmlFor="file-input" className="btn btn-success align-self-center mb-2" style={{ width: '150px', height: '150px', fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>+</label>
+                                                    <label  className="btn btn-secondary align-self-center mb-2" style={{ width: '150px', height: '150px', fontSize: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <i className="fa-solid fa-camera"></i></label>
 
                                                 </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Modal, Button, Row, Col, Form, Container } from "react-bootstrap";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -12,7 +12,6 @@ interface MCreateUserProps {
 }
 
 const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
-  
   const [formData, setFormData] = useState<User>({
     nombre: "",
     apellido: "",
@@ -23,32 +22,33 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
     fkRol: 0,
   });
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
-      const reader = new FileReader(); 
-  
+      const reader = new FileReader();
+
       reader.onload = (event) => {
         if (event.target?.result) {
-          const photoUrl = event.target.result.toString(); 
-          setFormData({ ...formData, foto: photoUrl }); 
+          const photoUrl = event.target.result.toString();
+          setFormData({ ...formData, foto: photoUrl });
         }
       };
-  
-      reader.readAsDataURL(file); 
+
+      reader.readAsDataURL(file);
     }
   };
-  
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (formData.número.length !== 10 ) {
+
+    if (formData.número.length !== 10) {
       MySwal.fire(
         "Error",
         "Número telefónico incorrecto. Debe tener 10 dígitos.",
@@ -65,7 +65,7 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
       );
       return;
     }
-  
+
     try {
       await createUser(formData);
       MySwal.fire({
@@ -83,7 +83,12 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
       MySwal.fire("Error", "Hubo un error al crear el usuario", "error");
     }
   };
-  
+
+  const handleImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   return (
     <Modal
@@ -102,9 +107,17 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
           <Row className="justify-content-center">
             <Col className="d-flex justify-content-center align-items-center">
               <img
-                src={formData.foto || "/public/agregar-usuario.png"}
-                style={{ width: "180px", height: "180px" , borderRadius:"6rem"}}
+                src={formData.foto || "/public/usuario.png"}
+                style={{ width: "180px", height: "180px", borderRadius: "6rem", cursor: "pointer" }}
                 alt="Perfil del usuario"
+                onClick={handleImageClick}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                ref={fileInputRef}
+                style={{ display: "none" }}
               />
             </Col>
             <Col md={8}>
@@ -180,22 +193,13 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
                         value={formData.fkRol}
                         onChange={handleChange}
                       >
-                         <option>Roles </option>
-                        <option value={1}>Admin </option>
+                        <option>Roles</option>
+                        <option value={1}>Admin</option>
                         <option value={2}>Empleado</option>
                       </Form.Control>
                     </Form.Group>
                   </Col>
                 </Row>
-
-                <Form.Group controlId="formFoto">
-                  <Form.Label>Foto de perfil:</Form.Label>
-                  <Form.Control
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                  />
-                </Form.Group>
 
                 <div className="d-flex align-items-center mt-4">
                   <Button variant="success" className="me-2" type="submit">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Container, Row, Col, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -18,10 +18,12 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
     apellido: "",
     número: "",
     correo: "",
-    contraseña: "" , 
+    contraseña: "",
     foto: "",
     fkRol: 0,
   });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -55,6 +57,12 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
         }
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
@@ -92,20 +100,24 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>Editar Usuario</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container className="flex-grow-1 my-5">
           <h2 className="text-center mb-4">Editar usuario</h2>
           <Row className="justify-content-center">
-            <Col
-              
-              className="d-flex justify-content-center align-items-center"
-            >
-               <img
-                src={formData.foto  || "/public/usuario.png"}
-                style={{ width: "180px", height: "180px" , borderRadius:"6rem"}}
+            <Col className="d-flex justify-content-center align-items-center">
+              <img
+                src={formData.foto || "/public/usuario.png"}
+                style={{ width: "180px", height: "180px", borderRadius: "6rem", cursor: "pointer" }}
                 alt="Perfil del usuario"
+                onClick={handleImageClick}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                ref={fileInputRef}
+                style={{ display: "none" }}
               />
             </Col>
             <Col md={8}>
@@ -177,22 +189,13 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                         value={formData.fkRol}
                         onChange={handleChange}
                       >
-                        <option>Roles </option>
-                        <option value={1}>Admin </option>
+                        <option>Roles</option>
+                        <option value={1}>Admin</option>
                         <option value={2}>Empleado</option>
                       </Form.Control>
                     </Form.Group>
                   </Col>
                 </Row>
-                <Form.Group>
-                  <Form.Label>Foto de perfil:</Form.Label>
-                  <Form.Control
-                    type="file"
-                    accept="image/*"
-                    
-                    onChange={handleFileChange}
-                  />
-                </Form.Group>
                 <div className="d-flex align-items-center mt-4">
                   <Button variant="success" className="me-2" type="submit">
                     Guardar
