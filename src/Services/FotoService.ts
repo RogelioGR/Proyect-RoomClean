@@ -32,14 +32,14 @@ export const getPhotoById = async (id: number): Promise<Photo> => {
     }
 };
 
-export const uploadPhoto = async (photoData: FormData): Promise<Photo> => {
+export const uploadPhoto = async (photoData: FormData): Promise<Photo[]> => {
     try {
         const response = await axiosInstance.post<ApiResponse>('/Foto/create', photoData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        return response.data.result as Photo;
+        return response.data.result as Photo[];
     } catch (error) {
         console.error("Error uploading photo:", error);
         throw error;
@@ -55,7 +55,6 @@ export const updatePhoto = async (id: number, photoData: Photo): Promise<Photo> 
         throw error;
     }
 };
-
 export const deletePhoto = async (id: number): Promise<void> => {
     try {
         await axiosInstance.delete<ApiResponse>(`/Foto/delete/${id}`);
