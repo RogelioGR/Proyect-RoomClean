@@ -201,7 +201,7 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
                   </Col>
                 </Row>
 
-                <div className="d-flex align-items-center mt-4">
+                <div className="text-center mt-4">
                   <Button variant="success" className="me-2" type="submit">
                     Guardar
                   </Button>

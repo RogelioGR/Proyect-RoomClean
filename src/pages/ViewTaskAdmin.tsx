@@ -90,7 +90,7 @@ const TaskAdmin: React.FC = () => {
                     <Sidebar />
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
-                        <div style={{ margin: '50px' }}>
+                        <div style={{ margin: '10px' }}>
                             <Container className="flex-grow-1">
                                 <React.Fragment>
                                     <Row>

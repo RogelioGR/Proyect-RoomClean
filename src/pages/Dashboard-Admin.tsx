@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Container, Pagination } from 'react-bootstrap';
+import { Button, Table, Container, Pagination, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { getUsers, User } from '../Services/UsuarioService';
-
-/*Componentes */
+import { getUsers, getUserById, User } from '../Services/UsuarioService';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Sidebar from '../Components/Sidebar';
@@ -11,55 +9,70 @@ import Loader from '../Components/Loader';
 import MCreateUser from '../Components/Modals/Users/Modals-Create-user';
 import MEditUser from '../Components/Modals/Users/Modals-Edit-User';
 import MDeleteUser from '../Components/Modals/Users/Modals-Drop-user';
+import { parseJwt } from '../Services/jwt';
 
 const DashboardAdmin: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>(''); // Estado para el término de búsqueda
+
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
-  const authStatus = localStorage.getItem('authenticated');
-  if (authStatus !== 'true') {
-    navigate("/login");
-  } else {
-    const fetchUsers = async () => {
-      try {
-        const usersData = await getUsers();
-        setUsers(usersData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-        setLoading(false);
-      }
-    };
+    const authStatus = localStorage.getItem('authenticated');
 
-    fetchUsers();
+    if (authStatus !== 'true') {
+      navigate("/login");
+    } else {
+      const fetchUsers = async () => {
+        try {
+          const usersData = await getUsers();
+          setUsers(usersData);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error fetching users:', error);
+          setLoading(false);
+        }
+        const token = localStorage.getItem('token');
+        if (token) {
+          const userId = parseJwt(token).id;
+          localStorage.setItem('userId', userId.toString());
 
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setUsersPerPage(6);
-      } else {
-        setUsersPerPage(5);
-      }
-    };
+          const userData = await getUserById(userId);
+          setUser(userData);
+        }
+      };
 
-    handleResize(); 
-    window.addEventListener('resize', handleResize);
+      fetchUsers();
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }
-}, [navigate]);
+      const handleResize = () => {
+        if (window.innerWidth <= 768) {
+          setUsersPerPage(6);
+        } else {
+          setUsersPerPage(5);
+        }
+      };
 
+      handleResize();
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, [navigate]);
+
+  const filteredUsers = users.filter(user => {
+    return `${user.nombre} ${user.apellido}`.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   enum ModalsUsers {
@@ -69,8 +82,9 @@ const DashboardAdmin: React.FC = () => {
     DELETE_USER = 'DELETE_USER',
   }
 
-  const [modalUsers, setModalUsers] = useState<ModalsUsers>(ModalsUsers.NONE);
+  const [modalUsers, setModalUsers] = useState(ModalsUsers.NONE);
   const [selectedUserId, setSelectedUserId] = useState<number>();
+
   const handleCloseModal = () => setModalUsers(ModalsUsers.NONE);
 
   const handleOpenModal = (type: ModalsUsers, userId?: number) => {
@@ -87,13 +101,25 @@ const DashboardAdmin: React.FC = () => {
           <Sidebar />
           <div className="d-flex flex-column flex-grow-1">
             <Header />
-            <Container className="mt-5">
-              <h1 className="mb-4">Bienvenido, Admin!</h1>
-              <div className="d-flex justify-content-end align-items-center mt-4">
+            <Container className="mt-2">
+              <h2 className="mb-4">Bienvenido {user ? `${user.nombre}` : 'Usuario'}!</h2>
+              <div className="d-flex justify-content-between align-items-center ">
+                <div className="col-lg-4 col-md-6 col-sm-12">
+                  <Form.Control
+                    type="text"
+                    placeholder="Buscar usuario"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{ backgroundColor: '#E2E2E2' }}
+                  />
+                </div>
+              </div>
+              <div className="d-flex justify-content-end align-items-center mt-2">
                 <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
                   <i className="fas fa-plus"></i> Agregar usuario
                 </Button>
               </div>
+
               <Table responsive striped bordered hover className="mt-4">
                 <thead className="text-center">
                   <tr>
@@ -124,25 +150,12 @@ const DashboardAdmin: React.FC = () => {
                             <Button variant="danger" className="me-2" onClick={() => handleOpenModal(ModalsUsers.DELETE_USER, user.id)}>
                               <i className="fas fa-trash"></i>
                             </Button>
-                            {user.fkRol === 1 ? (
-                              <Button
-                                variant="secondary"
-                                className="me-2"
-                                disabled
-                              >
-                                <i className="fas fa-plus"></i>
-                                <span className="d-none d-md-inline spanTask">
-                                  Asignar tareas
-                                </span>
-                              </Button>
-                            ) : (
-                              <Button variant="primary" className="me-2" onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
-                                <i className="fas fa-plus"></i>
-                                <span className="d-none d-md-inline spanTask">
-                                  Asignar tareas
-                                </span>
-                              </Button>
-                            )}
+                            <Button variant="primary" className="me-2" onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
+                              <i className="fas fa-plus"></i>
+                              <span className="d-none d-md-inline spanTask">
+                                Asignar tareas
+                              </span>
+                            </Button>
                           </div>
                         </td>
                       </tr>
@@ -156,7 +169,7 @@ const DashboardAdmin: React.FC = () => {
               </Table>
               {users.length > 0 && (
                 <Pagination className="justify-content-center">
-                  {[...Array(Math.ceil(users.length / usersPerPage)).keys()].map(number => (
+                  {[...Array(Math.ceil(filteredUsers.length / usersPerPage)).keys()].map(number => (
                     <Pagination.Item key={number} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
                       {number + 1}
                     </Pagination.Item>
@@ -168,8 +181,7 @@ const DashboardAdmin: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* Modals */}
+      {/* Modales */}
       <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal} userId={selectedUserId} />
       <MCreateUser show={modalUsers === ModalsUsers.CREATE_USER} handleClose={handleCloseModal} />
       <MDeleteUser show={modalUsers === ModalsUsers.DELETE_USER} handleClose={handleCloseModal} userId={selectedUserId} />

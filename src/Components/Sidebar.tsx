@@ -66,7 +66,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
                 Info
               </Nav.Link>
             </Nav>
-            <Nav className="mt-auto">
+            <Nav className="mt-auto flex-column logout-section">
               <Nav.Link onClick={handleLogout} className="sidebar-link text-white text-center">
                 <i className="fa-solid fa-power-off me-2"></i>
                 Cerrar Sesión
