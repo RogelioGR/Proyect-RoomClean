@@ -94,12 +94,16 @@ const MEditTasks: React.FC<MEditTasksProps> = ({ show, handleClose, taskId }) =>
               onChange={handleChange}
             />
           </Form.Group>
-          <Button variant="success" type="submit">
+          <div className='text-center mt-4'>
+          <Button variant="success" className='me-2' type="submit">
             Guardar
-          </Button>{' '}
-          <Button variant="secondary" onClick={handleClose}>
+          </Button>
+          <Button variant="secondary " onClick={handleClose}>
             Cancelar
           </Button>
+
+          </div>
+       
         </Form>
       </Modal.Body>
     </Modal>

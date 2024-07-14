@@ -34,7 +34,6 @@ const AssignTasksAdmin: React.FC = () => {
                 setLoading(false);
             }
         };
-
         const fetchUser = async () => {
             try {
                 if (UserAssignId) {
@@ -49,7 +48,6 @@ const AssignTasksAdmin: React.FC = () => {
                 console.error('Error fetching user:', error);
             }
         };
-
         fetchTasks();
         fetchUser();
     }, [UserAssignId, navigate]);
@@ -59,15 +57,12 @@ const AssignTasksAdmin: React.FC = () => {
         CREATE_TASKS = 'CREATE_TASKS',
         DELETE_TASKS = 'DELETE_TASKS',
     }
-
     const [modalType, setModalType] = useState<ModalsTasks>(ModalsTasks.NONE);
     const handleCloseModal = () => setModalType(ModalsTasks.NONE);
-
     const handleOpenModal = (type: ModalsTasks, taskId?: number) => {
         setModalType(type);
         setTaskId(taskId);
     };
-
     return (
         <>
             {loading ? (
@@ -97,12 +92,12 @@ const AssignTasksAdmin: React.FC = () => {
                                                 />
                                                 <div className="content">
                                                     <p className="title-card">{task.nombre}</p>
-                                                    <div className="desc">
+                                                    <div className="desc-status">
                                                         <span>Estatus: <span>{task.estatus}</span></span>
                                                     </div>
-                                                    <div className="actions">
-                                                        <button className="download" onClick={() => navigate(`/TaskAdmin/${task.id}`)}>Visualizar</button>
-                                                        <button className="notnow" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS, task.id)}>Eliminar</button>
+                                                    <div className="actions-btns">
+                                                        <button className="View" onClick={() => navigate(`/TaskAdmin/${task.id}`)}>Visualizar</button>
+                                                        <button className="Delete" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS, task.id)}>Eliminar</button>
                                                     </div>
                                                 </div>
                                             </div>

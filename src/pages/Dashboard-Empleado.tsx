@@ -80,7 +80,7 @@ const Dashboardempleado: React.FC = () => {
                                                         />
                                                         <div className="content">
                                                             <p className="title-card">{task.nombre}</p>
-                                                            <div className="desc">
+                                                            <div className="desc-status">
                                                                 <span>Estatus: <span>{task.estatus}</span></span>
                                                             </div>
                                                         </div>
