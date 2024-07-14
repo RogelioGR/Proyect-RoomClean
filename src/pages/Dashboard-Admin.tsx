@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table, Container, Pagination } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { getUsers, User } from '../Services/UsuarioService';
+import { getUsers,getUserById, User } from '../Services/UsuarioService';
 
 /*Componentes */
 import Footer from '../Components/Footer';
@@ -11,18 +11,20 @@ import Loader from '../Components/Loader';
 import MCreateUser from '../Components/Modals/Users/Modals-Create-user';
 import MEditUser from '../Components/Modals/Users/Modals-Edit-User';
 import MDeleteUser from '../Components/Modals/Users/Modals-Drop-user';
+import { parseJwt } from '../Services/jwt';
 
 const DashboardAdmin: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+
   const navigate = useNavigate();
-
-
 
   useEffect(() => {
   const authStatus = localStorage.getItem('authenticated');
+
   if (authStatus !== 'true') {
     navigate("/login");
   } else {
@@ -35,7 +37,16 @@ const DashboardAdmin: React.FC = () => {
         console.error('Error fetching users:', error);
         setLoading(false);
       }
+      const token = localStorage.getItem('token');
+      if (token) {
+        const userId = parseJwt(token).id; 
+        localStorage.setItem('userId', userId.toString());
+
+        const userData = await getUserById(userId);
+        setUser(userData);
+      }
     };
+    
 
     fetchUsers();
 
@@ -78,6 +89,8 @@ const DashboardAdmin: React.FC = () => {
     setSelectedUserId(userId);
   };
 
+
+
   return (
     <>
       {loading ? (
@@ -87,8 +100,8 @@ const DashboardAdmin: React.FC = () => {
           <Sidebar />
           <div className="d-flex flex-column flex-grow-1">
             <Header />
-            <Container className="mt-1">
-              <h1 className="mb-4">Bienvenido, Admin!</h1>
+            <Container className="mt-2">
+              <h2 className="mb-4">Bienvenido {user ? `${user.nombre} ${user.apellido}` : 'Usuario'} !</h2>
               <div className="d-flex justify-content-end align-items-center mt-4">
                 <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
                   <i className="fas fa-plus"></i> Agregar usuario

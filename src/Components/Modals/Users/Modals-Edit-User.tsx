@@ -107,7 +107,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
           <Row className="justify-content-center">
             <Col className="d-flex justify-content-center align-items-center">
               <img
-                src={formData.foto }
+                src={formData.foto || "/public/usuario.png"}
                 style={{ width: "180px", height: "180px", borderRadius: "6rem", cursor: "pointer" }}
                 alt="Perfil del usuario"
                 onClick={handleImageClick}

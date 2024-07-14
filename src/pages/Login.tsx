@@ -4,16 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../Services/AuthService';
 import Swal from 'sweetalert2';
 
+
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+
     const navigate = useNavigate();
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
-
         try {
             await login({ correo: email, contraseña: password });
             localStorage.setItem('authenticated', 'true');

@@ -19,7 +19,19 @@ const MDeleteUser: React.FC<MDeleteUserProps> = ({
   userId,
 }) => {
   const ValidarEliminacion = async () => {
+    const authenticatedUserId = parseInt(localStorage.getItem('userId') || '0', 10);
+
     try {
+      if (userId === authenticatedUserId) {
+        MySwal.fire({
+          title: "Error",
+          text: "No puedes eliminar tu propia cuenta.",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        return; 
+      }
+
       if (userId !== undefined) {
         await deleteUser(userId);
         MySwal.fire({
@@ -54,11 +66,11 @@ const MDeleteUser: React.FC<MDeleteUserProps> = ({
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="delete-user-modal-title"></Modal.Title>
+        <Modal.Title id="delete-user-modal-title">Eliminar Usuario</Modal.Title>
       </Modal.Header>
       <Modal.Body className="text-center justify-content-center">
         <h2>Eliminar Usuario</h2>
-        <p>¿Estás seguro de que deseas eliminar el usuario ?</p>
+        <p>¿Estás seguro de que deseas eliminar el usuario?</p>
       </Modal.Body>
       <Modal.Footer className="justify-content-center">
         <Button variant="danger" onClick={ValidarEliminacion}>

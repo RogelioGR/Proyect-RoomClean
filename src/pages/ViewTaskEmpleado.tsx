@@ -172,38 +172,16 @@ const TaskEmpleado: React.FC = () => {
                                             {uploadedPhotos.map((photo, index) => (
                                                 <div key={photo.id} className="position-relative">
                                                     <img
-                                    <Col >
-                                        <h4>Instrucción</h4>
-                                        <p>{task!.descripcion}</p>
-                                    </Col>
-                                    <Col md={6}>
-                                        <h4>Evidencia</h4>
-                                        <TextField
-                                            label="Comentarios"
-                                            multiline
-                                            rows={4}
-                                            variant="outlined"
-                                            fullWidth
-                                            value={comment}
-                                            onChange={(e: any) => setComment(e.target.value)}
-                                            className="mt-3"
-                                        />
-                                        <div className="Photo-container p-2">
-
-                                            <div className="photo-grid d-flex flex-wrap">
-                                                {uploadedPhotos.map(photo => (
-                                                    <img
-                                                        key={photo.id}
                                                         src={photo.fotoUrl}
                                                         alt={`evidence${photo.id}`}
-                                                        className="img-thumbnail me-2 mb-2"
-                                                        style={{ width: '150px', height: '150px' }}
+                                                        className="img-thumbnail "
                                                     />
                                                     <button
-                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0"
+                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0 "
                                                         onClick={() => handleDeletePhoto(photo.id, index)}
                                                     >
-                                                        X
+                                                                                                                <i className="fa-solid fa-x "></i>
+
                                                     </button>
                                                 </div>
                                             ))}
@@ -212,14 +190,13 @@ const TaskEmpleado: React.FC = () => {
                                                     <img
                                                         src={photo}
                                                         alt={`selected${index}`}
-                                                        className="img-thumbnail me-2 mb-2"
-                                                        style={{ width: '150px', height: '150px' }}
+                                                        className="img-thumbnail"
                                                     />
                                                     <button
-                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0"
+                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0 "
                                                         onClick={() => handleDeletePhoto(undefined, index)}
                                                     >
-                                                        X
+                                                        <i className="fa-solid fa-x "></i>
                                                     </button>
                                                 </div>
                                             ))}
