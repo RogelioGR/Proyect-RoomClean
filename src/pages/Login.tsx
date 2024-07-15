@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../Services/AuthService';
@@ -13,6 +13,21 @@ const Login: React.FC = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+        const rol = localStorage.getItem('rol');
+
+        if (isAuthenticated) {
+            if (rol === '1') {
+                navigate("/DashboardAdmin");
+            } else if (rol === '2') {
+                navigate("/Dashboardempleado");
+            } else {
+                alert('Acceso no autorizado');
+            }
+        }
+    }, [navigate]);
+
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
         setLoading(true);
@@ -20,14 +35,13 @@ const Login: React.FC = () => {
             if (!recaptchaToken) {
                 Swal.fire({
                     title: 'Captcha no completado',
-                    text: 'Por favor de completa el captcha.',
+                    text: 'Por favor completa el captcha.',
                     icon: 'error',
                     confirmButtonText: 'Aceptar'
                 });
                 setLoading(false);
                 return;
             }
-
 
             await login({ correo: email, contraseña: password });
             localStorage.setItem('authenticated', 'true');
@@ -81,15 +95,15 @@ const Login: React.FC = () => {
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                             />
                         </Form.Group>
-                   <div className='Recaptcha-container'>
-                    <div className='Recaptcha'>
-                    <ReCAPTCHA  
-                                sitekey="6LeT5w8qAAAAAL7kKO3u9_Fpjbr9PiLWbsl-Hcky"
-                                onChange={onCaptchaChange}
-                            />
-                    </div>
-                   </div>
-                           
+
+                        <div className='Recaptcha-container'>
+                            <div className='Recaptcha'>
+                                <ReCAPTCHA
+                                    sitekey="6LeT5w8qAAAAAL7kKO3u9_Fpjbr9PiLWbsl-Hcky"
+                                    onChange={onCaptchaChange}
+                                />
+                            </div>
+                        </div>
                     </div>
                     <Button variant="primary" type="submit" className="submit-btn" disabled={loading}>
                         {loading ? (

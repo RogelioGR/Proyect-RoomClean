@@ -54,44 +54,42 @@ const Dashboardempleado: React.FC = () => {
                     <Sidebar />
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
-                        <div>
-                            <Container className="container mt-2">
-                            <h1 className="my-4">Bienvenido, {user ? `${user.nombre} ${user.apellido}` : 'Usuario'}!</h1>
+                        <Container className="my-3" style={{ overflowY: 'auto' }}>
+                        <h1 className="my-4">Bienvenido, {user ? `${user.nombre} ${user.apellido}` : 'Usuario'}!</h1>
 
-                                <h3>Habitaciones</h3>
-                                <div className="scroll-container flex-grow-1">
-                                    {error ? (
-                                        <div className="col-12 text-center">
-                                            <p>{error}</p>
-                                        </div>
-                                    ) : tasks.length === 0 ? (
-                                        <div className="col-12 text-center">
-                                            <p>Sin actividades</p>
-                                        </div>
-                                    ) : (
-                                        <div className="card-container">
-                                            {tasks.map((task, index) => (
-                                                <Link to={`/TaskEmpleado/${task.id}`} style={{ textDecoration: 'none', color: '#000000' }} key={index}>
-                                                    <div className="card">
-                                                        <img
-                                                            className="card-image"
-                                                            alt="Room"
-                                                            src="/public/habitacion_Sencilla_8.jpg"
-                                                        />
-                                                        <div className="content">
-                                                            <p className="title-card">{task.nombre}</p>
-                                                            <div className="desc-status">
-                                                                <span>Estatus: <span>{task.estatus}</span></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            </Container>
+<h3>Habitaciones</h3>
+<div className="scroll-container flex-grow-1">
+    {error ? (
+        <div className="col-12 text-center">
+            <p>{error}</p>
+        </div>
+    ) : tasks.length === 0 ? (
+        <div className="col-12 text-center">
+            <p>Sin actividades</p>
+        </div>
+    ) : (
+        <div className="card-container">
+            {tasks.map((task, index) => (
+                <Link to={`/TaskEmpleado/${task.id}`} style={{ textDecoration: 'none', color: '#000000' }} key={index}>
+                    <div className="card">
+                        <img
+                            className="card-image"
+                            alt="Room"
+                            src="/public/habitacion_Sencilla_8.jpg"
+                        />
+                        <div className="content">
+                            <p className="title-card">{task.nombre}</p>
+                            <div className="desc-status">
+                                <span>Estatus: <span>{task.estatus}</span></span>
+                            </div>
                         </div>
+                    </div>
+                </Link>
+            ))}
+        </div>
+    )}
+</div>
+                        </Container>
                         <Footer />
                     </div>
                 </div>
