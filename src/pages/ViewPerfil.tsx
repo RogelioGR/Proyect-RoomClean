@@ -42,10 +42,6 @@ const ViewPerfil: React.FC = () => {
         }
     };
 
-
-
-
-
     return (
         <>
             {loading ? (
@@ -59,7 +55,7 @@ const ViewPerfil: React.FC = () => {
                             <h2 className="text-center mb-4">Perfil del usuario</h2>
                             <Row className="justify-content-center">
                                 <Col md={4} className="d-flex justify-content-center align-items-center">
-                                    <img src={userData.foto}  alt="Avatar"  className="rounded-circle" style={{ width: '200px', height: '200px' }} />
+                                    <img src={userData.foto || "/public/usuario.png"}  alt="Avatar"  className="rounded-circle" style={{ width: '200px', height: '200px' }} />
                                 </Col>
                                 <Col md={8}>
                                     <Form >
@@ -117,7 +113,7 @@ const ViewPerfil: React.FC = () => {
                                                         type="text"
                                                         placeholder="Rol del empleaod"
                                                         name="telefono"
-                                                        value={userData.fkRol === 1 ? 'Eres administrador' : userData.fkRol === 2 ? 'Eres empleado' : ''}
+                                                        value={userData.fkRol === 1 ? 'Eres administrador' : userData.fkRol === 2 ? 'Eres Camarista' : ''}
                                                     />
                                                 </Form.Group>
                                             </Col>
