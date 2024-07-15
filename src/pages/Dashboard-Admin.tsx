@@ -17,7 +17,7 @@ const DashboardAdmin: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<User[]>([]);
   const [user, setUser] = useState<User | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>(''); // Estado para el término de búsqueda
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const navigate = useNavigate();
 
@@ -97,13 +97,14 @@ const DashboardAdmin: React.FC = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="d-flex vh-100">
-                    <Sidebar />
-                    <div className="flex-grow-1 d-flex flex-column">
-                        <Header />
-                        <Container className="my-3" style={{ overflowY: 'auto' }}>
-                            <h2 className="mb-4">Bienvenido {user ? `${user.nombre}` : 'Usuario'}!</h2>
-              <div className="d-flex justify-content-between align-items-center ">
+        <div className="d-flex vh-100 flex-column flex-md-row">
+          <Sidebar/>
+          <div className="flex-grow-1 d-flex flex-column">
+            <Header />
+            <Container className="my-3" style={{ overflowY: 'auto' }}>
+              <div>
+                <h2 className="mb-4">Bienvenido {user ? `${user.nombre}` : 'Usuario'}!</h2>
+                <div className="d-flex justify-content-between align-items-center ">
                 <div className="col-lg-4 col-md-6 col-sm-12">
                   <Form.Control
                     type="text"
@@ -113,86 +114,79 @@ const DashboardAdmin: React.FC = () => {
                     style={{ backgroundColor: '#E2E2E2' }}
                   />
                 </div>
-              </div>
-              <div className="d-flex justify-content-end align-items-center mt-2">
+                <div className="d-flex justify-content-end align-items-center mt-2">
                 <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
                   <i className="fas fa-plus"></i> Agregar usuario
                 </Button>
               </div>
+              </div>
 
-              <Table responsive striped bordered hover className="mt-4">
-                <thead className="text-center">
-                  <tr>
-                    <th>Imagen</th>
-                    <th>Nombre completo</th>
-                    <th>Correo electrónico</th>
-                    <th className="d-none d-md-table-cell">Número</th>
-                    <th>Núm empleado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentUsers.length > 0 ? (
-                    currentUsers.map((user) => (
-                      <tr key={user.id}>
-                        <td className="align-middle text-center" style={{ width: '60px' }}>
-                          <img src={user.foto || "/public/usuario.png"} alt="user" className="rounded-circle" style={{ width: '50px' }} />
-                        </td>
-                        <td>{user.nombre} {user.apellido}</td>
-                        <td>{user.correo}</td>
-                        <td className="d-none d-md-table-cell">{user.número}</td>
-                        <td>{user.id}</td>
-                        <td>
-                          <div className="d-flex justify-content-center m-1">
-                            <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER, user.id)} >
-                              <i className="fas fa-pen"></i>
-                            </Button>
-                            <Button variant="danger" className="me-2" onClick={() => handleOpenModal(ModalsUsers.DELETE_USER, user.id)}>
-                              <i className="fas fa-trash"></i>
-                            </Button>
-                            {user.fkRol === 1 ? (
-                              <Button
-                                variant="secondary"
-                                className="me-2"
-                                disabled
-                              >
-                                <i className="fas fa-plus"></i>
-                                <span className="d-none d-md-inline spanTask">
-                                  Asignar tareas
-                                </span>
-                              </Button>
-                            ) : (
-                              <Button variant="primary" className="me-2" onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
-                                <i className="fas fa-plus"></i>
-                                <span className="d-none d-md-inline spanTask">
-                                  Asignar tareas
-                                </span>
-                              </Button>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
+                <Table responsive striped bordered hover>
+                  <thead className="text-center">
                     <tr>
-                      <td colSpan={6} className="text-center">Sin empleados en la lista</td>
+                      <th>Imagen</th>
+                      <th>Nombre completo</th>
+                      <th>Correo electrónico</th>
+                      <th className="d-none d-md-table-cell">Número</th>
+                      <th>Núm empleado</th>
+                      <th>Acciones</th>
                     </tr>
-                  )}
-                </tbody>
-              </Table>
-              {users.length > 0 && (
-                <Pagination className="justify-content-center">
-                  {[...Array(Math.ceil(filteredUsers.length / usersPerPage)).keys()].map(number => (
-                    <Pagination.Item key={number} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
-                      {number + 1}
-                    </Pagination.Item>
-                  ))}
-                </Pagination>
-              )}
-                        </Container>
-                        <Footer />
-                    </div>
-                </div>
+                  </thead>
+                  <tbody>
+                    {currentUsers.length > 0 ? (
+                      currentUsers.map((user) => (
+                        <tr key={user.id}>
+                          <td className="align-middle text-center" style={{ width: '60px' }}>
+                            <img src={user.foto || "/public/usuario.png"} alt="user" className="rounded-circle" style={{ width: '50px' }} />
+                          </td>
+                          <td>{user.nombre} {user.apellido}</td>
+                          <td>{user.correo}</td>
+                          <td className="d-none d-md-table-cell">{user.número}</td>
+                          <td>{user.id}</td>
+                          <td>
+                            <div className="d-flex justify-content-center m-1">
+                              <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsUsers.EDIT_USER, user.id)} >
+                                <i className="fas fa-pen"></i>
+                              </Button>
+                              <Button variant="danger" className="me-2" onClick={() => handleOpenModal(ModalsUsers.DELETE_USER, user.id)}>
+                                <i className="fas fa-trash"></i>
+                              </Button>
+                              {user.fkRol === 1 ? (
+                                <Button variant="secondary" className="me-2" disabled>
+                                  <i className="fas fa-plus"></i>
+                                  <span className="d-none d-md-inline">Asignar tareas</span>
+                                </Button>
+                              ) : (
+                                <Button variant="primary" className="me-2" onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
+                                  <i className="fas fa-plus"></i>
+                                  <span className="d-none d-md-inline">Asignar tareas</span>
+                                </Button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={6} className="text-center">Sin empleados en la lista</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </Table>
+                {users.length > 0 && (
+                  <Pagination className="justify-content-center">
+                    {[...Array(Math.ceil(filteredUsers.length / usersPerPage)).keys()].map(number => (
+                      <Pagination.Item key={number} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+                        {number + 1}
+                      </Pagination.Item>
+                    ))}
+                  </Pagination>
+                )}
+              </div>
+            </Container>
+            <Footer />
+          </div>
+        </div>
       )}
       {/* Modales */}
       <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal} userId={selectedUserId} />

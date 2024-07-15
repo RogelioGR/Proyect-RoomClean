@@ -154,8 +154,8 @@ const TaskEmpleado: React.FC = () => {
                                 <Row>
                                     <Col>
                                         <h4>Instrucción</h4>
-                                        <p>{task!.descripcion}</p>
-                                    </Col>
+                                        <p className="m-2 text-justify">{task!.descripcion}</p>
+                                        </Col>
                                     <Col md={6}>
                                         <h4>Evidencia</h4>
                                         <TextField
@@ -180,7 +180,7 @@ const TaskEmpleado: React.FC = () => {
                                                         className="btn btn-danger btn-sm position-absolute top-0 end-0 "
                                                         onClick={() => handleDeletePhoto(photo.id, index)}
                                                     >
-                                                                                                                <i className="fa-solid fa-x "></i>
+                                                <i className="fa-solid fa-x "></i>
 
                                                     </button>
                                                 </div>

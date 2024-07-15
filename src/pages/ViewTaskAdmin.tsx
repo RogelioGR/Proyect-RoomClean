@@ -107,7 +107,7 @@ const TaskAdmin: React.FC = () => {
                                                         <i className="fas fa-pen"></i> Editar
                                                     </Button>
                                                 </div>
-                                                <p>{task!.descripcion}</p>
+                                                <p className="m-2 text-justify">{task!.descripcion}</p>
                                             </Col>
                                             <Col md={6}>
                                                 <h4>Evidencia</h4>
