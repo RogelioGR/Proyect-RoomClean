@@ -150,12 +150,25 @@ const DashboardAdmin: React.FC = () => {
                             <Button variant="danger" className="me-2" onClick={() => handleOpenModal(ModalsUsers.DELETE_USER, user.id)}>
                               <i className="fas fa-trash"></i>
                             </Button>
-                            <Button variant="primary" className="me-2" onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
-                              <i className="fas fa-plus"></i>
-                              <span className="d-none d-md-inline spanTask">
-                                Asignar tareas
-                              </span>
-                            </Button>
+                            {user.fkRol === 1 ? (
+                              <Button
+                                variant="secondary"
+                                className="me-2"
+                                disabled
+                              >
+                                <i className="fas fa-plus"></i>
+                                <span className="d-none d-md-inline spanTask">
+                                  Asignar tareas
+                                </span>
+                              </Button>
+                            ) : (
+                              <Button variant="primary" className="me-2" onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
+                                <i className="fas fa-plus"></i>
+                                <span className="d-none d-md-inline spanTask">
+                                  Asignar tareas
+                                </span>
+                              </Button>
+                            )}
                           </div>
                         </td>
                       </tr>
