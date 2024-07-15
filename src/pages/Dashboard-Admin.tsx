@@ -97,12 +97,12 @@ const DashboardAdmin: React.FC = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="d-flex flex-column flex-md-row min-vh-100">
-          <Sidebar />
-          <div className="d-flex flex-column flex-grow-1">
-            <Header />
-            <Container className="mt-2">
-              <h2 className="mb-4">Bienvenido {user ? `${user.nombre}` : 'Usuario'}!</h2>
+        <div className="d-flex vh-100">
+                    <Sidebar />
+                    <div className="flex-grow-1 d-flex flex-column">
+                        <Header />
+                        <Container className="my-3" style={{ overflowY: 'auto' }}>
+                            <h2 className="mb-4">Bienvenido {user ? `${user.nombre}` : 'Usuario'}!</h2>
               <div className="d-flex justify-content-between align-items-center ">
                 <div className="col-lg-4 col-md-6 col-sm-12">
                   <Form.Control
@@ -189,10 +189,10 @@ const DashboardAdmin: React.FC = () => {
                   ))}
                 </Pagination>
               )}
-            </Container>
-            <Footer />
-          </div>
-        </div>
+                        </Container>
+                        <Footer />
+                    </div>
+                </div>
       )}
       {/* Modales */}
       <MEditUser show={modalUsers === ModalsUsers.EDIT_USER} handleClose={handleCloseModal} userId={selectedUserId} />
