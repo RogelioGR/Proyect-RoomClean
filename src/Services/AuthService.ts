@@ -8,6 +8,8 @@ interface LoginData {
 interface AuthResponse {
     token: string;
     rol: string; 
+    id: string; 
+
 }
 
 export const login = async (loginData: LoginData): Promise<void> => {
@@ -15,6 +17,8 @@ export const login = async (loginData: LoginData): Promise<void> => {
         const response = await axiosInstance.post<AuthResponse>('/Usuario/login', loginData);
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('rol', response.data.rol); 
+        localStorage.setItem('userId', response.data.id); 
+
         
         console.log('Inicio de sesión exitoso');
     } catch (error) {

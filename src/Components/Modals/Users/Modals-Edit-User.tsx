@@ -102,7 +102,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
       <Modal.Header closeButton>
       </Modal.Header>
       <Modal.Body>
-        <Container className="flex-grow-1 my-5">
+        <Container className="flex-grow-1 my-3">
           <h2 className="text-center mb-4">Editar usuario</h2>
           <Row className="justify-content-center">
             <Col className="d-flex justify-content-center align-items-center">
@@ -196,7 +196,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <div className="d-flex align-items-center mt-4">
+                <div className="text-center mt-4">
                   <Button variant="success" className="me-2" type="submit">
                     Guardar
                   </Button>

@@ -44,7 +44,7 @@ const Header: React.FC = () => {
                 {user ? (
                     <>
                         <img
-                            src={user.foto}
+                            src={user.foto || "/public/usuario.png"}
                             alt="avatar"
                             className="rounded-circle"
                             style={{

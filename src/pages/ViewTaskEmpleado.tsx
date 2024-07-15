@@ -174,14 +174,14 @@ const TaskEmpleado: React.FC = () => {
                                                     <img
                                                         src={photo.fotoUrl}
                                                         alt={`evidence${photo.id}`}
-                                                        className="img-thumbnail me-2 mb-2"
-                                                        style={{ width: '150px', height: '150px' }}
+                                                        className="img-thumbnail "
                                                     />
                                                     <button
-                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0"
+                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0 "
                                                         onClick={() => handleDeletePhoto(photo.id, index)}
                                                     >
-                                                        X
+                                                                                                                <i className="fa-solid fa-x "></i>
+
                                                     </button>
                                                 </div>
                                             ))}
@@ -190,14 +190,13 @@ const TaskEmpleado: React.FC = () => {
                                                     <img
                                                         src={photo}
                                                         alt={`selected${index}`}
-                                                        className="img-thumbnail me-2 mb-2"
-                                                        style={{ width: '150px', height: '150px' }}
+                                                        className="img-thumbnail"
                                                     />
                                                     <button
-                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0"
+                                                        className="btn btn-danger btn-sm position-absolute top-0 end-0 "
                                                         onClick={() => handleDeletePhoto(undefined, index)}
                                                     >
-                                                        X
+                                                        <i className="fa-solid fa-x "></i>
                                                     </button>
                                                 </div>
                                             ))}
