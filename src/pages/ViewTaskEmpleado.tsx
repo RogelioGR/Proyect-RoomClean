@@ -48,7 +48,7 @@ const TaskEmpleado: React.FC = () => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     if (e.target?.result) {
-                        setPhotos(prevPhotos => [...prevPhotos, e.target.result as string]);
+                        setPhotos(prevPhotos => [...prevPhotos, e.target!.result as string]);
                     }
                 };
                 reader.readAsDataURL(file);

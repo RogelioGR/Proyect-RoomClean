@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Container, Row, Col } from 'react-bootstrap';
 import { getUserById, User } from '../Services/UsuarioService';
 
 /* Componentes */
@@ -47,9 +47,9 @@ const ViewPerfil: React.FC = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <div className="d-flex vh-100">
+                <div className="d-flex vh-100  vviewinform-container">
                     <Sidebar />
-                    <div className="flex-grow-1 d-flex flex-column">
+                    <div className="flex-grow-1 d-flex flex-column  viewinform-content">
                         <Header />
                         <Container className="flex-grow-1 my-5" style={{ padding: '60px' }}>
                             <h2 className="text-center mb-4">Perfil del usuario</h2>
