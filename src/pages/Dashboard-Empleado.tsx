@@ -50,12 +50,13 @@ const Dashboardempleado: React.FC = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <div className="d-flex vh-100">
-                    <Sidebar />
-                    <div className="flex-grow-1 d-flex flex-column">
-                        <Header />
-                        <Container className="my-3" style={{ overflowY: 'auto' }}>
-                        <h1 className="my-4">Bienvenido, {user ? `${user.nombre} ${user.apellido}` : 'Usuario'}!</h1>
+                <div className="d-flex vh-100 flex-column flex-md-row">
+                <Sidebar/>
+                <div className="flex-grow-1 d-flex flex-column">
+                  <Header />
+                  <Container className="my-3" style={{ overflowY: 'auto' }}>
+                    <div>
+                    <h1 className="my-4">Bienvenido, {user ? `${user.nombre} ${user.apellido}` : 'Usuario'}!</h1>
 
 <h3>Habitaciones</h3>
 <div className="scroll-container flex-grow-1">
@@ -89,10 +90,12 @@ const Dashboardempleado: React.FC = () => {
         </div>
     )}
 </div>
-                        </Container>
-                        <Footer />
                     </div>
+                   
+                  </Container>
+                  <Footer />
                 </div>
+              </div>
             )}
         </>
     );

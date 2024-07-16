@@ -1,17 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+
+import ReCAPTCHA from 'react-google-recaptcha';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../Services/AuthService';
-import ReCAPTCHA from 'react-google-recaptcha';
 import Swal from 'sweetalert2';
 
-const Login: React.FC = () => {
+
+const NewLogin: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const inputs = document.querySelectorAll(".input-field") as NodeListOf<HTMLInputElement>;
+
+        inputs.forEach((inp) => {
+            inp.addEventListener("focus", () => {
+                inp.classList.add("active");
+            });
+            inp.addEventListener("blur", () => {
+                if (inp.value !== "") return;
+                inp.classList.remove("active");
+            });
+        });
+    }, []);
 
     useEffect(() => {
         const isAuthenticated = localStorage.getItem('authenticated') === 'true';
@@ -71,56 +87,74 @@ const Login: React.FC = () => {
     };
 
     return (
-        <Container fluid className="login-container">
-            <div className="form-container">
-                <Form className="form-controls " onSubmit={handleLogin}>
-                    <h1 className="title-login">Iniciar sesión</h1>
-                    <div>
-                        <Form.Group controlId="formBasicEmail ">
-                            <Form.Control
-                                type="email"
-                                placeholder="Correo Electrónico"
-                                className="input"
-                                value={email}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                            />
-                        </Form.Group>
+        <>
+            <Container fluid className="login-container ">
+                <div className='box-login'>
+                    <div className="inner-box">
+                        <div className="forms-wrap">
+                            <form autoComplete="off" className="sign-in-form" onSubmit={handleLogin}>
+                                <div className="logo">
+                                    <h4>Room<span>Clean</span></h4>
+                                </div>
+                                <div className="heading">
+                                    <h2>Iniciar sesion</h2>
+                                </div>
+                                <div className="actual-form">
+                                    <div className="input-wrap">
+                                        <input
+                                            type="email"
+                                            minLength={4}
+                                            className="input-field"
+                                            autoComplete="off"
+                                            required
+                                            value={email}
+                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                                        />
+                                        <label className='label-login'>Correo Electrónico</label>
+                                    </div>
 
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Control
-                                type="password"
-                                placeholder="Contraseña"
-                                className="input"
-                                value={password}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                            />
-                        </Form.Group>
+                                    <div className="input-wrap">
+                                        <input
+                                            type="password"
+                                            minLength={4}
+                                            className="input-field"
+                                            autoComplete="off"
+                                            required
+                                            value={password}
+                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                                        />
+                                        <label className='label-login'>Contraseña</label>
+                                    </div>
+                                    <div>
+                                        <ReCAPTCHA
+                                            sitekey="6LeT5w8qAAAAAL7kKO3u9_Fpjbr9PiLWbsl-Hcky"
+                                            onChange={onCaptchaChange}
+                                        />
+                                    </div>
+                                    <button type="submit" className="sign-btn" disabled={loading}>
+                                        {loading ? (
+                                            <>
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            </>
+                                        ) : (
+                                            'Iniciar sesión'
+                                        )}
+                                    </button>
+                                </div>
 
-                        <div className='Recaptcha-container'>
-                            <div className='Recaptcha'>
-                                <ReCAPTCHA
-                                    sitekey="6LeT5w8qAAAAAL7kKO3u9_Fpjbr9PiLWbsl-Hcky"
-                                    onChange={onCaptchaChange}
-                                />
+                            </form>
+                        </div>
+                        <div className="logo-container">
+                            <div className="images-wrapper">
+                                <img src="/public/roomclean.png" className='image ' alt="" />
                             </div>
                         </div>
                     </div>
-                    <Button variant="primary" type="submit" className="submit-btn" disabled={loading}>
-                        {loading ? (
-                            <>
-                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            </>
-                        ) : (
-                            'Iniciar sesión'
-                        )}
-                    </Button>
-                </Form>
-                <div className="login-img d-none d-lg-block">
-                    <img src='/public/roomclean.png' alt="404 Error" className="bounce" />
                 </div>
-            </div>
-        </Container>
+            </Container>
+        </>
+
     );
 };
 
-export default Login;
+export default NewLogin;

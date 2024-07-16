@@ -11,7 +11,7 @@ const Viewinform: React.FC = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000); 
+        }, 1000);
     }, []);
 
     return (
@@ -19,12 +19,12 @@ const Viewinform: React.FC = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <div className="d-flex vh-100">
+                <div className="viewinform-container d-flex vh-100" >
                     <Sidebar />
-                    <div className="flex-grow-1 d-flex flex-column">
+                    <div className="viewinform-content flex-grow-1 d-flex flex-column">
                         <Header />
                         <Container className="my-3" style={{ overflowY: 'auto' }}>
-                            <div>
+                            <div className="viewinform-fade-in">
                                 <Carousel>
                                     <Carousel.Item>
                                         <img
@@ -61,7 +61,7 @@ const Viewinform: React.FC = () => {
                                     </Carousel.Item>
                                 </Carousel>
                                 <Row className="mb-4 mt-4">
-                                    <Col md={4} className="text-center">
+                                    <Col md={4} className="text-center viewinform-fade-in">
                                         <div className="mb-3">
                                             <img
                                                 src="/public/innova.jpg"
@@ -77,7 +77,7 @@ const Viewinform: React.FC = () => {
                                             </p>
                                         </div>
                                     </Col>
-                                    <Col md={4} className="text-center">
+                                    <Col md={4} className="text-center viewinform-fade-in">
                                         <div className="mb-3">
                                             <img
                                                 src="/public/compromiso.jpg"
@@ -93,7 +93,7 @@ const Viewinform: React.FC = () => {
                                             </p>
                                         </div>
                                     </Col>
-                                    <Col md={4} className="text-center">
+                                    <Col md={4} className="text-center viewinform-fade-in">
                                         <div className="mb-3">
                                             <img
                                                 src="/public/excelencia.jpg"
@@ -111,7 +111,7 @@ const Viewinform: React.FC = () => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-4">
-                                    <Col md={6} className="d-flex align-items-center">
+                                    <Col md={6} className="d-flex align-items-center viewinform-fade-in">
                                         <div>
                                             <h2 className="text-center mb-4" style={{ fontSize: '2.5rem' }}>Acerca de Nosotros</h2>
                                             <p style={{ textAlign: 'justify' }}>
@@ -119,7 +119,7 @@ const Viewinform: React.FC = () => {
                                             </p>
                                         </div>
                                     </Col>
-                                    <Col md={6} className="d-flex justify-content-center align-items-center">
+                                    <Col md={6} className="d-flex justify-content-center align-items-center viewinform-fade-in">
                                         <img
                                             src="/public/empresas.jpg"
                                             alt="Acerca de Nosotros"
@@ -128,7 +128,7 @@ const Viewinform: React.FC = () => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-4">
-                                    <Col md={6} className="d-flex align-items-center">
+                                    <Col md={6} className="d-flex align-items-center viewinform-fade-in">
                                         <img
                                             src="/public/contacto.jpg"
                                             alt="Contacto"

@@ -68,12 +68,13 @@ const AssignTasksAdmin: React.FC = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <div className="d-flex vh-100">
-                    <Sidebar />
-                    <div className="flex-grow-1 d-flex flex-column">
-                        <Header />
-                        <Container className="container mt-2">
-                            <h2>Tareas Asignadas</h2>
+                <div className="d-flex vh-100 flex-column flex-md-row">
+          <Sidebar/>
+          <div className="flex-grow-1 d-flex flex-column">
+            <Header />
+            <Container className="my-3" style={{ overflowY: 'auto' }}>
+             <div>
+             <h2>Tareas Asignadas</h2>
                             <p>Empleado: {user ? `${user.nombre} ${user.apellido}` : 'Cargando...'}</p>
                             <div className="d-flex justify-content-end align-items-center mt-4">
                                 <Button variant="success" className="mb-2" onClick={() => handleOpenModal(ModalsTasks.CREATE_TASKS)}>Crear Tarea</Button>
@@ -105,10 +106,13 @@ const AssignTasksAdmin: React.FC = () => {
                                     </div>
                                 )}
                             </div>
-                        </Container>
-                        <Footer />
-                    </div>
-                </div>
+
+
+             </div>
+            </Container>
+            <Footer />
+          </div>
+        </div>
             )}
             {UserAssignId && (
                 <MCreateTasks
