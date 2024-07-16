@@ -2,7 +2,6 @@ import React from 'react';
 import { Navbar, Nav, Offcanvas } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../Services/AuthService';
-import {  User } from '../Services/UsuarioService';
 
 
 interface SidebarProps {
@@ -12,6 +11,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
   const navigate = useNavigate();
+  const rol = localStorage.getItem('rol');
 
   const handleLogout = () => {
     logout();
@@ -57,6 +57,14 @@ const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
                 <i className="fa-solid fa-house sidebar-icon me-2"></i>
                 Dashboard
               </Nav.Link>
+              {rol === '1' ? (
+              <Nav.Link as={Link} to="/Inventario" className="sidebar-link">
+               <i className="fas fa-box sidebar-icon me-2"></i>
+               Inventario
+              </Nav.Link>
+             ) : (
+              <></>
+            )}
               <Nav.Link as={Link} to="/ViewPerfil" onClick={closeMenu} className="sidebar-link">
                 <i className="fa-solid fa-user sidebar-icon me-2"></i>
                 Perfil
@@ -91,6 +99,14 @@ const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
               <i className="fa-solid fa-house sidebar-icon me-2"></i>
               Dashboard
             </Nav.Link>
+            {rol === '1' ? (
+              <Nav.Link as={Link} to="/Inventario" className="sidebar-link">
+               <i className="fas fa-box sidebar-icon me-2"></i>
+               Inventario
+              </Nav.Link>
+             ) : (
+              <></>
+            )}
             <Nav.Link as={Link} to="/ViewPerfil" className="sidebar-link">
               <i className="fa-solid fa-user sidebar-icon me-2"></i>
               Perfil
@@ -99,6 +115,7 @@ const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
               <i className="fa-solid fa-circle-info sidebar-icon me-2"></i>
               Info
             </Nav.Link>
+            
           </Nav>
           <Nav className="mt-auto">
             <Nav.Link onClick={handleLogout} className="sidebar-link text-white text-center">

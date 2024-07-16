@@ -6,7 +6,7 @@ export interface User {
     apellido: string;
     número: string;
     correo: string;
-    contraseña: string  ;
+    contraseña?: string  ;
     foto: string ;
     fkRol: number;
 }

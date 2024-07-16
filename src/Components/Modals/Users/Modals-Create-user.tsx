@@ -57,7 +57,7 @@ const MCreateUser: React.FC<MCreateUserProps> = ({ show, handleClose }) => {
       return;
     }
 
-    if (formData.contraseña.length < 8) {
+    if (formData.contraseña!.length < 8) {
       MySwal.fire(
         "Error",
         "La contraseña debe tener al menos 8 caracteres.",
