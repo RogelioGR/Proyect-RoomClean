@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Container, Row, Col } from 'react-bootstrap';
 import { getUserById, User } from '../Services/UsuarioService';
 
 /* Componentes */
@@ -68,6 +68,7 @@ const ViewPerfil: React.FC = () => {
                                                         placeholder="Nombre"
                                                         name="nombre"
                                                         value={userData.nombre}
+                                                        disabled
                                                     />
                                                 </Form.Group>
                                             </Col>
@@ -79,6 +80,7 @@ const ViewPerfil: React.FC = () => {
                                                         placeholder="Apellido"
                                                         name="Apellidos"
                                                         value={userData.apellido}
+                                                        disabled
                                                     />
                                                 </Form.Group>
                                             </Col>
@@ -91,6 +93,7 @@ const ViewPerfil: React.FC = () => {
                                                 placeholder="Correo electrónico"
                                                 name="email"
                                                 value={userData.correo}
+                                                disabled
                                             />
                                         </Form.Group>
 
@@ -103,6 +106,7 @@ const ViewPerfil: React.FC = () => {
                                                         placeholder="Teléfono"
                                                         name="telefono"
                                                         value={userData.número}
+                                                        disabled
                                                     />
                                                 </Form.Group>
                                             </Col>
@@ -114,6 +118,7 @@ const ViewPerfil: React.FC = () => {
                                                         placeholder="Rol del empleaod"
                                                         name="telefono"
                                                         value={userData.fkRol === 1 ? 'Eres administrador' : userData.fkRol === 2 ? 'Eres Camarista' : ''}
+                                                        disabled
                                                     />
                                                 </Form.Group>
                                             </Col>

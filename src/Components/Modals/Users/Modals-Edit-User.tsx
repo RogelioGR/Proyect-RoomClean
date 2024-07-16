@@ -23,6 +23,7 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
     fkRol: 0,
   });
 
+  const [isPasswordChanged, setIsPasswordChanged] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -43,9 +44,14 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    if (name === 'contraseña') {
+      setIsPasswordChanged(true);
+    }
+
     setFormData({ ...formData, [name]: value });
   };
-  
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file) {
@@ -74,7 +80,13 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
     }
 
     try {
-      await updateUser(userId, formData);
+      const updatedData = { ...formData };
+
+      if (!isPasswordChanged) {
+        delete updatedData.contraseña;
+      }
+
+      await updateUser(userId, updatedData);
       MySwal.fire({
         title: "Usuario editado",
         text: "El usuario ha sido editado correctamente.",
@@ -82,10 +94,10 @@ const MEditUser: React.FC<MEditUserProps> = ({ show, handleClose, userId }) => {
         confirmButtonText: "OK",
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.reload(); 
+          window.location.reload();
         }
       });
-      handleClose(); 
+      handleClose();
     } catch (error) {
       MySwal.fire("Error", "Hubo un error al editar el usuario", "error");
     }
