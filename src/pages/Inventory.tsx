@@ -80,9 +80,9 @@ const Inventario: React.FC = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="d-flex vh-100 flex-column flex-md-row">
+        <div className="d-flex vh-100 flex-column flex-md-row  vviewinform-container">
           <Sidebar />
-          <div className="flex-grow-1 d-flex flex-column">
+          <div className="flex-grow-1 d-flex flex-column viewinform-content">
             <Header />
             <Container className="my-3" style={{ overflowY: 'auto' }}>
               <div>

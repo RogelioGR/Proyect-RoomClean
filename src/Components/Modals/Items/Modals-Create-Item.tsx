@@ -28,8 +28,8 @@ const MySwal = withReactContent(Swal);
     try {
       await createItem(formData);
       MySwal.fire({
-        title: "Usuario creado",
-        text: "El usuario ha sido creado exitosamente",
+        title: "Item creado",
+        text: "El item ha sido creado exitosamente",
         icon: "success",
         confirmButtonText: "OK",
       }).then((result) => {
