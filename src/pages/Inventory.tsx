@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table, Container, Pagination, Form } from 'react-bootstrap';
-import { getItems, Item } from '../Services/InventarioService';
+import { getItems, Item, updateItem } from '../Services/InventarioService';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Sidebar from '../Components/Sidebar';
@@ -8,6 +8,8 @@ import Loader from '../Components/Loader';
 import MCreateItem from '../Components/Modals/Items/Modals-Create-Item';
 import MEditItem from '../Components/Modals/Items/Modals-Edit-Item';
 import MDeleteItem from '../Components/Modals/Items/Modals-Drop-Item';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 const Inventario: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,7 +17,8 @@ const Inventario: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<Item[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
-
+  const [pendingChanges, setPendingChanges] = useState<{ [id: number]: number }>({});
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -74,6 +77,60 @@ const Inventario: React.FC = () => {
     setSelectedItemId(itemId);
   };
 
+  const handleIncrementQuantity = (id: number) => {
+    setPendingChanges({
+      ...pendingChanges,
+      [id]: (pendingChanges[id] || items.find(i => i.id === id)?.cantidad || 0) + 1,
+    });
+  };
+
+  const handleDecrementQuantity = (id: number) => {
+    const currentQuantity = pendingChanges[id] || items.find(i => i.id === id)?.cantidad || 0;
+    if (currentQuantity > 0) {
+      setPendingChanges({
+        ...pendingChanges,
+        [id]: currentQuantity - 1,
+      });
+    }
+  };
+
+  const handleInputChange = (id: number, newCantidad: number) => {
+    setPendingChanges({
+      ...pendingChanges,
+      [id]: newCantidad,
+    });
+  };
+
+  const handleSaveChanges = async () => {
+    const updatedItems = await Promise.all(
+      items.map(async (item) => {
+        const updatedCantidad = pendingChanges[item.id!] !== undefined ? pendingChanges[item.id!] : item.cantidad;
+        if (updatedCantidad !== item.cantidad) {
+          try {
+            await updateItem(item.id!, { ...item, cantidad: updatedCantidad });
+            MySwal.fire({
+              title: "Inventario editado",
+              text: "El Inventario se ha guardado",
+              icon: "success",
+              confirmButtonText: "OK",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.reload();
+              }
+            });
+            return { ...item, cantidad: updatedCantidad };
+          } catch (error) {
+            MySwal.fire("Error", "Hubo un error al guardar el inventario", "error");
+            return item;
+          }
+        }
+        return item;
+      })
+    );
+
+    setItems(updatedItems);
+    setPendingChanges({});
+  };
 
   return (
     <>
@@ -98,6 +155,11 @@ const Inventario: React.FC = () => {
                     />
                   </div>
                   <div className="d-flex justify-content-end align-items-center mt-2">
+                  
+                    <Button variant="primary"className="mb-3 me-2" onClick={handleSaveChanges}>
+                       Guardar cambios
+                    </Button>
+
                     <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsItems.CREATE_ITEM)}>
                       <i className="fas fa-plus"></i> Agregar item
                     </Button>
@@ -119,7 +181,21 @@ const Inventario: React.FC = () => {
                         <tr key={item.id}>
                           <td>{item.nombre}</td>
                           <td>{item.descripcion}</td>
-                          <td>{item.cantidad}</td>
+                          <td className="text-center">
+                            <div className="d-flex justify-content-center align-items-center">
+                              <Button variant="outline-primary" onClick={() => handleDecrementQuantity(item.id!)}>-</Button>
+                              <input
+                                type="text"
+                                pattern="[0-9]*"
+                                style={{ maxWidth: '100px', minWidth: '70px'}}
+                                className="mx-2 form-control text-center"
+                                value={pendingChanges[item.id!] !== undefined ? pendingChanges[item.id!] : item.cantidad}
+                                onChange={(e) => handleInputChange(item.id!, parseInt(e.target.value))}
+                                onBlur={(e) => handleInputChange(item.id!, parseInt(e.target.value))}
+                              />
+                              <Button variant="outline-primary" onClick={() => handleIncrementQuantity(item.id!)}>+</Button>
+                            </div>
+                          </td>
                           <td>
                             <div className="d-flex justify-content-center m-1">
                               <Button variant="warning" className="me-2" onClick={() => handleOpenModal(ModalsItems.EDIT_ITEM, item.id)}>
