@@ -51,7 +51,7 @@ const MEditItem: React.FC<MEditItemProps> = ({ show, handleClose, itemId }) => {
         
       await updateItem(itemId, formData);
       MySwal.fire({
-        title: "Usuario editado",
+        title: "Item editado",
         text: "El item ha sido editado correctamente.",
         icon: "success",
         confirmButtonText: "OK",

@@ -23,16 +23,16 @@ const TaskAdmin: React.FC = () => {
     const [photos, setPhotos] = useState<Photo[]>([]);
 
 
-    const { TaskId }: any = useParams();
+    const { taskId }: any = useParams();
 
     useEffect(() => {
         const fetchTaskAndEvidence = async () => {
             try {
-                const taskData = await getTaskById(TaskId);
+                const taskData = await getTaskById(taskId!);
                 setTask(taskData);
 
                 if (taskData?.id) {
-                    const evidences = await getEvidences(taskData.id);
+                    const evidences = await getEvidences(taskData.id!);
                     setEvidence(evidences?.[0]);
 
                     if (evidences?.[0]?.id) {
@@ -49,7 +49,7 @@ const TaskAdmin: React.FC = () => {
         };
 
         fetchTaskAndEvidence();
-    }, [TaskId]);
+    }, [taskId]);
 
     const handleGuardarYFinalizar = async () => {
         try {
@@ -86,9 +86,9 @@ const TaskAdmin: React.FC = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <div className="d-flex vh-100">
+                <div className="d-flex vh-100 vviewinform-container">
                     <Sidebar />
-                    <div className="flex-grow-1 d-flex flex-column">
+                    <div className="flex-grow-1 d-flex flex-column  viewinform-content">
                         <Header />
                         <div style={{ margin: '10px' }}>
                             <Container className="flex-grow-1">
@@ -157,7 +157,7 @@ const TaskAdmin: React.FC = () => {
                     </div>
                 </div>
             )}
-            <MCEditTasks show={modalType === 'EDIT_TASKS'} handleClose={handleCloseModal} taskId={TaskId} />
+            <MCEditTasks show={modalType === 'EDIT_TASKS'} handleClose={handleCloseModal} taskId={taskId} />
         </>
     );
 };
