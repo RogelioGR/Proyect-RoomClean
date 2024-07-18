@@ -30,4 +30,7 @@ export const login = async (loginData: LoginData): Promise<void> => {
 export const logout = () => {
     localStorage.removeItem('authenticated');
     localStorage.removeItem('rol');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('_grecaptcha');
 };

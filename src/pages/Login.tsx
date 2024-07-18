@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../Services/AuthService';
 import Swal from 'sweetalert2';
 
-
 const NewLogin: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+    const [captchaError, setCaptchaError] = useState<string | null>(null);
 
     const navigate = useNavigate();
 
@@ -48,15 +48,12 @@ const NewLogin: React.FC = () => {
         setLoading(true);
         try {
             if (!recaptchaToken) {
-                Swal.fire({
-                    title: 'Captcha no completado',
-                    text: 'Por favor completa el captcha.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar'
-                });
+                setCaptchaError('Por favor completa el captcha.');
                 setLoading(false);
                 return;
             }
+
+            setCaptchaError(null);
 
             await login({ correo: email, contraseña: password });
             localStorage.setItem('authenticated', 'true');
@@ -129,6 +126,7 @@ const NewLogin: React.FC = () => {
                                             sitekey="6LeT5w8qAAAAAL7kKO3u9_Fpjbr9PiLWbsl-Hcky"
                                             onChange={onCaptchaChange}
                                         />
+                                        {captchaError && <p style={{ color: 'red', fontSize: '0.9em' }}>{captchaError}</p>}
                                     </div>
                                     <button type="submit" className="sign-btn" disabled={loading}>
                                         {loading ? (
@@ -140,7 +138,6 @@ const NewLogin: React.FC = () => {
                                         )}
                                     </button>
                                 </div>
-
                             </form>
                         </div>
                         <div className="logo-container">
@@ -152,7 +149,6 @@ const NewLogin: React.FC = () => {
                 </div>
             </Container>
         </>
-
     );
 };
 

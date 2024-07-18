@@ -2,6 +2,8 @@ import React from 'react';
 import { Navbar, Nav, Offcanvas } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../Services/AuthService';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 
 interface SidebarProps {
@@ -12,13 +14,25 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ mobile = false, closeMenu }) => {
   const navigate = useNavigate();
   const rol = localStorage.getItem('rol');
+  const MySwal = withReactContent(Swal);
 
   const handleLogout = () => {
-    logout();
-    navigate('/login');
-    if (closeMenu) {
-      closeMenu();
-    }
+    MySwal.fire({
+      title: "Cerrar Sesión",
+      text: "¿Seguro que quieres cerrar tu sesión?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+      logout();
+      navigate('/login');
+      if (closeMenu) {
+        closeMenu();
+      }
+      }
+    });
   };
 
   const handleDashboard = () => {

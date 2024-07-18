@@ -106,7 +106,7 @@ const Inventario: React.FC = () => {
             await updateItem(item.id!, { ...item, cantidad: updatedCantidad });
             MySwal.fire({
               title: "Actualizado",
-              text: "El articulo se ha actualizado",
+              text: "El inventario se ha actualizado",
               icon: "success",
               confirmButtonText: "OK",
             }).then((result) => {
