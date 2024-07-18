@@ -166,7 +166,7 @@ const TaskEmpleado: React.FC = () => {
                                         />
                                         <div className="d-flex flex-wrap p-2">
                                             {uploadedPhotos.map((photo, index) => (
-                                                <div key={photo.id} className="position-relative">
+                                                <div key={photo.id} className="position-relative scale-up-cente">
                                                     <img
                                                         src={photo.fotoUrl}
                                                         alt={`evidence${photo.id}`}
@@ -181,11 +181,11 @@ const TaskEmpleado: React.FC = () => {
                                                 </div>
                                             ))}
                                             {photos.map((photo, index) => (
-                                                <div key={index} className="position-relative">
+                                                <div key={index} className="position-relative scale-up-cente">
                                                     <img
                                                         src={photo}
                                                         alt={`selected${index}`}
-                                                        className="img-thumbnail"
+                                                        className="img-thumbnail "
                                                     />
                                                     <button
                                                         className="btn btn-danger btn-sm position-absolute top-0 end-0 "

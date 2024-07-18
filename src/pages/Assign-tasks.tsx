@@ -63,6 +63,16 @@ const AssignTasksAdmin: React.FC = () => {
         setModalType(type);
         setTaskId(taskId);
     };
+    const getEstatusStyle = (estatus: string) => {
+        switch (estatus) {
+          case "Por hacer":
+            return { color: 'red' };
+          case "Finalizado":
+            return { color: 'green' };
+          default:
+            return {};
+        }
+      };
     return (
         <>
             {loading ? (
@@ -97,7 +107,7 @@ const AssignTasksAdmin: React.FC = () => {
                                                     <div className="content">
                                                         <p className="title-card">{task.nombre}</p>
                                                         <div className="desc-status">
-                                                            <span>Estatus: <span>{task.estatus}</span></span>
+                                                        <span>Estatus: <span style={getEstatusStyle(task.estatus)}>{task.estatus}</span></span>
                                                         </div>
                                                         <div className="actions-btns">
                                                             <Button variant="primary" onClick={() => navigate(`/TaskAdmin/${task.id}`)} style={{ width: '50px' }}><i className="fa-solid fa-eye" ></i></Button>
