@@ -61,12 +61,10 @@ const MDeleteUser: React.FC<MDeleteUserProps> = ({
     <Modal
       show={show}
       onHide={handleClose}
-      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="delete-user-modal-title">Eliminar Usuario</Modal.Title>
       </Modal.Header>
       <Modal.Body className="text-center justify-content-center">
         <h2>Eliminar Usuario</h2>

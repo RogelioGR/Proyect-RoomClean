@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { updateTask, getTaskById, Task } from '../Services/TareaService';
 import { getEvidences, Evidence } from '../Services/EvidenciaService';
 import { getPhotos, Photo } from '../Services/FotoService';
@@ -24,6 +24,9 @@ const TaskAdmin: React.FC = () => {
 
 
     const { taskId }: any = useParams();
+
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchTaskAndEvidence = async () => {
@@ -59,8 +62,11 @@ const TaskAdmin: React.FC = () => {
                 MySwal.fire({
                     icon: 'success',
                     title: 'Tarea finalizada',
-                    text: 'La tarea ha sido marcada como finalizada correctamente.',
+                    text: 'La tarea ha sido marcada como finalizada.',
+                }).then(() => {
+                    navigate(`/AssignTasksAdmin/${task.fkUsuario}`);
                 });
+                
             }
         } catch (error) {
             MySwal.fire({
@@ -86,11 +92,11 @@ const TaskAdmin: React.FC = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <div className="d-flex vh-100 vviewinform-container">
+                <div className="d-flex vh-100 ">
                     <Sidebar />
-                    <div className="flex-grow-1 d-flex flex-column  viewinform-content">
+                    <div className="flex-grow-1 d-flex flex-column  ">
                         <Header />
-                        <div style={{ margin: '10px' }}>
+                        <div style={{ margin: '10px' }} className='viewPages-fade-in '>
                             <Container className="flex-grow-1">
                                 <React.Fragment>
                                     <Row>

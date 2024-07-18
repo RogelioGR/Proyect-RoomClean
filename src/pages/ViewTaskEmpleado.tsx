@@ -59,16 +59,13 @@ const TaskEmpleado: React.FC = () => {
     const handleDeletePhoto = async (photoId: number | undefined, index: number) => {
         try {
             if (photoId !== undefined) {
-                // Eliminar la foto de la base de datos
-                await deletePhoto(photoId); // Asegúrate de implementar esta función en FotoService
+                await deletePhoto(photoId); 
             }
 
-            // Actualizar el estado local quitando la foto eliminada
             const newPhotos = [...photos];
             newPhotos.splice(index, 1);
             setPhotos(newPhotos);
 
-            // Actualizar también las fotos subidas si se está eliminando una foto ya guardada
             if (photoId !== undefined) {
                 const updatedUploadedPhotos = [...uploadedPhotos];
                 updatedUploadedPhotos.splice(updatedUploadedPhotos.findIndex(p => p.id === photoId), 1);
@@ -121,7 +118,6 @@ const TaskEmpleado: React.FC = () => {
                 icon: 'success',
                 confirmButtonText: 'Aceptar'
             }).then(() => {
-                // Recargar la página después de cerrar la alerta
                 window.location.reload();
             });
         } catch (error) {
@@ -145,7 +141,7 @@ const TaskEmpleado: React.FC = () => {
                     <div className="flex-grow-1 d-flex flex-column">
                         <Header />
                         <div style={{ margin: '10px' }}>
-                            <Container className="flex-grow-1">
+                            <Container className="flex-grow-1 viewPages-fade-in ">
                                 <Row>
                                     <Col>
                                         <h2 style={{ fontSize: '3rem' }}>Habitación {task!.nombre}</h2>
@@ -181,7 +177,6 @@ const TaskEmpleado: React.FC = () => {
                                                         onClick={() => handleDeletePhoto(photo.id, index)}
                                                     >
                                                 <i className="fa-solid fa-x "></i>
-
                                                     </button>
                                                 </div>
                                             ))}

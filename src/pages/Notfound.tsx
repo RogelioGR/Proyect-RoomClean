@@ -19,8 +19,8 @@ const NotFound: React.FC = () => {
   };
 
   return (
-    <div className="container-Notfound">
-      <div className="infor-container">
+    <div className="container-Notfound ">
+      <div className="infor-container viewPages-fade-in ">
         <div>
           <h1 className='titulo-404'>RoomClean</h1>
           <span className='text-span'>Página no encontrada</span>
