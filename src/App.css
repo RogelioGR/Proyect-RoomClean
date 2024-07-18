@@ -648,4 +648,21 @@ form {
   margin-right: 10px;
 }
 
+  .custom-checkbox-input {
+    /* Estilo para el checkbox sin estar marcado */
+    border-color: #3f3f3f; /* Color del borde del checkbox */
+    background-color: #3f3f3f; /* Color de fondo del checkbox */
+  }
+
+  .custom-checkbox-input:checked {
+    /* Estilo para el checkbox marcado */
+    background-color: #046118; 
+    border-color: #046118;/* Color de fondo del checkbox marcado */
+  }
+
+  .custom-checkbox-label {
+    /* Estilo para la etiqueta del checkbox */
+    margin-left: 10px; /* Margen izquierdo para separación con el checkbox */
+    color: #000000; /* Color del texto de la etiqueta */
+  }
 

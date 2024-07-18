@@ -4,6 +4,7 @@ export interface Evidence {
     id?: number;
     comentarios: string;
     fkTarea?: number;
+    completedDescriptions: boolean[]; 
 }
 
 interface ApiResponse {
