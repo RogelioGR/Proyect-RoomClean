@@ -215,8 +215,8 @@ const TaskEmpleado: React.FC = () => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col>
-                    <h4>Instrucción</h4>
+                  <Col className="m-50">
+                    <h4>Instrucciones</h4>
                     <ul className="custom-checkbox">
                       {task!.descripcion.map((desc, index) => (
                         <li key={index} className="m-2 text-justify">

@@ -117,7 +117,7 @@ const DashboardAdmin: React.FC = () => {
                   </div>
                   <div className="d-flex justify-content-end align-items-center mt-2">
                     <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
-                      <i className="fas fa-plus"></i> Agregar usuario
+                      <i className="fas fa-plus"></i> <span className='d-none d-md-inline'> Agregar Usuario</span>
                     </Button>
                   </div>
                 </div>

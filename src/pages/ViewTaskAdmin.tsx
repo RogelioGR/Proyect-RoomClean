@@ -117,14 +117,14 @@ const TaskAdmin: React.FC = () => {
                   </Row>
                   <div>
                     <Row>
-                      <Col md={6}>
+                      <Col className="mt-5" md={6}>
                         <div className="d-flex justify-content-between align-items-center mb-3">
-                          <h4 className="mb-0">Instrucción</h4>
+                          <h4 className="mb-0">Instrucciones</h4>
                           <Button
                             variant="warning"
                             onClick={() => handleOpenModal("EDIT_TASKS")}
                           >
-                            <i className="fas fa-pen"></i> Editar
+                            <i className="fas fa-pen"></i> <span className='d-none d-md-inline'>Editar</span>
                           </Button>
                         </div>
                         <ul className="custom-checkbox">
@@ -148,7 +148,7 @@ const TaskAdmin: React.FC = () => {
                           ))}
                         </ul>
                       </Col>
-                      <Col md={6}>
+                      <Col className="mt-5 " md={6}>
                         <h4>Evidencia</h4>
                         {evidence ? (
                           <p>{evidence.comentarios}</p>

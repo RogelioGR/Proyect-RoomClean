@@ -106,7 +106,7 @@ const MEditTasks: React.FC<MEditTasksProps> = ({ show, handleClose, taskId }) =>
           </Form.Group>
           {descripciones.map((descripcion, index) => (
             <Form.Group key={index} controlId={`formDescripcion${index}`}>
-              <Form.Label>Descripción {index + 1}</Form.Label>
+              <Form.Label>Tarea {index + 1}</Form.Label>
               <div className="d-flex">
                 <Form.Control
                   type="text"
@@ -117,13 +117,13 @@ const MEditTasks: React.FC<MEditTasksProps> = ({ show, handleClose, taskId }) =>
                 />
                 {index > 0 && (
                   <Button variant="danger" className='ms-2' onClick={() => handleEliminarDescripcion(index)}>
-                    Eliminar
+                    <i className="fas fa-trash"></i> 
                   </Button>
                 )}
               </div>
             </Form.Group>
           ))}
-          <Button variant="secondary" className='mt-2' onClick={handleAgregarDescripcion}>
+          <Button variant="primary" className='mt-2' onClick={handleAgregarDescripcion}>
             Añadir Tarea
           </Button>
           <div className='text-center mt-4'>

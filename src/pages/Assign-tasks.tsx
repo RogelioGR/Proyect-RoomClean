@@ -77,7 +77,7 @@ const AssignTasksAdmin: React.FC = () => {
                                 <h2>Tareas Asignadas</h2>
                                 <p>Empleado: {user ? `${user.nombre} ${user.apellido}` : 'Cargando...'}</p>
                                 <div className="d-flex justify-content-end align-items-center mt-4">
-                                    <Button variant="success" className="mb-2" onClick={() => handleOpenModal(ModalsTasks.CREATE_TASKS)}>Crear Tarea</Button>
+                                    <Button variant="success" className="mb-2" onClick={() => handleOpenModal(ModalsTasks.CREATE_TASKS)}><i className="fas fa-plus"></i> <span className='d-none d-md-inline'> Crear Tarea</span></Button>
                                 </div>
                                 <div className="scroll-container flex-grow-1">
                                     {tasks.length === 0 ? (
