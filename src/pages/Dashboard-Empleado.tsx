@@ -42,7 +42,16 @@ const Dashboardempleado: React.FC = () => {
 
         fetchTasksAndUser();
     }, []);
-
+    const getEstatusStyle = (estatus: string) => {
+        switch (estatus) {
+          case "Por hacer":
+            return { color: 'red' };
+          case "Finalizado":
+            return { color: 'green' };
+          default:
+            return {};
+        }
+      };
 
 
     return (
@@ -56,7 +65,7 @@ const Dashboardempleado: React.FC = () => {
                         <Header />
                         <Container className="my-3" style={{ overflowY: 'auto' }}>
                             <div>
-                                <h1 className="my-4">Bienvenido, {user ? `${user.nombre}` : 'Usuario'}!</h1>
+                                <h1 className="my-4">Bienvenid@, {user ? `${user.nombre}` : 'Usuario'}!</h1>
 
                                 <h3>Habitaciones</h3>
                                 <div className="scroll-container flex-grow-1">
@@ -82,7 +91,7 @@ const Dashboardempleado: React.FC = () => {
                                                         <div className="content">
                                                             <p className="title-card">{task.nombre}</p>
                                                             <div className="desc-status">
-                                                                <span>Estatus: <span>{task.estatus}</span></span>
+                                                            <span>Estatus: <span style={getEstatusStyle(task.estatus)}>{task.estatus}</span></span>
                                                             </div>
                                                         </div>
                                                     </div>
