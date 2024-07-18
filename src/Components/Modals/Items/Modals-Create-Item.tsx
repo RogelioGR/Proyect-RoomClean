@@ -28,8 +28,8 @@ const MySwal = withReactContent(Swal);
     try {
       await createItem(formData);
       MySwal.fire({
-        title: "Item creado",
-        text: "El item ha sido creado exitosamente",
+        title: "Articulo creado",
+        text: "El Articulo ha sido creado exitosamente",
         icon: "success",
         confirmButtonText: "OK",
       }).then((result) => {
@@ -44,17 +44,22 @@ const MySwal = withReactContent(Swal);
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal 
+    show={show} 
+    onHide={handleClose}
+    aria-labelledby="contained-modal-title-vcenter"
+    centered
+    >
       <Modal.Header closeButton>
-        <Modal.Title>Crear Ítem</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
+        <h2 className="text-center mb-4">Crear articulo</h2>
           <Form.Group controlId="formNombre">
             <Form.Label>Nombre</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Nombre del ítem"
+              placeholder="Nombre del articulo"
               name="nombre"
               value={formData.nombre}
               onChange={handleChange}
@@ -63,13 +68,16 @@ const MySwal = withReactContent(Swal);
           <Form.Group controlId="formDescripcion">
             <Form.Label>Descripción</Form.Label>
             <Form.Control
-              type="text"
-              placeholder="Descripción del ítem"
+                as="textarea"
+                rows={3}
+              placeholder="Descripción del articulo"
               name="descripcion"
               value={formData.descripcion}
               onChange={handleChange}
             />
           </Form.Group>
+
+        
           <Form.Group controlId="formCantidad">
             <Form.Label>Cantidad</Form.Label>
             <Form.Control

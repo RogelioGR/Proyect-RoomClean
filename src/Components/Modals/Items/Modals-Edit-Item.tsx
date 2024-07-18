@@ -64,12 +64,16 @@ const MEditItem: React.FC<MEditItemProps> = ({ show, handleClose, itemId }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal 
+    show={show}
+     onHide={handleClose}
+     aria-labelledby="contained-modal-title-vcenter"
+     centered>
       <Modal.Header closeButton>
-        <Modal.Title>Editar Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
+        <h2 className="text-center mb-4">Editar articulo</h2>
           <Form.Group controlId="formNombre">
             <Form.Label>Nombre</Form.Label>
             <Form.Control
@@ -83,7 +87,8 @@ const MEditItem: React.FC<MEditItemProps> = ({ show, handleClose, itemId }) => {
           <Form.Group controlId="formDescripcion">
             <Form.Label>Descripción</Form.Label>
             <Form.Control
-              type="text"
+                as="textarea"
+                rows={3}
               name="descripcion"
               value={formData.descripcion}
               onChange={handleChange}

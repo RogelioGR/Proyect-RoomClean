@@ -31,9 +31,7 @@ const Inventario: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchItems();
-
     const handleResize = () => {
       if (window.innerWidth <= 768) {
         setItemsPerPage(6);
@@ -41,10 +39,8 @@ const Inventario: React.FC = () => {
         setItemsPerPage(5);
       }
     };
-
     handleResize();
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -109,8 +105,8 @@ const Inventario: React.FC = () => {
           try {
             await updateItem(item.id!, { ...item, cantidad: updatedCantidad });
             MySwal.fire({
-              title: "Inventario editado",
-              text: "El Inventario se ha guardado",
+              title: "Actualizado",
+              text: "El articulo se ha actualizado",
               icon: "success",
               confirmButtonText: "OK",
             }).then((result) => {
@@ -120,7 +116,7 @@ const Inventario: React.FC = () => {
             });
             return { ...item, cantidad: updatedCantidad };
           } catch (error) {
-            MySwal.fire("Error", "Hubo un error al guardar el inventario", "error");
+            MySwal.fire("Error", "Hubo un error al guardar el articulo", "error");
             return item;
           }
         }
@@ -143,34 +139,31 @@ const Inventario: React.FC = () => {
             <Header />
             <Container className="my-3" style={{ overflowY: 'auto' }}>
               <div>
-                <h2 className="mb-4">Gestión de Inventario</h2>
+                <h2 className="mb-4">Gestión de  Articulos</h2>
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="col-lg-4 col-md-6 col-sm-12">
                     <Form.Control
                       type="text"
-                      placeholder="Buscar item"
+                      placeholder="Buscar Articulos"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       style={{ backgroundColor: '#E2E2E2' }}
                     />
                   </div>
                   <div className="d-flex justify-content-end align-items-center mt-2">
-                  
                     <Button variant="primary"className="mb-3 me-2" onClick={handleSaveChanges}>
-                       Guardar cambios
+                    <i className="fa-solid fa-floppy-disk"> </i><span className='d-none d-md-inline'> Guardar cambios</span>
                     </Button>
-
                     <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsItems.CREATE_ITEM)}>
-                      <i className="fas fa-plus"></i> Agregar item
+                      <i className="fas fa-plus"> </i><span className='d-none d-md-inline'> Agregar Articulo</span>
                     </Button>
                   </div>
                 </div>
-
                 <Table responsive striped bordered hover>
                   <thead className="text-center">
                     <tr>
-                      <th>Nombre</th>
-                      <th>Descripción</th>
+                      <th>Nombre </th>
+                      <th className="d-none d-md-table-cell">Descripción</th>
                       <th>Cantidad</th>
                       <th>Acciones</th>
                     </tr>
@@ -180,14 +173,14 @@ const Inventario: React.FC = () => {
                       currentItems.map((item) => (
                         <tr key={item.id}>
                           <td>{item.nombre}</td>
-                          <td>{item.descripcion}</td>
+                          <td className="d-none d-md-table-cell">{item.descripcion}</td>
                           <td className="text-center">
                             <div className="d-flex justify-content-center align-items-center">
-                              <Button variant="outline-primary" onClick={() => handleDecrementQuantity(item.id!)}>-</Button>
+                              <Button variant="outline-danger" onClick={() => handleDecrementQuantity(item.id!)}>-</Button>
                               <input
                                 type="text"
                                 pattern="[0-9]*"
-                                style={{ maxWidth: '100px', minWidth: '70px'}}
+                                style={{ maxWidth: '80px', minWidth: '50px', }}
                                 className="mx-2 form-control text-center"
                                 value={pendingChanges[item.id!] !== undefined ? pendingChanges[item.id!] : item.cantidad}
                                 onChange={(e) => handleInputChange(item.id!, parseInt(e.target.value))}
@@ -210,15 +203,19 @@ const Inventario: React.FC = () => {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan={5} className="text-center">Sin items en la lista</td>
+                        <td colSpan={5} className="text-center">Sin articulos en la lista</td>
                       </tr>
                     )}
                   </tbody>
                 </Table>
                 {items.length > 0 && (
-                  <Pagination className="justify-content-center">
+                  <Pagination className="justify-content-center" >
                     {[...Array(Math.ceil(filteredItems.length / itemsPerPage)).keys()].map(number => (
-                      <Pagination.Item key={number} active={number + 1 === currentPage} onClick={() => paginate(number + 1)}>
+                      <Pagination.Item
+                       key={number} 
+                       active={number + 1 === currentPage} 
+                       onClick={() => paginate(number + 1)} 
+                       >
                         {number + 1}
                       </Pagination.Item>
                     ))}

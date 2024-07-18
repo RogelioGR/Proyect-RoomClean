@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Container, Pagination, Form } from 'react-bootstrap';
+import { Button, Table, Container, Pagination, Form  } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { getUsers, getUserById, User } from '../Services/UsuarioService';
 import Footer from '../Components/Footer';
@@ -98,29 +98,29 @@ const DashboardAdmin: React.FC = () => {
         <Loader />
       ) : (
         <div className="d-flex vh-100 flex-column flex-md-row  viewinform-container">
-          <Sidebar/>
+          <Sidebar />
           <div className="flex-grow-1 d-flex flex-column viewinform-content ">
             <Header />
             <Container className="my-3" style={{ overflowY: 'auto' }}>
+     
               <div>
                 <h2 className="mb-4">Bienvenido {user ? `${user.nombre}` : 'Usuario'}!</h2>
                 <div className="d-flex justify-content-between align-items-center ">
-                <div className="col-lg-4 col-md-6 col-sm-12">
-                  <Form.Control
-                    type="text"
-                    placeholder="Buscar usuario"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    style={{ backgroundColor: '#E2E2E2' }}
-                  />
+                  <div className="col-lg-4 col-md-6 col-sm-12">
+                    <Form.Control
+                      type="text"
+                      placeholder="Buscar usuario"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      style={{ backgroundColor: '#E2E2E2' }}
+                    />
+                  </div>
+                  <div className="d-flex justify-content-end align-items-center mt-2">
+                    <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
+                      <i className="fas fa-plus"></i> Agregar usuario
+                    </Button>
+                  </div>
                 </div>
-                <div className="d-flex justify-content-end align-items-center mt-2">
-                <Button variant="success" className="mb-3" onClick={() => handleOpenModal(ModalsUsers.CREATE_USER)}>
-                  <i className="fas fa-plus"></i> Agregar usuario
-                </Button>
-              </div>
-              </div>
-
                 <Table responsive striped bordered hover>
                   <thead className="text-center">
                     <tr>
@@ -154,12 +154,12 @@ const DashboardAdmin: React.FC = () => {
                               {user.fkRol === 1 ? (
                                 <Button variant="secondary" className="me-2" disabled>
                                   <i className="fas fa-plus"></i>
-                                  <span className="d-none d-md-inline">Asignar tareas</span>
+                                  <span className="d-none d-md-inline"> Asignar tareas</span>
                                 </Button>
                               ) : (
                                 <Button variant="primary" className="me-2" onClick={() => navigate(`/AssignTasksAdmin/${user.id}`)}>
                                   <i className="fas fa-plus"></i>
-                                  <span className="d-none d-md-inline">Asignar tareas</span>
+                                  <span className="d-none d-md-inline"> Asignar tareas</span>
                                 </Button>
                               )}
                             </div>

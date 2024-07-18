@@ -44,7 +44,6 @@ const MDeleteTasks: React.FC<MDeleteTasksProps> = ({ show, handleClose, TaskId }
     <Modal
       show={show}
       onHide={handleClose}
-      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >

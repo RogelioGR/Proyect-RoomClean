@@ -19,7 +19,7 @@ const MySwal = withReactContent(Swal);
         await deleteItem(itemId);
         MySwal.fire({
             title: "Eliminado",
-            text: "El item ha sido eliminado.",
+            text: "El articulo ha sido eliminado.",
             icon: "success",
             confirmButtonText: "OK",
           }).then((result) => {
@@ -30,19 +30,25 @@ const MySwal = withReactContent(Swal);
         handleClose();
       }
     } catch (error) {
-        throw new Error("El ID del item es indefinido");
+        throw new Error("El ID del articulo es indefinido");
     }
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal 
+    show={show} 
+    onHide={handleClose}  
+    aria-labelledby="contained-modal-title-vcenter"
+    centered>
       <Modal.Header closeButton>
-        <Modal.Title>Eliminar Ítem</Modal.Title>
+        <Modal.Title></Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <p>¿Estás seguro de que deseas eliminar este ítem?</p>
+      <Modal.Body className="text-center justify-content-center">
+      <h2 className="text-center mb-4">Eliminar articulo</h2>
+
+        <p>¿Estás seguro de que deseas eliminar este articulo?</p>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className="justify-content-center">
         <Button variant="secondary" onClick={handleClose}>
           Cancelar
         </Button>

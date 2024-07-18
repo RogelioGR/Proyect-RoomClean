@@ -69,50 +69,51 @@ const AssignTasksAdmin: React.FC = () => {
                 <Loader />
             ) : (
                 <div className="d-flex vh-100 flex-column flex-md-row">
-          <Sidebar/>
-          <div className="flex-grow-1 d-flex flex-column">
-            <Header />
-            <Container className="my-3" style={{ overflowY: 'auto' }}>
-             <div>
-             <h2>Tareas Asignadas</h2>
-                            <p>Empleado: {user ? `${user.nombre} ${user.apellido}` : 'Cargando...'}</p>
-                            <div className="d-flex justify-content-end align-items-center mt-4">
-                                <Button variant="success" className="mb-2" onClick={() => handleOpenModal(ModalsTasks.CREATE_TASKS)}>Crear Tarea</Button>
-                            </div>
-                            <div className="scroll-container flex-grow-1">
-                                {tasks.length === 0 ? (
-                                    <p>Sin tareas asignadas</p>
-                                ) : (
-                                    <div className="card-container">
-                                        {tasks.map((task, index) => (
-                                            <div className="card" key={index}>
-                                                <img
-                                                    className="card-image"
-                                                    alt="Room"
-                                                    src="/public/habitacion_Sencilla_8.jpg"
-                                                />
-                                                <div className="content">
-                                                    <p className="title-card">{task.nombre}</p>
-                                                    <div className="desc-status">
-                                                        <span>Estatus: <span>{task.estatus}</span></span>
-                                                    </div>
-                                                    <div className="actions-btns">
-                                                        <button className="View" onClick={() => navigate(`/TaskAdmin/${task.id}`)}>Visualizar</button>
-                                                        <button className="Delete" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS, task.id)}>Eliminar</button>
+                    <Sidebar />
+                    <div className="flex-grow-1 d-flex flex-column">
+                        <Header />
+                        <Container className="my-3" style={{ overflowY: 'auto' }}>
+                            <div className=' '>
+                                <h2>Tareas Asignadas</h2>
+                                <p>Empleado: {user ? `${user.nombre} ${user.apellido}` : 'Cargando...'}</p>
+                                <div className="d-flex justify-content-end align-items-center mt-4">
+                                    <Button variant="success" className="mb-2" onClick={() => handleOpenModal(ModalsTasks.CREATE_TASKS)}>Crear Tarea</Button>
+                                </div>
+                                <div className="scroll-container flex-grow-1">
+                                    {tasks.length === 0 ? (
+                                        <div className=" d-flex flex-column align-items-center justify-content-center text-center m-5 viewPages-fade-in " >
+                                            <img src="/public/limpieza.png" alt="Sin actividades" className="img-fluid mb-3" style={{ width: '200px', height: 'auto' }} />
+                                            <p style={{ color: '#9E9E9E', fontSize: '1.2rem' }}>Sin actividades</p>
+                                        </div>
+                                    ) : (
+                                        <div className="card-container">
+                                            {tasks.map((task, index) => (
+                                                <div className="card viewPages-fade-in " key={index}>
+                                                    <img
+                                                        className="card-image"
+                                                        alt="Room"
+                                                        src="/public/habitacion_Sencilla_8.jpg"
+                                                    />
+                                                    <div className="content">
+                                                        <p className="title-card">{task.nombre}</p>
+                                                        <div className="desc-status">
+                                                            <span>Estatus: <span>{task.estatus}</span></span>
+                                                        </div>
+                                                        <div className="actions-btns">
+                                                            <Button variant="primary" onClick={() => navigate(`/TaskAdmin/${task.id}`)} style={{ width: '50px' }}><i className="fa-solid fa-eye" ></i></Button>
+                                                            <Button variant="danger" onClick={() => handleOpenModal(ModalsTasks.DELETE_TASKS, task.id)} style={{ width: '50px' }}><i className="fa-solid fa-trash" ></i></Button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-
-
-             </div>
-            </Container>
-            <Footer />
-          </div>
-        </div>
+                        </Container>
+                        <Footer />
+                    </div>
+                </div>
             )}
             {UserAssignId && (
                 <MCreateTasks

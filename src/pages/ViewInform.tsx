@@ -19,12 +19,12 @@ const Viewinform: React.FC = () => {
             {loading ? (
                 <Loader />
             ) : (
-                <div className="viewinform-container d-flex vh-100" >
+                <div className=" d-flex vh-100" >
                     <Sidebar />
-                    <div className="viewinform-content flex-grow-1 d-flex flex-column">
+                    <div className=" flex-grow-1 d-flex flex-column">
                         <Header />
                         <Container className="my-3" style={{ overflowY: 'auto' }}>
-                            <div className="viewinform-fade-in">
+                            <div className="viewPages-fade-in">
                                 <Carousel>
                                     <Carousel.Item>
                                         <img
