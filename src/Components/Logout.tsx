@@ -1,13 +1,27 @@
 import React from 'react';
 import { logout } from '../Services/AuthService';
 import { useNavigate } from 'react-router-dom';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 const LogoutButton: React.FC = () => {
     const navigate = useNavigate();
+    const MySwal = withReactContent(Swal);
 
     const handleLogout = () => {
-        logout();
-        navigate('/login');
+        MySwal.fire({
+            title: "Cerrar Sesión",
+            text: "¿Seguro que quieres cerrar tu sesión?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si",
+            cancelButtonText: "Cancelar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+            logout();
+            navigate('/login');
+            }
+          });
     };
 
     return (
