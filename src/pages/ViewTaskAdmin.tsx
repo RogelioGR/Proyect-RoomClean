@@ -53,14 +53,15 @@ const TaskAdmin: React.FC = () => {
 
   const handleGuardarYFinalizar = async () => {
     
-    if (!evidence || !evidence.completedDescriptions.every(desc => desc)) {
-        MySwal.fire({
-          icon: "error",
-          title: "Error",
-          text: "No se han completado todas las tareas",
-        });
-        return;
-      }    
+    if (!evidence) {
+      MySwal.fire({
+        title: "Error",
+        text: "No se puede completar sin evidencias",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
 
     try {
       if (task?.id) {
@@ -71,12 +72,11 @@ const TaskAdmin: React.FC = () => {
           estatus: "Finalizado",
         });
         setTask(updatedTask);
+        navigate(`/AssignTasksAdmin/${task.fkUsuario}`);
         MySwal.fire({
           icon: "success",
           title: "Tarea finalizada",
           text: "La tarea ha sido marcada como finalizada.",
-        }).then(() => {
-            window.location.reload();
         });
       }
     } catch (error) {
@@ -138,7 +138,7 @@ const TaskAdmin: React.FC = () => {
                                     evidence &&
                                     evidence.completedDescriptions[index]
                                   }
-                                  disabled // Deshabilita la edición visual para el administrador
+                                  disabled
                                 />
                                 <label className="form-check-label custom-checkbox-label">
                                   {desc}
